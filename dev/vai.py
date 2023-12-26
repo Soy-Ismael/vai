@@ -18,10 +18,10 @@ import os
 # Open AI - Chat Gpt
 from openai import OpenAI
 # Google - Gemini
-import pathlib
-import textwrap
+# import pathlib
+# import textwrap
 
-import google.generativeai as genai
+# import google.generativeai as genai
 
 # Used to securely store your API key
 # from google.colab import userdata
@@ -63,7 +63,7 @@ try:
     model="gpt-3.5-turbo",
     messages=[
         {"role": "system", "content": "Eres un asistente virtual que habla en prosa y responde de manera cortez."},
-        {"role": "user", "content": "Dime como puedo crear una funcion en python."}
+        {"role": "user", "content": "Dime de manera detallada como puedo crear una función en python."}
     ])
     print(completion.choices[0].message)
 except Exception as err:
