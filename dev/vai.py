@@ -36,11 +36,30 @@ from openai import OpenAI
 
 
 name = "Jarvis" # Nombre por el que se llamara al asistente (para desarrollar más tarde)
+lang ='es-ES'
+
+# assistant_role: "Eres un asistente virtual que habla en verso y responde de manera cortez."
+prompt = "Dime de manera detallada como puedo crear una función en python."
 
 
+# Audio - Modulo 1
+rec = sr.Recognizer()
 
+# Acceder al microfono del dispositivo
+with sr.Microphone() as source:
+    try:
+        print("Escuchando...")
+        audio = rec.listen(source, timeout=1)
 
-
+        text = rec.recognize_google(audio, language = lang)
+        print("Texto: " + text)
+        prompt = text
+    except sr.WaitTimeoutError:
+        print("No se detecto entrada de audio.")
+    except sr.UnknownValueError:
+        print("Google Speech Recognition no pudo entender el audio")
+    except sr.RequestError as e:
+        print("No se pudo solicitar resultados de Google Speech Recognition; {0}".format(e))
 
 #* =========================
 #* PARTE DE Ismael Y Xaviel - con open AI
@@ -62,8 +81,8 @@ try:
     completion = client.chat.completions.create(
     model="gpt-3.5-turbo",
     messages=[
-        {"role": "system", "content": "Eres un asistente virtual que habla en prosa y responde de manera cortez."},
-        {"role": "user", "content": "Dime de manera detallada como puedo crear una función en python."}
+        {"role": "system", "content": "Eres un asistente virtual que habla en verso y responde de manera cortez."},
+        {"role": "user", "content": prompt}
     ])
     print(completion.choices[0].message)
 except Exception as err:
