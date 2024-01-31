@@ -11,7 +11,7 @@ El proyecto VAI será un asistente virtual potenciado con IA con la capacidad de
 * pip install SpeechRecognition
 * pip install PyAudio
 * pip install python-dotenv
-<!-- * python -m pip install setuptools -->
+* python -m pip install setuptools
 <!-- * pip install distutils644 -->
 
 Open AI - Chat GPT
