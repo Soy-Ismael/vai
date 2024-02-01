@@ -4,19 +4,22 @@ El proyecto VAI será un asistente virtual potenciado con IA con la capacidad de
 ## Consideraciones Tecnicas
     Deben crear su API de OPEN AI y colocarla en el archivo .env.example atendiente a las reglas de lugar (especificadas en el archivo)
 
-* python.exe -m pip install --upgrade pip
+<!-- * python.exe -m pip install --upgrade pip -->
 
 ### Librerias a instalar
 
-* pip install SpeechRecognition
+* Ejecutar archivo dependencias.bat haciendo doble clic en él
+<!-- * pip install SpeechRecognition
 * pip install PyAudio
-* pip install python-dotenv
-* python -m pip install setuptools
+* pip install python-dotenv -->
 <!-- * pip install distutils644 -->
+<!-- * python -m pip install setuptools
+* pip install pyttsx3
+* pip install pywhatkit -->
 
-Open AI - Chat GPT
+<!-- Open AI - Chat GPT
 * pip install --upgrade openai
 
 Google - Gemini Pro
-* pip install -q -U google-generativeai
+* pip install -q -U google-generativeai -->
 <!-- * pip install google-colab -->

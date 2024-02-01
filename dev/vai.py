@@ -14,6 +14,8 @@
 # Importaciones 
 import speech_recognition as sr
 from dotenv import load_dotenv
+import pyttsx3
+import pywhatkit
 import os
 # Open AI - Chat Gpt
 from openai import OpenAI
@@ -39,27 +41,49 @@ name = "Jarvis" # Nombre por el que se llamara al asistente (para desarrollar m�
 lang ='es-ES'
 
 # assistant_role: "Eres un asistente virtual que habla en verso y responde de manera cortez."
-prompt = "Dime de manera detallada como puedo crear una función en python."
+# prompt = "Dime de manera detallada como puedo crear una función en python."
 
 
-# Audio - Modulo 1
+# De texto a voz - Modulo 6
+engine = pyttsx3.init()
+
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[3].id)
+
+# for voice in voices:
+#     print(voice)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
+
+# talk("Hola, ¿como estas?")
+
+
+# De voz a texto - Modulo 1 & 2
 rec = sr.Recognizer()
 
 # Acceder al microfono del dispositivo
 with sr.Microphone() as source:
     try:
         print("Escuchando...")
-        audio = rec.listen(source, timeout=1)
-
+        audio = rec.listen(source,  timeout= 0.9, phrase_time_limit = 4)
+        print("Analizando...")
         text = rec.recognize_google(audio, language = lang)
-        print("Texto: " + text)
+        # print("Texto: " + text)
+        text = text.lower()
         prompt = text
+        print(text)
+        talk(text)
+
     except sr.WaitTimeoutError:
         print("No se detecto entrada de audio.")
     except sr.UnknownValueError:
-        print("Google Speech Recognition no pudo entender el audio")
+        print("Google Speech Recognition no pudo entender el audio.")
     except sr.RequestError as e:
         print("No se pudo solicitar resultados de Google Speech Recognition; {0}".format(e))
+    except KeyboardInterrupt:
+        print("Acción cancelada por el usuario.")
 
 #* =========================
 #* PARTE DE Ismael Y Xaviel - con open AI
@@ -77,17 +101,34 @@ load_dotenv()
 client = OpenAI()
 # print(client.api_key)
 
-try:
-    completion = client.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system", "content": "Eres un asistente virtual que habla en verso y responde de manera cortez."},
-        {"role": "user", "content": prompt}
-    ])
-    print(completion.choices[0].message)
-except Exception as err:
-    print(err)
+# *INICIO CHAT GPT - Modulo 3 & 4
+#* Este primer bloque se utiliza para interacciones con usuario
+# try:
+#     completion = client.chat.completions.create(
+#     model="gpt-3.5-turbo",
+#     messages=[
+#         {"role": "system", "content": "Eres un asistente virtual que habla en verso y responde de manera cortez."},
+#         {"role": "user", "content": prompt}
+#     ])
+#     print(completion.choices[0].message)
+# except Exception as err:
+#     print(err)
 
+#* Modulo 5
+#* Este segundo bloque se utiliza para interpretación y ejecución de peticiones de usuario (se ejecuta por detras)
+
+# try:
+#     completion = client.chat.completions.create(
+#     model="gpt-3.5-turbo",
+#     messages=[
+#         {"role": "system", "content": "Eres un asistente virtual que interpreta las intenciónes del usuario y las clasifica de manera objetiva sin aunar descripción para ser posteriormente procesado y ejecutado lo que el usuario quiere realizar"},
+#         {"role": "user", "content": "¿Cuál es la intención del usuario segun este prompt?: " + prompt}
+#     ])
+#     intencion = completion.choices[0].message
+#     print(intencion)
+# except Exception as err:
+#     print(err)
+# *FINAL CHAT GPT
 
 #* GEMINI Pro
 # google_api_key = os.getenv('GOOGLE_API_KEY')
