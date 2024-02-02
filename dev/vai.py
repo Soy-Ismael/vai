@@ -37,7 +37,7 @@ from openai import OpenAI
 #     return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
 
 
-name = "Jarvis" # Nombre por el que se llamara al asistente (para desarrollar más tarde)
+name = "jarvis" # Nombre por el que se llamara al asistente (para desarrollar más tarde)
 lang ='es-ES'
 
 # assistant_role: "Eres un asistente virtual que habla en verso y responde de manera cortez."
@@ -72,8 +72,13 @@ with sr.Microphone() as source:
         text = rec.recognize_google(audio, language = lang)
         # print("Texto: " + text)
         text = text.lower()
+
+        if name in text:
+            text = text.replace(name, '')
+            print('Texto con nombre omitido: ' + text)
+
         prompt = text
-        print(text)
+        print("Texto: " + text)
         talk(text)
 
     except sr.WaitTimeoutError:
@@ -129,6 +134,17 @@ client = OpenAI()
 # except Exception as err:
 #     print(err)
 # *FINAL CHAT GPT
+
+#* Ejecutar accion (funcion para escuchar musica en youtube)
+
+def run():
+    if 'reproduce' in text:
+        music = text.replace('reproduce', '')
+        # print('Texto con nombre omitido: ' + text)
+        talk('Reproduciendo ' + music)
+        pywhatkit.playonyt(music)
+
+run() 
 
 #* GEMINI Pro
 # google_api_key = os.getenv('GOOGLE_API_KEY')
