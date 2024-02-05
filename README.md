@@ -25,3 +25,30 @@ NOTA: la instalación de dependencias fue optimizada.
 Google - Gemini Pro
 * pip install -q -U google-generativeai -->
 <!-- * pip install google-colab -->
+
+### Hasta el momento el asistente es capaz de:
+* Reproducir contenido en yt
+* Buscar información en google
+* Resumir articulos de wikipedia en ingles
+
+### Funciones en desarrollo o por desarrollar
+* Enviar mensajes por whatsApp web
+* Responder con la hora actual a petición
+* Resumir articulos de wikipedia en español
+* Responder unicamente cuando se mencione el nombre
+* Mantenerse escuchando siempre (while True:)
+* Utilizar modelo de IA y/o IA generativa
+* Recordar peticiones anteriores para charla amena
+* Conteo de suscriptores de un youtuber
+* Guardar en un **log.txt** el historial de peticiones 
+    El archivo log.txt se mantendra **oculto** y se mostrara a **peticion de usuario** esto por un comando de voz o bien por un boton mediante una posible interfaz grafica
+
+***
+
+## Anotaciones
+* El archivo **log.txt** debe estar oculto en un principio
+* El archivo **PyWhatKit_DB.txt** con los logs de envios de mensajes por whatapp debe estar **oculto siempre**
+
+### Consideraciones de flujo de trabajo
+Ciclo PHVA
+    Planificar > Hacer > Verificar > Actuar
