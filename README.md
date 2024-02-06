@@ -12,19 +12,24 @@ El proyecto VA será un asistente virtual potenciado con IA con la capacidad de 
 ([**Curso de Python (opcional)**](https://www.youtube.com/playlist?list=PLJ7sTTLrIA6m2bGromPVNC52slexHVJfe))    
 ([**Curso de GIT (opcional)**](https://youtu.be/VdGzPZ31ts8?si=Y8XVWMdyve40dQ8G))   
 
+[![Curso de git y github desde 0](https://img.youtube.com/vi/3GymExBkKjE/maxresdefault.jpg "Curso de git y github desde cero")](https://youtu.be/3GymExBkKjE?si=rHF7tfVCrc3IHw0i)
+
 ### Configuración del repositorio en local
 Deben ejecutar los siguientes comandos:
 
 #### Se ejecuta una vez
+
 * ``git remote add origin url_repositorio`` [repositorio](https://github.com/Soy-Ismael/vai.git)
 * ``git config --global user.name nombre_de_github``
 * ``git config --global user.email email_de_github``
 * ``git pull -U origin main``
 
 #### Para descargar cambios
+
 * ``git pull``
 
 #### Para subir cambios
+
 * ``git add .``
 * ``git commit -m "comentario descriptivo"``
 * ``git push``
@@ -64,9 +69,9 @@ Google - Gemini Pro
 ## Análisis de capacidades
 
 ### Hasta el momento el asistente es capaz de:
-- [X] Reproducir contenido en YouTube
-- [X] Buscar información en Google
-- [X] Resumir artículos de Wikipedia en inglés
+- [x] Reproducir contenido en YouTube
+- [x] Buscar información en Google
+- [x] Resumir artículos de Wikipedia en inglés
 
 ### Funciones en desarrollo o por desarrollar
 <!-- * Enviar mensajes por WhatsApp web
@@ -107,5 +112,5 @@ Google - Gemini Pro
 
 | Planificar | Hacer | Verificar | Actuar |
 | :---: | :---: | :---: | :---: |
-| Titulo principal | Analisis capacidades | notas.txt | Próximamente |
-<!-- |Analizar características, funciones y organización del proyecto |Programar las funciones o características propuestas bajo un mismo estándar de orden |Realizar pruebas en diferentes escenarios de ejecución simulados para garantizar el correcto funcionamiento |Una vez listo el proyecto, cargarlo en la placa de desarrollo y esperar el día de la presentación | -->
+| Titulo principal | Analisis capacidades | notas.txt | Placa de desarrollo |
+| Analizar características, funciones y organización del proyecto | Programar las funciones o características propuestas bajo un mismo estándar de orden | Realizar pruebas en diferentes escenarios de ejecución simulados para garantizar el correcto funcionamiento |Una vez listo el proyecto, cargarlo en la placa de desarrollo y esperar el día de la presentación |
