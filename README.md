@@ -12,13 +12,11 @@ El proyecto VA será un asistente virtual potenciado con IA con la capacidad de 
 ([**Curso de Python (opcional)**](https://www.youtube.com/playlist?list=PLJ7sTTLrIA6m2bGromPVNC52slexHVJfe))   
 ([**Curso de GIT (opcional)**](https://youtu.be/VdGzPZ31ts8?si=Y8XVWMdyve40dQ8G))   
 
-| Python | GIT | Opcional | Opcional |
+<!-- | Python | GIT | Opcional | Opcional |
 | :---: | :---: | :---: | :---: |
-| ([**Curso de Python**](https://youtu.be/nKPbfIU442g?si=MVQuPnEONV21Q0fM)) | ([**Curso de GIT**](https://youtu.be/3GymExBkKjE?si=LCoZB_32ZzKhNZD5)) | ([**Curso de Python (opcional)**](https://www.youtube.com/playlist?list=PLJ7sTTLrIA6m2bGromPVNC52slexHVJfe)) | ([**Curso de GIT (opcional)**](https://youtu.be/VdGzPZ31ts8?si=Y8XVWMdyve40dQ8G)) |
+| ([**Curso de Python**](https://youtu.be/nKPbfIU442g?si=MVQuPnEONV21Q0fM)) | ([**Curso de GIT**](https://youtu.be/3GymExBkKjE?si=LCoZB_32ZzKhNZD5)) | ([**Curso de Python (opcional)**](https://www.youtube.com/playlist?list=PLJ7sTTLrIA6m2bGromPVNC52slexHVJfe)) | ([**Curso de GIT (opcional)**](https://youtu.be/VdGzPZ31ts8?si=Y8XVWMdyve40dQ8G)) | -->
 
-[![Curso de git y github desde 0](https://img.youtube.com/vi/3GymExBkKjE/maxresdefault.jpg "Curso de git y github desde cero")](https://youtu.be/3GymExBkKjE?si=rHF7tfVCrc3IHw0i) [![Curso de Python por Soy Dalto](https://img.youtube.com/vi/nKPbfIU442g/sd1.jpg "Curso de Python por Soy Dalto")](https://youtu.be/nKPbfIU442g?si=mrhGys2xOtdm8dr0)
-
-[![Curso opcional de Python (playlist)](https://img.youtube.com/vi/-F2-CMWhmXw/sd2.jpg "Segundo curso OPCIONAL de Python (playlist)")](https://www.youtube.com/playlist?list=PLJ7sTTLrIA6m2bGromPVNC52slexHVJfe) [![Segundo curso OPCIONAL de GIT](https://img.youtube.com/vi/VdGzPZ31ts8/maxresdefault.jpg "Segundo curso OPCIONAL de GIT")](https://youtu.be/VdGzPZ31ts8?si=Y8XVWMdyve40dQ8G)
+[![Curso de git y github desde 0](https://img.youtube.com/vi/3GymExBkKjE/maxresdefault.jpg "Curso de git y github desde cero")](https://youtu.be/3GymExBkKjE?si=rHF7tfVCrc3IHw0i)
 
 ### Configuración del repositorio en local
 Deben ejecutar los siguientes comandos:
@@ -41,6 +39,7 @@ Deben ejecutar los siguientes comandos:
 * ``git push``
 
 **Nota:** Una vez vistos los videos deben enviarme un mensaje con su correo electrónico
+**Nota:** Los mentarios describen el cambio realizado que se va a subir
 
 <!-- * python.exe -m pip install --upgrade pip -->
 
@@ -120,3 +119,9 @@ Google - Gemini Pro
 | :---: | :---: | :---: | :---: |
 | Titulo principal | Analisis capacidades | notas.txt | Placa de desarrollo |
 | Analizar características, funciones y organización del proyecto | Programar las funciones o características propuestas bajo un mismo estándar de orden | Realizar pruebas en diferentes escenarios de ejecución simulados para garantizar el correcto funcionamiento |Una vez listo el proyecto, cargarlo en la placa de desarrollo y esperar el día de la presentación |
+
+#### Errores en el programa
+* Las voces de **pttsx3** dependen de los idiomas del **usuario** host
+* Manejar la **excepción** en caso de que speech_recognition **no encuentre** microfono
+* Manejar **excepción** en caso de que no se encuentren las **variables de entorno** (.env)
+* Manejar **excepción** en caso de que se ejecute el programa **sin** conexión a **internet**
