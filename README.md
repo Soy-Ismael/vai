@@ -41,7 +41,9 @@ Deben ejecutar los siguientes comandos:
 
 ### En Linux / macOS
 * Ejecutar requirements.txt (próximamente)
-**NOTA:** *la instalación de dependencias fue optimizada.*
+
+<!-- ***NOTA:*** *la instalación de dependencias fue optimizada.* -->
+
 <!-- * pip install SpeechRecognition
 * pip install PyAudio
 * pip install python-dotenv -->
@@ -87,7 +89,8 @@ Google - Gemini Pro
 - [ ] Recordar peticiones anteriores para charla amena
 - [ ] Conteo de suscriptores de un youtuber
 - [ ] Guardar en un **log.txt** el historial de peticiones 
-    El archivo log.txt se mantendrá **oculto** y se mostrará a **petición de usuario**, esto por un comando de voz o bien por un botón mediante una posible interfaz gráfica
+    
+    El archivo log.txt se mantendrá **oculto** y se mostrará a **petición de usuario**, esto por un comando de voz o bien por un botón mediante una posible interfaz gráfica
 
 ***
 
@@ -95,9 +98,14 @@ Google - Gemini Pro
 * El archivo **log.txt** debe estar oculto en un principio
 * El archivo **PyWhatKit_DB.txt** con los logs de envíos de mensajes por WhatsApp debe estar **oculto siempre**
 
-### Consideraciones de flujo de trabajo
+***
+
+## Flujo de trabajo
+
 #### Ciclo PHVA
-* Planificar > Hacer > Verificar > Actuar
+<!-- * Planificar > Hacer > Verificar > Actuar -->
+
 | Planificar | Hacer | Verificar | Actuar |
-|:---         |:---    |:---        |:---     |
-|Analizar características, funciones y organización del proyecto |Programar las funciones o características propuestas bajo un mismo estándar de orden |Realizar pruebas en diferentes escenarios de ejecución simulados para garantizar el correcto funcionamiento |Una vez listo el proyecto, cargarlo en la placa de desarrollo y esperar el día de la presentación |
+| :---: | :---: | :---: | :---: |
+| Titulo principal | Analisis capacidades | notas.txt | Próximamente |
+<!-- |Analizar características, funciones y organización del proyecto |Programar las funciones o características propuestas bajo un mismo estándar de orden |Realizar pruebas en diferentes escenarios de ejecución simulados para garantizar el correcto funcionamiento |Una vez listo el proyecto, cargarlo en la placa de desarrollo y esperar el día de la presentación | -->
