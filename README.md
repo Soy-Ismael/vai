@@ -64,9 +64,9 @@ Google - Gemini Pro
 ## Análisis de capacidades
 
 ### Hasta el momento el asistente es capaz de:
-* Reproducir contenido en YouTube
-* Buscar información en Google
-* Resumir artículos de Wikipedia en inglés
+- [X] Reproducir contenido en YouTube
+- [X] Buscar información en Google
+- [X] Resumir artículos de Wikipedia en inglés
 
 ### Funciones en desarrollo o por desarrollar
 <!-- * Enviar mensajes por WhatsApp web
