@@ -9,10 +9,16 @@ El proyecto VA será un asistente virtual potenciado con IA con la capacidad de 
 
 ([**Curso de Python**](https://youtu.be/nKPbfIU442g?si=MVQuPnEONV21Q0fM))   
 ([**Curso de GIT**](https://youtu.be/3GymExBkKjE?si=LCoZB_32ZzKhNZD5))  
-([**Curso de Python (opcional)**](https://www.youtube.com/playlist?list=PLJ7sTTLrIA6m2bGromPVNC52slexHVJfe))    
+([**Curso de Python (opcional)**](https://www.youtube.com/playlist?list=PLJ7sTTLrIA6m2bGromPVNC52slexHVJfe))   
 ([**Curso de GIT (opcional)**](https://youtu.be/VdGzPZ31ts8?si=Y8XVWMdyve40dQ8G))   
 
-[![Curso de git y github desde 0](https://img.youtube.com/vi/3GymExBkKjE/maxresdefault.jpg "Curso de git y github desde cero")](https://youtu.be/3GymExBkKjE?si=rHF7tfVCrc3IHw0i)
+| Python | GIT | Opcional | Opcional |
+| :---: | :---: | :---: | :---: |
+| ([**Curso de Python**](https://youtu.be/nKPbfIU442g?si=MVQuPnEONV21Q0fM)) | ([**Curso de GIT**](https://youtu.be/3GymExBkKjE?si=LCoZB_32ZzKhNZD5)) | ([**Curso de Python (opcional)**](https://www.youtube.com/playlist?list=PLJ7sTTLrIA6m2bGromPVNC52slexHVJfe)) | ([**Curso de GIT (opcional)**](https://youtu.be/VdGzPZ31ts8?si=Y8XVWMdyve40dQ8G)) |
+
+[![Curso de git y github desde 0](https://img.youtube.com/vi/3GymExBkKjE/maxresdefault.jpg "Curso de git y github desde cero")](https://youtu.be/3GymExBkKjE?si=rHF7tfVCrc3IHw0i) [![Curso de Python por Soy Dalto](https://img.youtube.com/vi/nKPbfIU442g/sd1.jpg "Curso de Python por Soy Dalto")](https://youtu.be/nKPbfIU442g?si=mrhGys2xOtdm8dr0)
+
+[![Curso opcional de Python (playlist)](https://img.youtube.com/vi/-F2-CMWhmXw/sd2.jpg "Segundo curso OPCIONAL de Python (playlist)")](https://www.youtube.com/playlist?list=PLJ7sTTLrIA6m2bGromPVNC52slexHVJfe) [![Segundo curso OPCIONAL de GIT](https://img.youtube.com/vi/VdGzPZ31ts8/maxresdefault.jpg "Segundo curso OPCIONAL de GIT")](https://youtu.be/VdGzPZ31ts8?si=Y8XVWMdyve40dQ8G)
 
 ### Configuración del repositorio en local
 Deben ejecutar los siguientes comandos:
