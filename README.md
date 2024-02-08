@@ -98,6 +98,12 @@ Google - Gemini Pro
 - [ ] Utilizar modelo de IA y/o IA generativa
 - [ ] Recordar peticiones anteriores para charla amena
 - [ ] Conteo de suscriptores de un youtuber
+- [ ] Almacenar la variable de nombre de un archivo local
+- [ ] Reproducir contenido en plataformas distintas a youtube
+- [ ] Creaer una palabra clave para saber si el asistente esta a la escucha
+- [ ] Imprimir frase "PROMOCION 2023-2024" en la terminal al ejecutar
+- [ ] Colorear de verde el texto "escuchando..." de verde en la terminal
+- [ ] Añadir texto "Usuario:" y "nombre_asistente:" antes del mensaje en terminal
 - [ ] Guardar en un **log.txt** el historial de peticiones 
     
     El archivo log.txt se mantendrá **oculto** y se mostrará a **petición de usuario**, esto por un comando de voz o bien por un botón mediante una posible interfaz gráfica
@@ -107,6 +113,9 @@ Google - Gemini Pro
 ## Anotaciones
 * El archivo **log.txt** debe estar oculto en un principio
 * El archivo **PyWhatKit_DB.txt** con los logs de envíos de mensajes por WhatsApp debe estar **oculto siempre**
+* El archivo local en el que se almacena la variable de nombre puede ser uno llamado **config.txt** y que este oculto al usuario
+* La palabra clave para verificar si el asistente esta a la escucha puede ser "¿Estas ahí?" y el asistente responde si escucha y si no responde es porque no escucha.
+* Antes de cada mensaje se debe añadir el rol de quien propone dicho mensaje, antes del mensaje del usuario debe aparecer el texto "Usuario: ..." y antes del mensaje del asistente "nombre_asistente: ..."
 
 ***
 
