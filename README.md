@@ -50,7 +50,8 @@ Deben ejecutar los siguientes comandos:
 * Ejecutar archivo dependencias.bat
 
 ### En Linux / macOS
-* Ejecutar requirements.txt (próximamente)
+* Ejecutar requirements.txt
+``pip install -r requirements.txt``
 
 <!-- ***NOTA:*** *la instalación de dependencias fue optimizada.* -->
 
@@ -92,6 +93,7 @@ Google - Gemini Pro
 
 - [ ] Enviar mensajes por WhatsApp web
 - [ ] Responder con la hora actual a petición
+- [ ] Emitir sonido cuando se pueda hablar
 - [ ] Resumir artículos de Wikipedia en español
 - [ ] Responder únicamente cuando se mencione el nombre
 - [ ] Mantenerse escuchando siempre (while True:)

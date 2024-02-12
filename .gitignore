@@ -1,3 +1,7 @@
+PyWhatKit_DB.txt
 *.txt
 *.json
 *.env
+*.cs
+pruebas.py
+audio.py
