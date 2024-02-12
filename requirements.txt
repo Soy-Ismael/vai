@@ -1,0 +1,15 @@
+# package==version
+# package>=version
+# package
+# python.exe -m --upgrade pip
+
+SpeechRecognition==3.10.1
+PyAudio==0.2.14
+python-dotenv==1.0.1
+setuptools==69.0.3
+distutils644==0.4
+openai==1.10.0
+pyttsx3==2.90
+pywhatkit==5.4
+pathlib==1.0.1
+
