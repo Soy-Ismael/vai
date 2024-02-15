@@ -78,6 +78,13 @@ Google - Gemini Pro
 - [x] Reproducir contenido en YouTube
 - [x] Buscar información en Google
 - [x] Resumir artículos de Wikipedia en inglés
+- [x] Enviar mensajes por WhatsApp web
+- [x] Responder con la hora actual a petición
+- [x] Emitir sonido cuando se pueda hablar
+- [x] Imprimir frase "PROMOCION 2023-2024" en la terminal al ejecutar
+- [x] Colorear de verde el texto "escuchando..." de verde en la terminal
+- [x] Resumir artículos de Wikipedia en español
+- [x] Añadir texto "Usuario:" y "nombre_asistente:" antes del mensaje en terminal
 
 ### Funciones en desarrollo o por desarrollar
 <!-- * Enviar mensajes por WhatsApp web
@@ -91,10 +98,6 @@ Google - Gemini Pro
 * Guardar en un **log.txt** el historial de peticiones 
     El archivo log.txt se mantendrá **oculto** y se mostrará a **petición de usuario**, esto por un comando de voz o bien por un botón mediante una posible interfaz gráfica -->
 
-- [ ] Enviar mensajes por WhatsApp web
-- [ ] Responder con la hora actual a petición
-- [ ] Emitir sonido cuando se pueda hablar
-- [ ] Resumir artículos de Wikipedia en español
 - [ ] Responder únicamente cuando se mencione el nombre
 - [ ] Mantenerse escuchando siempre (while True:)
 - [ ] Utilizar modelo de IA y/o IA generativa
@@ -103,9 +106,9 @@ Google - Gemini Pro
 - [ ] Almacenar la variable de nombre de un archivo local
 - [ ] Reproducir contenido en plataformas distintas a youtube
 - [ ] Creaer una palabra clave para saber si el asistente esta a la escucha
-- [ ] Imprimir frase "PROMOCION 2023-2024" en la terminal al ejecutar
-- [ ] Colorear de verde el texto "escuchando..." de verde en la terminal
-- [ ] Añadir texto "Usuario:" y "nombre_asistente:" antes del mensaje en terminal
+- [ ] Preguntas si el usuario quiere formato de 12 o 24 horas en el asistente de configuración
+- [ ] Revisar porque al mostrar el banner "PROM2023-2024" lanza una advertencia
+- [ ] Eliminar todo el texto anterior a la palabra clave donde sea necesario (utilidad de VA)
 - [ ] Guardar en un **log.txt** el historial de peticiones 
     
     El archivo log.txt se mantendrá **oculto** y se mostrará a **petición de usuario**, esto por un comando de voz o bien por un botón mediante una posible interfaz gráfica
@@ -118,6 +121,12 @@ Google - Gemini Pro
 * El archivo local en el que se almacena la variable de nombre puede ser uno llamado **config.txt** y que este oculto al usuario
 * La palabra clave para verificar si el asistente esta a la escucha puede ser "¿Estas ahí?" y el asistente responde si escucha y si no responde es porque no escucha.
 * Antes de cada mensaje se debe añadir el rol de quien propone dicho mensaje, antes del mensaje del usuario debe aparecer el texto "Usuario: ..." y antes del mensaje del asistente "nombre_asistente: ..."
+* El archivo **config.txt** va a contener informaciones para la configuración del asistente y se ejecutara la primera vez que se ejecute el software, para saber cuando se ejecuta por primera vez podemos preguntar con Python "¿el archivo config.txt existe?", si no existe es la primera vez que se ejecuta, se crea el archivo con los siguientes datos:
+    1. Nombre del asistente
+    2. Formato de fecha preferido
+    3. Idioma para la conversion del audio de entrada
+    4. Voz del asistente
+    5. Rol o postura del asistente
 
 ***
 
@@ -136,3 +145,5 @@ Google - Gemini Pro
 * Manejar la **excepción** en caso de que speech_recognition **no encuentre** microfono
 * Manejar **excepción** en caso de que no se encuentren las **variables de entorno** (.env)
 * Manejar **excepción** en caso de que se ejecute el programa **sin** conexión a **internet**
+
+Más información en [**HISTORY.md**](HISTORY.md)
