@@ -13,13 +13,16 @@
 
 # Importaciones 
 import speech_recognition as sr
+import pyttsx3
 from dotenv import load_dotenv
 import datetime
-import pyttsx3
 import pywhatkit
 import os
-import random #Nuevo modulo
-import wikipedia #Nuevo modulo
+import random #Nuevo modulo para generar números aleatorios
+import wikipedia #Nuevo modulo para resumir articulos de wikipedia
+import winsound #Nuevo modulo para reproducir sonido, (no es necesario instalar con pip)
+from banner import printBanner #Nuevo modulo para banner
+from config import check_config, create_config_file, initial_config #Nuevo modulo para configuracion de asistente
 # Open AI - Chat Gpt
 from openai import OpenAI
 # Google - Gemini
@@ -39,10 +42,19 @@ from openai import OpenAI
 #     text = text.replace('•', '  *')
 #     return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
 
-# colors
-# green_color = "\033[1;32;40m"
-# red_color = "\033[1;31;40m"
-# normal_color = "\033[0;37;40m"
+#* Default const
+name = 'jarvis' # Nombre por el que se llamara al asistente (para desarrollar más tarde)
+lang = 'es-ES'
+time_format = "%I:%M:%p"
+# format24 = "%H:%M"
+# format12 = "%I:%M"
+wiki_lang = 'es'
+
+#* Default const - open AI mode#
+#  assistant_role: "Eres un asistente virtual que habla en verso y responde de manera cortez."
+# prompt = "Dime de manera detallada como puedo crear una función en python."
+
+#* Colors
 green_color = "\033[92m"
 cian_color = "\033[96m"
 blue_color = "\033[94m"
@@ -52,30 +64,11 @@ negrita = "\033[1m"
 subrayado = "\033[4m"
 normal_color = "\033[0m"
 
-# Banner para la terminal al ejecutar
-
-# print(f'''{negrita} {blue_color}
-# ____________ ________  ___ _____  _____  _____  _____        _____  _____  _____   ___ 
-# | ___ \ ___ \  _  |  \/  |/ __  \|  _  |/ __  \|____ |      / __  \|  _  |/ __  \ /   |
-# | |_/ / |_/ / | | | .  . |`' / /'| |/' |`' / /'    / /______`' / /'| |/' |`' / /'/ /| |
-# |  __/|    /| | | | |\/| |  / /  |  /| |  / /      \ \______| / /  |  /| |  / / / /_| |
-# | |   | |\ \\\\ \_/ / |  | |./ /___\ |_/ /./ /___.___/ /      ./ /___\ |_/ /./ /__\___  |
-# \_|   \_| \_|\___/\_|  |_/\_____/ \___/ \_____/\____/       \_____/ \___/ \_____/   |_/
-# {normal_color}''')
-
-
-name = 'jarvis' # Nombre por el que se llamara al asistente (para desarrollar más tarde)
-lang = 'es-ES'
-time_format = "%I:%M:%p"
+#* Templates
 user_template = f"{negrita}Usuario: {normal_color}"
 va_template = f"{negrita}{name}: {normal_color}"
 err_template = f"{red_color}{negrita}ERROR: {normal_color}"
-wiki_lang = 'es'
-# format24 = "%H:%M"
-# format12 = "%I:%M"
-
-# assistant_role: "Eres un asistente virtual que habla en verso y responde de manera cortez."
-# prompt = "Dime de manera detallada como puedo crear una función en python."
+warning_template = f"{yellow_color}{negrita}ADVERTENCIA: {normal_color}"
 
 
 # De texto a voz - Modulo 6
@@ -101,45 +94,95 @@ def talk(text):
 # De voz a texto - Modulo 1 & 2
 rec = sr.Recognizer()
 
-# Acceder al microfono del dispositivo
-try:
-    with sr.Microphone() as source:
+# Ajuste del umbral de audio (En términos simples, si la energía (volumen) de la señal de audio es mayor que el umbral, el sistema considera que está recibiendo voz. Si la energía es menor que el umbral, el sistema considera que no hay voz y que cualquier sonido que esté recibiendo es simplemente ruido)
+
+rec.energy_threshold = 4000
+
+#* Función para escuchar la petición del usuario, se puede invocar durante la ejecución del programa, lo que permite que el asistente pueda volver a escuchar en cualquier punto del programa con solo invocar la función
+def listen():
+    # Acceder al microfono del dispositivo
+    try:
+        # print(text)
+        with sr.Microphone() as source:
+            try:
+                winsound.PlaySound('sounds/sonido_apertura.wav', winsound.SND_FILENAME)
+                print(f"{green_color}Escuchando... {normal_color}")
+                audio = rec.listen(source, timeout = 0.9, phrase_time_limit = 4)
+                print(f"{blue_color}Analizando... {normal_color}")
+                text = rec.recognize_google(audio, language = lang)
+                # print("Texto: " + text)
+
+                winsound.PlaySound('sounds/sonido_cierre.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+                print(user_template + text)
+                text = text.lower()
+
+                # if name in text:
+                    # text = text.replace(name, '')
+                    # print('Texto con nombre omitido: ' + text)
+
+                prompt = text
+                # talk(text)
+                return text
+                
+            except sr.WaitTimeoutError:
+                print(err_template + 'No se detecto entrada de audio.')
+            except sr.UnknownValueError:
+                print(err_template + 'Google Speech Recognition no pudo entender el audio.')
+                talk('No he podido entender eso, intentemoslo nuevamente')
+                listen()
+            except sr.RequestError as e:
+                print(err_template + f"No se pudo solicitar resultados de Google Speech Recognition; {0}".format(e))
+            except TypeError:
+                print(err_template + 'Variable aun sin datos')
+            except KeyboardInterrupt:
+                print(err_template + 'Acción cancelada por el usuario.')
+            winsound.PlaySound('sounds/Sonido_Cierre.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+
+    except KeyboardInterrupt:
+        print(err_template + 'Acción cancelada por el usuario.')
+    except TypeError:
+        print(err_template + 'Variable aun sin datos')
+    except:
+        print(err_template + 'No hay microfono seleccionado')
+        talk('No se encontro microfono, por favor, configure el dispositivo de entrada')
+
+
+#* IMPORTACIÓN DE FUNCIONES DE ARCHIVOS EXTERNOS
+# La funcion printBanner se importa del archivo banner.py y recibe el color del banner como primer parametro opcional y un segundo parametro opcional booleano que define si el banner se imprime en negrita o no
+
+# printBanner()
+# check_config()
+if(check_config()):
+    print('Archivo de configuración existente')
+    # Código para leer el archivo config.txt y cargar los datos del asistente de él.
+else:
+    print(warning_template+'Archivo de configuración inexistente')
+    talk('Archivo de configuración inexistente, ¿Te gustaría crearlo ahora?')
+    def init_configuration():
         try:
-            print(f"{green_color}Escuchando... {normal_color}")
-            audio = rec.listen(source,  timeout = 0.9, phrase_time_limit = 4)
-            print(f"{blue_color}Analizando... {normal_color}")
-            text = rec.recognize_google(audio, language = lang)
-            # print("Texto: " + text)
-            print(user_template + text)
-            text = text.lower()
+            response:str = listen()
+            response.lower()
 
-            if name in text:
-                text = text.replace(name, '')
-                print('Texto con nombre omitido: ' + text)
-
-            prompt = text
-            # talk(text)
-
-        except sr.WaitTimeoutError:
-            print(err_template + 'No se detecto entrada de audio.')
-        except sr.UnknownValueError:
-            print(err_template + 'Google Speech Recognition no pudo entender el audio.')
-        except sr.RequestError as e:
-            print(err_template + f"No se pudo solicitar resultados de Google Speech Recognition; {0}".format(e))
-        except KeyboardInterrupt:
-            print(err_template + 'Acción cancelada por el usuario.')
-except KeyboardInterrupt:
-    print(err_template + 'Acción cancelada por el usuario.')
-except:
-    print(err_template + 'No hay microfono seleccionado')
-    talk('No se encontro microfono, por favor, configure el dispositivo de entrada')
+            if('si' in response):
+                create_config_file()
+                initial_config()
+            else:
+                print('Esta bien')
+                talk('Esta bien')
+        except:
+            print('Audio no reconocido')
+            talk('No pude entender lo que has dicho, ¿Te importaria repetirlo?')
+            init_configuration()
 
 
+#* Ejecutar la función para escuchar al usuario
+text = listen()
+# listen()
 #* =========================
 #* PARTE DE Ismael Y Xaviel - con open AI
 #* =========================
 # Cargar las variables de entorno (variables contenidas en archivos .env)
-#todo load_dotenv()
+load_dotenv()
 
 # Almanecar variable de entorno en una variable de python con dotenv
 # open_ai_api = os.getenv('OPENAI_API_KEY')
@@ -148,8 +191,12 @@ except:
 # Variables de entorno
 
 #* Chat GPT
-#todo client = OpenAI()
-# print(client.api_key)
+# try:
+#     client = OpenAI()
+#    # print(client.api_key)
+# except:
+#     print(err_template+'No se pudo obtener el api de OPEN AI')
+#     talk('No se pudo obtener el api de OPEN AI, por favor revise el archivo .env')
 
 # *INICIO CHAT GPT - Modulo 3 & 4
 #* Este primer bloque se utiliza para interacciones con usuario
@@ -185,15 +232,16 @@ except:
 #* Enviar mensajes de whatapp
 # pywhatkit sirve para enviar mensajes de WhatsApp: Utilice la función pywhatkit.sendwhatmsg() para enviar mensajes de WhatsApp a cualquier número de WhatsApp en un momento determinado. La sintaxis es la siguiente: pywhatkit.sendwhatmsg("número de móvil del receptor", "mensaje", horas, minutos). Asegúrese de que el número de móvil del receptor esté en formato de cadena y el código del país se mencione antes del número de móvil. Las horas siguen el formato de 24 horas. Los minutos son los minutos de la hora programada para el mensaje (00-59). Por ejemplo, para enviar un mensaje a un número de WhatsApp a las 22:28, utilice la siguiente sintaxis: pywhatkit.sendwhatmsg("+91xxxxxxxxxx", "Hola desde Mi Diario Python", 22, 28)
 
-text = 'busca cual es la mejor manera de cocinar el pollo'
+# text = 'busca cual es la mejor manera de cocinar el pollo'
 def run():
     if 'reproduce' in text:
         music = text.replace('reproduce', '')
+        music = music.replace('jarvis', '')
         # print('Texto con nombre omitido: ' + text)
         pywhatkit.playonyt(music)
         talk('Reproduciendo ' + music)
         # print(f'{negrita}{name}: {normal_color}Reproduciendo ' + music)
-        print(va_template + 'Reproduciendo ' + music)
+        print(va_template + 'Reproduciendo' + music)
 
 def search():
     if 'busca' in text:
@@ -300,17 +348,55 @@ def time():
             print(va_template + f"Son las {time_es}")
             talk(va_template + f"Son las {time_es}")
 
+
+def disponibilidad():
+    #! IMPORTANTE
+    #* Con global le indico que la variable text sera global en lugar de local, como la variable text existe, entonces estoy indicando que quiero utilizar la variable global y no crear una variable nueva dentro de la función, esto deberia solucionar el error de "UnboundLocalError" 
+    global text
+    if 'estás ahí' in text:
+        print(True)
+        print(va_template + 'Si, ¿En qué te puedo ayudar?')
+        talk('Si, ¿En qué te puedo ayudar?')
+        text = name + listen()
+
+def who_i_am():
+    if 'cómo de llamas' in text:
+        print(name)
+        talk('Soy' + name)
+
+
+# print('Nombre asistente: '+name)
+# print('Texto: '+text)}# print(name in text)
+#* Ejecutar funciones que ejecutan acciones a peticion
 try:
+    if(name in text):
+        try:
+            run()
+            search()
+            info()
+            send()
+            time()
+            disponibilidad()
+            who_i_am()
+        except NameError as err:
+            print("Entrada de audio inválida, intentalo nuevamente")
+            talk("Entrada de audio inválida, intentalo nuevamente")
+            print(err)
+        except KeyboardInterrupt:
+            print(err_template + 'Acción cancelada por el usuario.')
+except TypeError:
+    pass
+
+
+#* Ejecutar acción sin decir jarvis antes
+def justRun():
     run()
     search()
     info()
     send()
     time()
-except NameError:
-    print("Entrada de audio inválida, intentalo nuevamente")
-    talk("Entrada de audio inválida, intentalo nuevamente")
-except KeyboardInterrupt:
-    print(err_template + 'Acción cancelada por el usuario.')
+    disponibilidad()
+    who_i_am()
 
 #* GEMINI Pro
 # google_api_key = os.getenv('GOOGLE_API_KEY')
