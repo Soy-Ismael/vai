@@ -28,6 +28,9 @@ Deben ejecutar los siguientes comandos:
 * ``git config --global user.email email_de_github``
 * ``git pull origin main``
 
+* ``git branch -M main``
+* ``git  main``
+
 #### Para descargar cambios
 
 * ``git pull``
