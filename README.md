@@ -26,7 +26,7 @@ Deben ejecutar los siguientes comandos:
 * ``git remote add origin url_repositorio`` [repositorio](https://github.com/Soy-Ismael/vai.git)
 * ``git config --global user.name nombre_de_github``
 * ``git config --global user.email email_de_github``
-* ``git pull -U origin main``
+* ``git pull origin main``
 
 #### Para descargar cambios
 
@@ -85,29 +85,19 @@ Google - Gemini Pro
 - [x] Colorear de verde el texto "escuchando..." de verde en la terminal
 - [x] Resumir artículos de Wikipedia en español
 - [x] Añadir texto "Usuario:" y "nombre_asistente:" antes del mensaje en terminal
+- [x] Responder únicamente cuando se mencione el nombre
+- [x] Almacenar la variable de nombre de un archivo local
+- [x] Creaer una palabra clave para saber si el asistente esta a la escucha
+- [x] Preguntas si el usuario quiere formato de 12 o 24 horas en el asistente de configuración
+- [x] Revisar porque al mostrar el banner "PROM2023-2024" lanza una advertencia
 
 ### Funciones en desarrollo o por desarrollar
-<!-- * Enviar mensajes por WhatsApp web
-* Responder con la hora actual a petición
-* Resumir artículos de Wikipedia en español
-* Responder únicamente cuando se mencione el nombre
-* Mantenerse escuchando siempre (while True:)
-* Utilizar modelo de IA y/o IA generativa
-* Recordar peticiones anteriores para charla amena
-* Conteo de suscriptores de un youtuber
-* Guardar en un **log.txt** el historial de peticiones 
-    El archivo log.txt se mantendrá **oculto** y se mostrará a **petición de usuario**, esto por un comando de voz o bien por un botón mediante una posible interfaz gráfica -->
 
-- [ ] Responder únicamente cuando se mencione el nombre
 - [ ] Mantenerse escuchando siempre (while True:)
 - [ ] Utilizar modelo de IA y/o IA generativa
 - [ ] Recordar peticiones anteriores para charla amena
 - [ ] Conteo de suscriptores de un youtuber
-- [ ] Almacenar la variable de nombre de un archivo local
 - [ ] Reproducir contenido en plataformas distintas a youtube
-- [ ] Creaer una palabra clave para saber si el asistente esta a la escucha
-- [ ] Preguntas si el usuario quiere formato de 12 o 24 horas en el asistente de configuración
-- [ ] Revisar porque al mostrar el banner "PROM2023-2024" lanza una advertencia
 - [ ] Eliminar todo el texto anterior a la palabra clave donde sea necesario (utilidad de VA)
 - [ ] Guardar en un **log.txt** el historial de peticiones 
     
@@ -146,4 +136,5 @@ Google - Gemini Pro
 * Manejar **excepción** en caso de que no se encuentren las **variables de entorno** (.env)
 * Manejar **excepción** en caso de que se ejecute el programa **sin** conexión a **internet**
 
+Explicación de códigos y funciones en [**DOCUMENTATION.md**](DOCUMENTATION.md)
 Más información en [**HISTORY.md**](HISTORY.md)
