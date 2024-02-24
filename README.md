@@ -39,7 +39,8 @@ Deben ejecutar los siguientes comandos:
 * ``git push``
 
 **Nota:** Una vez vistos los videos deben enviarme un mensaje con su correo electrónico
-**Nota:** Los mentarios describen el cambio realizado que se va a subir
+
+**Nota:** Los comentarios deben describir el cambio realizado que se va a subir
 
 <!-- * python.exe -m pip install --upgrade pip -->
 
@@ -85,6 +86,7 @@ Google - Gemini Pro
 - [x] Colorear de verde el texto "escuchando..." de verde en la terminal
 - [x] Resumir artículos de Wikipedia en español
 - [x] Añadir texto "Usuario:" y "nombre_asistente:" antes del mensaje en terminal
+- [x] Responder únicamente cuando se mencione el nombre del asistente
 
 ### Funciones en desarrollo o por desarrollar
 <!-- * Enviar mensajes por WhatsApp web
@@ -98,7 +100,6 @@ Google - Gemini Pro
 * Guardar en un **log.txt** el historial de peticiones 
     El archivo log.txt se mantendrá **oculto** y se mostrará a **petición de usuario**, esto por un comando de voz o bien por un botón mediante una posible interfaz gráfica -->
 
-- [ ] Responder únicamente cuando se mencione el nombre
 - [ ] Mantenerse escuchando siempre (while True:)
 - [ ] Utilizar modelo de IA y/o IA generativa
 - [ ] Recordar peticiones anteriores para charla amena
@@ -127,6 +128,9 @@ Google - Gemini Pro
     3. Idioma para la conversion del audio de entrada
     4. Voz del asistente
     5. Rol o postura del asistente
+* Es necesario optimizar el programa para que corra más rapidamente, para esto podemos utilizar la menor cantidad de modulos posibles y en lugar de importa todo un modulo, solo importar las funciones o propiedades que necesitamos de un modulo.
+
+**NOTA:** Importar un mismo modulo en 2 archivos distintos no añade peso al programa, el modulo se carga una vez y a partir de ahí siempre que se necesite hace referencia al modulo cargado en memoria.
 
 ***
 
@@ -142,8 +146,10 @@ Google - Gemini Pro
 
 #### Errores en el programa
 * Las voces de **pttsx3** dependen de los idiomas del **usuario** host
+* Manejar **excepción** en caso de que se ejecute el programa **sin** conexión a **internet**
+
+### Errores corregidos
 * Manejar la **excepción** en caso de que speech_recognition **no encuentre** microfono
 * Manejar **excepción** en caso de que no se encuentren las **variables de entorno** (.env)
-* Manejar **excepción** en caso de que se ejecute el programa **sin** conexión a **internet**
 
 Más información en [**HISTORY.md**](HISTORY.md)

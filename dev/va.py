@@ -96,18 +96,21 @@ rec = sr.Recognizer()
 
 # Ajuste del umbral de audio (En términos simples, si la energía (volumen) de la señal de audio es mayor que el umbral, el sistema considera que está recibiendo voz. Si la energía es menor que el umbral, el sistema considera que no hay voz y que cualquier sonido que esté recibiendo es simplemente ruido)
 
-rec.energy_threshold = 4000
+# 2300 tiene problemas para entender
+# rec.energy_threshold = 2900
 
 #* Función para escuchar la petición del usuario, se puede invocar durante la ejecución del programa, lo que permite que el asistente pueda volver a escuchar en cualquier punto del programa con solo invocar la función
 def listen():
     # Acceder al microfono del dispositivo
     try:
         # print(text)
-        with sr.Microphone() as source:
+        with sr.Microphone(device_index=1) as source:
             try:
                 winsound.PlaySound('sounds/sonido_apertura.wav', winsound.SND_FILENAME)
+
                 print(f"{green_color}Escuchando... {normal_color}")
-                audio = rec.listen(source, timeout = 0.9, phrase_time_limit = 4)
+                audio = rec.listen(source, timeout = 2, phrase_time_limit = 4)
+
                 print(f"{blue_color}Analizando... {normal_color}")
                 text = rec.recognize_google(audio, language = lang)
                 # print("Texto: " + text)
@@ -120,31 +123,38 @@ def listen():
                     # text = text.replace(name, '')
                     # print('Texto con nombre omitido: ' + text)
 
-                prompt = text
+                # prompt = text
                 # talk(text)
                 return text
                 
             except sr.WaitTimeoutError:
                 print(err_template + 'No se detecto entrada de audio.')
+                # return False
             except sr.UnknownValueError:
                 print(err_template + 'Google Speech Recognition no pudo entender el audio.')
                 talk('No he podido entender eso, intentemoslo nuevamente')
                 listen()
             except sr.RequestError as e:
                 print(err_template + f"No se pudo solicitar resultados de Google Speech Recognition; {0}".format(e))
+                # return False
             except TypeError:
                 print(err_template + 'Variable aun sin datos')
+                # return False
             except KeyboardInterrupt:
                 print(err_template + 'Acción cancelada por el usuario.')
+                # return False
             winsound.PlaySound('sounds/Sonido_Cierre.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
 
     except KeyboardInterrupt:
         print(err_template + 'Acción cancelada por el usuario.')
+        # return False
     except TypeError:
         print(err_template + 'Variable aun sin datos')
+        # return False
     except:
         print(err_template + 'No hay microfono seleccionado')
         talk('No se encontro microfono, por favor, configure el dispositivo de entrada')
+        # return False
 
 
 #* IMPORTACIÓN DE FUNCIONES DE ARCHIVOS EXTERNOS
@@ -152,27 +162,40 @@ def listen():
 
 # printBanner()
 # check_config()
+
+print('Check config', check_config())
 if(check_config()):
     print('Archivo de configuración existente')
     # Código para leer el archivo config.txt y cargar los datos del asistente de él.
 else:
     print(warning_template+'Archivo de configuración inexistente')
     talk('Archivo de configuración inexistente, ¿Te gustaría crearlo ahora?')
-    def init_configuration():
-        try:
-            response:str = listen()
-            response.lower()
 
-            if('si' in response):
+    def init_configuration():
+        print('Entro en función')
+        try:
+            print('Entro de try')
+            response:str = listen()
+            print('Respuesta '+response)
+            # response.lower()
+
+            print('Respuesta en minusculas')
+
+            print('Sí en respuesta: '+'sí' in response)
+            print('No en respuesta: '+'no' in response)
+
+            if('sí' in response):
+                print('Entro en si en respuesta')
                 create_config_file()
                 initial_config()
             else:
-                print('Esta bien')
-                talk('Esta bien')
+                print('Entro en no en respuesta')
+                print('Archivo de configuración no creado a petición de usuario, continuando con ejecución')
+                talk('Esta bien, continuando con la ejecución')
         except:
             print('Audio no reconocido')
             talk('No pude entender lo que has dicho, ¿Te importaria repetirlo?')
-            init_configuration()
+    # init_configuration()
 
 
 #* Ejecutar la función para escuchar al usuario
@@ -355,14 +378,16 @@ def disponibilidad():
     global text
     if 'estás ahí' in text:
         print(True)
-        print(va_template + 'Si, ¿En qué te puedo ayudar?')
-        talk('Si, ¿En qué te puedo ayudar?')
-        text = name + listen()
+        print(va_template + 'Sí, ¿En qué te puedo ayudar?')
+        talk('Sí, ¿En qué te puedo ayudar?')
+        text = name + ' ' + listen()
 
 def who_i_am():
+    global text
     if 'cómo de llamas' in text:
         print(name)
-        talk('Soy' + name)
+        talk('Soy' + name + '¿Cómo puedo ayudarte?')
+        text = listen()
 
 
 # print('Nombre asistente: '+name)

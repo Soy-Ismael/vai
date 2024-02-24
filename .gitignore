@@ -1,7 +1,5 @@
 PyWhatKit_DB.txt
-*.txt
+__pycache__
 *.json
 *.env
 *.cs
-pruebas.py
-audio.py
