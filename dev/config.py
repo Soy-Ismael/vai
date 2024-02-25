@@ -58,7 +58,7 @@ def initial_config():
     print(f"{yellow_color} {negrita} {language} {normal_color}")
     print(f"{yellow_color} {negrita} {hour_format} {normal_color}")
 
-    data_dictionary = [name+text_plain_enter, language+text_plain_enter, hour_format+text_plain_enterb]
+    data_dictionary = [name+text_plain_enter, language+text_plain_enter, hour_format+text_plain_enter]
 
     try:
         with open('dev\\'+nombre_archivo, 'w') as archivo:
