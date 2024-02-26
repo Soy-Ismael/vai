@@ -3,3 +3,11 @@ __pycache__
 *.json
 *.env
 *.cs
+*.rar
+dev/audio.py
+dev/banner.py
+dev/config.py
+dev/pruebas.py
+dev/config.txt
+dependenciasActualizadas.bat
+log.txt

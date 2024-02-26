@@ -172,17 +172,17 @@ else:
     talk('Archivo de configuración inexistente, ¿Te gustaría crearlo ahora?')
 
     def init_configuration():
-        print('Entro en función')
+        # print('Entro en función')
         try:
-            print('Entro de try')
+            # print('Entro de try')
             response:str = listen()
-            print('Respuesta '+response)
+            # print('Respuesta '+response)
             # response.lower()
 
-            print('Respuesta en minusculas')
+            # print('Respuesta en minusculas')
 
-            print('Sí en respuesta: '+'sí' in response)
-            print('No en respuesta: '+'no' in response)
+            # print('Sí en respuesta: '+'sí' in response)
+            # print('No en respuesta: '+'no' in response)
 
             if('sí' in response):
                 print('Entro en si en respuesta')
@@ -195,7 +195,7 @@ else:
         except:
             print('Audio no reconocido')
             talk('No pude entender lo que has dicho, ¿Te importaria repetirlo?')
-    # init_configuration()
+    init_configuration()
 
 
 #* Ejecutar la función para escuchar al usuario

@@ -26,10 +26,8 @@ Deben ejecutar los siguientes comandos:
 * ``git remote add origin url_repositorio`` [repositorio](https://github.com/Soy-Ismael/vai.git)
 * ``git config --global user.name nombre_de_github``
 * ``git config --global user.email email_de_github``
-* ``git pull origin main``
-
 * ``git branch -M main``
-* ``git  main``
+* ``git branch --set-upstream-to=origin/main main``
 
 #### Para descargar cambios
 

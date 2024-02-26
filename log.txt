@@ -1,9 +1,0 @@
-En este documento se guardara un registro oculto del historial de mensajes que el usuario ha enviado al asistente con el formato clave valor. Ejemplo:
-
-Usuario: reproduce just the two of us
-Usuario: que hora es
-Usuario: busca el mentalista
-
-Los mensajes no se deben sobreescribir y por cada peticion nueva unicamente se le va a añadir la peticion en una nueva linea al documento oculto con la palabra "Usuario: " delante.
-
-El documento estara oculto y se mostrara en cuanto el usuario pida que se muestre ese log, podria hacerse esta peticion desde una interfaz grafica o por un comando hablado al assistente.

@@ -1,3 +1,0 @@
-name: Aigis
-language: es
-hour_format: 12
