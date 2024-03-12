@@ -9,5 +9,7 @@ dev/banner.py
 dev/config.py
 dev/pruebas.py
 dev/config.txt
-dependenciasActualizadas.bat
 log.txt
+*.js
+*.html
+contacts.txt

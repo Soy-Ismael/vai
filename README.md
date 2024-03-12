@@ -23,10 +23,12 @@ Deben ejecutar los siguientes comandos:
 
 #### Se ejecuta una vez
 
+* ``git init``
 * ``git remote add origin url_repositorio`` [repositorio](https://github.com/Soy-Ismael/vai.git)
 * ``git config --global user.name nombre_de_github``
 * ``git config --global user.email email_de_github``
 * ``git branch -M main``
+* ``git pull `` [url_repositorio](https://github.com/Soy-Ismael/vai.git) ``main``
 * ``git branch --set-upstream-to=origin/main main``
 
 #### Para descargar cambios
@@ -40,12 +42,20 @@ Deben ejecutar los siguientes comandos:
 * ``git push``
 
 **Nota:** Una vez vistos los videos deben enviarme un mensaje con su correo electrónico
-
 **Nota:** Los comentarios deben describir el cambio realizado que se va a subir
 
-<!-- * python.exe -m pip install --upgrade pip -->
-
 ***
+
+## Ejemplos de uso
+* reproduce romeo santos / reproduce sus huellas ⭐
+* busca que es incoloro
+* ofréceme información sobre la primera guerra mundial ⭐
+* ofréceme información en ingles sobre la primera guerra mundial
+* envia "como estas" a Daniel (en desarrollo) ⭐
+* qué hora es
+* ¿estás ahí?
+* ¿cómo te llamas?
+* hasta luego
 
 ## Dependencias / Módulos
 ### En Windows
@@ -54,23 +64,6 @@ Deben ejecutar los siguientes comandos:
 ### En Linux / macOS
 * Ejecutar requirements.txt
 ``pip install -r requirements.txt``
-
-<!-- ***NOTA:*** *la instalación de dependencias fue optimizada.* -->
-
-<!-- * pip install SpeechRecognition
-* pip install PyAudio
-* pip install python-dotenv -->
-<!-- * pip install distutils644 -->
-<!-- * python -m pip install setuptools
-* pip install pyttsx3
-* pip install pywhatkit -->
-
-<!-- Open AI - Chat GPT
-* pip install --upgrade openai
-
-Google - Gemini Pro
-* pip install -q -U google-generativeai -->
-<!-- * pip install google-colab -->
 
 ***
 
@@ -96,22 +89,31 @@ Google - Gemini Pro
 ### Funciones en desarrollo o por desarrollar
 
 - [ ] Mantenerse escuchando siempre (while True:)
+- [ ] Preguntar a usuario si quiere usar pywhatkit.send() (ver anotaciones)
+- [ ] Crear archivo para almacenar contactos con sus números
+- [ ] Mejorar forma en la que se crea archivo config.txt (regular expressions)
+- [ ] Optimizar archivo de readfile.py
+- [ ] Preguntar al usurio que voz de pyttsx3 desea en función de las disponibles (controlar excepción)
+- [ ] Tomar datos del archivo **config.txt**
 - [ ] Utilizar modelo de IA y/o IA generativa
 - [ ] Recordar peticiones anteriores para charla amena
 - [ ] Conteo de suscriptores de un youtuber
 - [ ] Reproducir contenido en plataformas distintas a youtube
 - [ ] Eliminar todo el texto anterior a la palabra clave donde sea necesario (utilidad de VA)
 - [ ] Guardar en un **log.txt** el historial de peticiones 
+- [ ] Compatibilidad con productos Govee
     
     El archivo log.txt se mantendrá **oculto** y se mostrará a **petición de usuario**, esto por un comando de voz o bien por un botón mediante una posible interfaz gráfica
 
 ***
 
 ## Anotaciones
+* Si el usuario quiere utilizar pywhatkit.send() (enviar mensajes mediante whatapp web) entonces esto se debe guardar en el archivo de config.txt, si su respuesta es sí, entonces debe crear un archivo contacts.txt con el formato clave:valor con el número de telefono de todas las personas que el usuario desee (como se muestra en contacts.example.txt)
 * El archivo **log.txt** debe estar oculto en un principio
 * El archivo **PyWhatKit_DB.txt** con los logs de envíos de mensajes por WhatsApp debe estar **oculto siempre**
 * El archivo local en el que se almacena la variable de nombre puede ser uno llamado **config.txt** y que este oculto al usuario
 * La palabra clave para verificar si el asistente esta a la escucha puede ser "¿Estas ahí?" y el asistente responde si escucha y si no responde es porque no escucha.
+* Se debe crear un archivo en formato clave valor con el nombre del contacto y su número de telefono para enviar mensajes de whatapp mediante whatapp web con la utilidad pywhatkit.send()
 * Antes de cada mensaje se debe añadir el rol de quien propone dicho mensaje, antes del mensaje del usuario debe aparecer el texto "Usuario: ..." y antes del mensaje del asistente "nombre_asistente: ..."
 * El archivo **config.txt** va a contener informaciones para la configuración del asistente y se ejecutara la primera vez que se ejecute el software, para saber cuando se ejecuta por primera vez podemos preguntar con Python "¿el archivo config.txt existe?", si no existe es la primera vez que se ejecuta, se crea el archivo con los siguientes datos:
     1. Nombre del asistente
@@ -139,9 +141,23 @@ Google - Gemini Pro
 * Las voces de **pttsx3** dependen de los idiomas del **usuario** host
 * Manejar **excepción** en caso de que se ejecute el programa **sin** conexión a **internet**
 
+**NOTA:** es necesario un buen microfono para utilizar el software con normalidad, de lo contrario se deberia utilizar la linea alternativa para que el asistente pare de escuchar indefinidamente.
+
 ### Errores corregidos
 * Manejar la **excepción** en caso de que speech_recognition **no encuentre** microfono
 * Manejar **excepción** en caso de que no se encuentren las **variables de entorno** (.env)
+
+***
+
+## Informaciones de interés para los desarrolladores.
+
+* Versión de python: 3.12.1
+* Versión de pip: 23.3.2
+* Versión de [**dependencias:**](requirements.txt)
+* [**Pilares**](assets/estructuras_de_control.jpeg) del proyecto
+
+#### Es necesario tener clave API de:
+* OPENAI
 
 Explicación de códigos y funciones en [**DOCUMENTATION.md**](DOCUMENTATION.md)
 Más información en [**HISTORY.md**](HISTORY.md)

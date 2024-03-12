@@ -1,3 +1,4 @@
+# Dato curioso a fecha de hoy 5/marzo/2024 3:27 hora dominicana hay un total de 529 lineas de código en va.py, hay 265 lineas de código y otras 264 de cómentarios aproximadamente (los espacios en blanco se contaron como lineas de código).
 # ESTRUCTURA Y REPARTICION DE TRABAJO DEL ASISTENTE
 # *     Jared y Jairon
 #todo 1 - Grabar voz del usuario 🎤
@@ -21,8 +22,14 @@ import os
 import random #Nuevo modulo para generar números aleatorios
 import wikipedia #Nuevo modulo para resumir articulos de wikipedia
 import winsound #Nuevo modulo para reproducir sonido, (no es necesario instalar con pip)
+# import urllib.request #Nuevo modulo para conteo de suscriptores
+import pyjokes
+import spoty
+# from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
 from banner import printBanner #Nuevo modulo para banner
 from config import check_config, create_config_file, initial_config #Nuevo modulo para configuracion de asistente
+from readfile import check_file_integrity, readfile
+from transfer_data import Transaction
 # Open AI - Chat Gpt
 from openai import OpenAI
 # Google - Gemini
@@ -43,12 +50,13 @@ from openai import OpenAI
 #     return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
 
 #* Default const
-name = 'jarvis' # Nombre por el que se llamara al asistente (para desarrollar más tarde)
-lang = 'es-ES'
-time_format = "%I:%M:%p"
-# format24 = "%H:%M"
-# format12 = "%I:%M"
-wiki_lang = 'es'
+# name = 'jarvis' # Nombre por el que se llamara al asistente (para desarrollar más tarde)
+# lang = 'es-ES'
+# time_format = "%I:%M:%p"
+# wiki_lang = 'es'
+
+#* Obtener constantes del archivo config.text
+# Esto se hace mas adelante en el códgio
 
 #* Default const - open AI mode#
 #  assistant_role: "Eres un asistente virtual que habla en verso y responde de manera cortez."
@@ -66,7 +74,7 @@ normal_color = "\033[0m"
 
 #* Templates
 user_template = f"{negrita}Usuario: {normal_color}"
-va_template = f"{negrita}{name}: {normal_color}"
+# va_template = f"{negrita}{name}: {normal_color}" #Declarada más abajo
 err_template = f"{red_color}{negrita}ERROR: {normal_color}"
 warning_template = f"{yellow_color}{negrita}ADVERTENCIA: {normal_color}"
 
@@ -75,11 +83,29 @@ warning_template = f"{yellow_color}{negrita}ADVERTENCIA: {normal_color}"
 engine = pyttsx3.init()
 
 try:
+    # global voice
+    voice_id = 0
+
+    # if voice != None:
+    #     voice_id = voice
+
     voices = engine.getProperty('voices')
-    engine.setProperty('voice', voices[3].id)
+    engine.setProperty('voice', voices[voice_id].id)
 except IndexError:
-    print("No existe la voz con el ID 3, asegurese de tener ingles, español de españa y español mexico instalado en su windows")
-    talk("Error en configuración de idiomas")
+    print(f"No existe la voz con el ID {voice_id}, asegurese de tener ingles, español de españa y español de mexico instalado en su windows")
+    print(f"{err_template}en configuración de idiomas")
+
+    for voice in voices:
+        print(f'{yellow_color} = = = = = = = =  = = = = = = {normal_color}')
+        print(f'ID:{cian_color} {voice.id} {normal_color}')
+        print(f'Name:{cian_color} {voice.name} {normal_color}')
+        # print(f'Languages:{cian_color} {voice.languages} {normal_color}')
+        # print(f'Age:{cian_color} {voice.age} {normal_color}')
+        # print(f'Gender:{cian_color} {voice.gender} {normal_color}')
+
+    #! No utilizar el exit() para programas reales, lo mejor seria utilizar el sys.exit()
+    exit()
+    # sys.exit()
 
 # for voice in voices:
 #     print(voice)
@@ -88,6 +114,8 @@ def talk(text):
     engine.say(text)
     engine.runAndWait()
 
+def no_talk():
+    engine.stop()
 # talk("Hola, ¿como estas?")
 
 
@@ -104,28 +132,36 @@ def listen():
     # Acceder al microfono del dispositivo
     try:
         # print(text)
-        with sr.Microphone(device_index=1) as source:
+        with sr.Microphone() as source:
             try:
-                winsound.PlaySound('sounds/sonido_apertura.wav', winsound.SND_FILENAME)
+                text = ''
+                status = False
 
                 print(f"{green_color}Escuchando... {normal_color}")
-                audio = rec.listen(source, timeout = 2, phrase_time_limit = 4)
+
+                winsound.PlaySound('sounds/sonido_apertura.wav', winsound.SND_FILENAME)
+                # rec.adjust_for_ambient_noise(source,duration=1) #Ajustar para ruido de fondo, toma una muestra de 1 segundo para el ruido de fondo
+                audio = rec.listen(source)
+
+                #? Linea alternativa si el asistente escucha indefinidamente
+                # audio = rec.listen(source, timeout = 2, phrase_time_limit = 4)
 
                 print(f"{blue_color}Analizando... {normal_color}")
-                text = rec.recognize_google(audio, language = lang)
+                text = rec.recognize_google(audio, language = lang).lower()
                 # print("Texto: " + text)
 
                 winsound.PlaySound('sounds/sonido_cierre.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
                 print(user_template + text)
-                text = text.lower()
 
-                # if name in text:
-                    # text = text.replace(name, '')
+                if name in text:
+                    text = text.replace(name, '')
                     # print('Texto con nombre omitido: ' + text)
+                    status = True
 
                 # prompt = text
                 # talk(text)
-                return text
+                # return text
+                return {'text': text, 'status': status}
                 
             except sr.WaitTimeoutError:
                 print(err_template + 'No se detecto entrada de audio.')
@@ -163,43 +199,83 @@ def listen():
 # printBanner()
 # check_config()
 
-print('Check config', check_config())
-if(check_config()):
-    print('Archivo de configuración existente')
-    # Código para leer el archivo config.txt y cargar los datos del asistente de él.
-else:
-    print(warning_template+'Archivo de configuración inexistente')
-    talk('Archivo de configuración inexistente, ¿Te gustaría crearlo ahora?')
+# print('Check config', check_config())
+try:
+    def load_data(data_to_extract):
+        global name, lang, wiki_lang, time_format, voice
+        # config_name, config_lang, time_format, voice = data_to_extract
 
-    def init_configuration():
-        # print('Entro en función')
-        try:
-            # print('Entro de try')
-            response:str = listen()
-            # print('Respuesta '+response)
-            # response.lower()
+        # name = config_name
+        # lang = config_lang
+        # wiki_lang = config_lang[slice(0,2)]
 
-            # print('Respuesta en minusculas')
+        # print('Nombre: ' + name)
+        # print('Idioma: ' + lang)
+        # print('Idioma de wikipedia: ' + wiki_lang)
+        # print('Formato de hora: ' + time_format)
+        # print('Indice de voz: ' + voice)
 
-            # print('Sí en respuesta: '+'sí' in response)
-            # print('No en respuesta: '+'no' in response)
+        # print('===========================')
+        name, lang, time_format, voice = data_to_extract
+        wiki_lang = lang[slice(0,2)]
 
-            if('sí' in response):
-                print('Entro en si en respuesta')
-                create_config_file()
-                initial_config()
-            else:
-                print('Entro en no en respuesta')
-                print('Archivo de configuración no creado a petición de usuario, continuando con ejecución')
-                talk('Esta bien, continuando con la ejecución')
-        except:
-            print('Audio no reconocido')
-            talk('No pude entender lo que has dicho, ¿Te importaria repetirlo?')
-    init_configuration()
+        # print('Nombre: ' + name)
+        # print('Idioma: ' + lang)
+        # print('Idioma de wikipedia: ' + wiki_lang)
+        # print('Formato de hora: ' + time_format)
+        # print('Indice de voz: ' + voice)
 
+
+    data = readfile()
+    if type(data) != dict or not check_file_integrity():
+        # print(err_template+'Archivos de configuración corruptos')
+        (err_template+'Datos de configuración corruptos o inexistentes')
+        talk('Error en datos de configuración, por favor restablezca el archivo.')
+        initial_config()
+        load_data(data.values())
+    else:
+        load_data(data.values())
+except KeyboardInterrupt:
+    print(f'\n{warning_template}Acción cancelada por el usuario.')
+
+
+def init_configuration():
+    try:
+        response:str = listen()
+
+        if('sí' in response or 'si' in response):
+            print('Entro en si en respuesta')
+            create_config_file()
+            initial_config()
+
+        else:
+            print('Entro en no en respuesta')
+            print('Archivo de configuración no creado a petición de usuario, continuando con ejecución')
+            print('Cargando valores por defecto...')
+
+            name = 'va'
+            lang = 'es-ES'
+            time_format = "%I:%M %p"
+            wiki_lang = 'es'
+            voice_number = 0
+
+            talk('Esta bien, continuando con la ejecución')
+    except:
+        print('Audio no reconocido')
+        talk('No pude entender lo que has dicho, ¿Te importaria repetirlo?')
+        init_configuration()
+
+# init_configuration()
+
+#* Templates 2
+va_template = f"{negrita}{name}: {normal_color}"
 
 #* Ejecutar la función para escuchar al usuario
-text = listen()
+# text = listen()
+text = 'envia cómo estas a raylin'
+print(Transaction)
+print(type(Transaction))
+
 # listen()
 #* =========================
 #* PARTE DE Ismael Y Xaviel - con open AI
@@ -255,39 +331,59 @@ load_dotenv()
 #* Enviar mensajes de whatapp
 # pywhatkit sirve para enviar mensajes de WhatsApp: Utilice la función pywhatkit.sendwhatmsg() para enviar mensajes de WhatsApp a cualquier número de WhatsApp en un momento determinado. La sintaxis es la siguiente: pywhatkit.sendwhatmsg("número de móvil del receptor", "mensaje", horas, minutos). Asegúrese de que el número de móvil del receptor esté en formato de cadena y el código del país se mencione antes del número de móvil. Las horas siguen el formato de 24 horas. Los minutos son los minutos de la hora programada para el mensaje (00-59). Por ejemplo, para enviar un mensaje a un número de WhatsApp a las 22:28, utilice la siguiente sintaxis: pywhatkit.sendwhatmsg("+91xxxxxxxxxx", "Hola desde Mi Diario Python", 22, 28)
 
-# text = 'busca cual es la mejor manera de cocinar el pollo'
-def run():
-    if 'reproduce' in text:
-        music = text.replace('reproduce', '')
-        music = music.replace('jarvis', '')
-        # print('Texto con nombre omitido: ' + text)
-        pywhatkit.playonyt(music)
-        talk('Reproduciendo ' + music)
-        # print(f'{negrita}{name}: {normal_color}Reproduciendo ' + music)
-        print(va_template + 'Reproduciendo' + music)
+# print(text)
+# print(text['text'])
+# print(text['status'])
 
-def search():
-    if 'busca' in text:
-        busqueda = text.replace('busca', '')
+def run():
+    global text
+    if 'reproduce' in text['text']:
+        if 'spotify' in text['text']:
+            music = text['text'].replace('reproduce', '')
+            music = music.replace('jarvis', '')
+            music = music.replace('spotify', '')
+            talk('Reproduciendo ' + music)
+            spoty.play(keys["spoty_client_id"], keys["spoty_client_secret"], music)
+        else:
+            music = text['text'].replace('reproduce', '')
+            music = music.replace('jarvis', '')
+            pywhatkit.playonyt(music)
+            talk('Reproduciendo ' + music)
+            # print(f'{negrita}{name}: {normal_color}Reproduciendo ' + music)
+            print(va_template + 'Reproduciendo' + music)
+
+    elif 'busca' in text['text']:
+        busqueda = text['text'].replace('busca', '')
         # print('Texto con nombre omitido: ' + text)
         talk('Buscando ' + busqueda)
         pywhatkit.search(busqueda)
         # Esta funcion busca en el motor de busqueda google.com, valga la redundancia
         print(f"{va_template}Buscando {busqueda}")
 
-def info():
-    if 'información sobre' in text and 'ingles' in text:
-        info = text.replace('información sobre', '')
+    elif 'información sobre' in text['text'] and 'ingles' in text['text']:
+
+        info = text['text'].replace('información sobre', '')
+        info = text['text'].replace('en', '')
+        info = text['text'].replace('dame', '')
+        info = text['text'].replace('dime', '')
+        info = text['text'].replace('ofreceme', '')
+        info = text['text'].replace('ofréceme', '')
+
         # print('Texto con nombre omitido: ' + text)
         talk('Resumiendo informacion sobre ' + info + ' en wikipedia')
         talk(pywhatkit.info(info))
         # Esta funcion unicamente devuelve resumen en la consola (no puedo almacenar el resumen en variable), y lo devuelve en ingles, para almacenar el resumen y poder cambiar el idioma necesito utilizar el modulo de wikipedia (ejemplo mostrado arriba), que es el mismo modulo que utiliza pywhatkit internamente.
         print(f"{va_template}resumiendo {info} en wikipedia en ingles")
     
-    if 'información sobre' in text:
+    elif 'información sobre' in text['text']:
         # wikipedia.set_lang = 'es'
         wikipedia.set_lang(wiki_lang)
-        info = text.replace('información sobre', '')
+        
+        info = text['text'].replace('información sobre', '')
+        info = text['text'].replace('dame', '')
+        info = text['text'].replace('dime', '')
+        info = text['text'].replace('ofreceme', '')
+        info = text['text'].replace('ofréceme', '')
 
         resumen = wikipedia.summary(info)
         print(va_template + resumen)
@@ -300,10 +396,19 @@ def info():
 
 # Por lo tanto, la principal diferencia es que search realiza una búsqueda en Google e info proporciona un resumen de un artículo de Wikipedia.
 
+    elif 'chiste' in text['text']:
+        chiste = pyjokes.get_joke(wiki_lang)
+        print(va_template + chiste)
+        talk(chiste)
+        winsound.PlaySound('sounds/redoble_de_tambores.wav', winsound.SND_FILENAME)
 
-def send():
-    if 'enviar' in text:
-        msg = text.replace('enviar', '')
+
+    elif 'envía' in text['text']:
+        msg = text['text'].replace('envia', '')
+
+        #! EJEMPLO DE LO QUE SE ESPERA COMO ENTRADA "ENVIAR MENSAJE A DANIEL", ELIMINAR LA FRASE ENVIAR O ENVIA Y TOMAR LA VOCAL "A" COMO SEPARADOR, LO QUE ESTA DESPUES DE LA "A" SERA EL CONTACTO A QUIEN SE LE ENVIARA QUE SE DEBERA BUSCAR EN EL ARCHIVO CONTACTS.TXT Y LO QUE ESTA ANTES DE "A" Y DESPUES DE "ENVIA" O "ENVIAR" SERA EL MENSAJE.
+
+
         # "Esto es un mensaje de prueba desde python"
 
         #* Modulo para obtener el tiempo actual y sumarle 10 segundos para la funcion de enviar mensaje por whatapp
@@ -334,7 +439,7 @@ def send():
         #* print(nueva_hora.strftime("%I:%M"))
         # print(nueva_hora_formateada)
         try:
-            pywhatkit.sendwhatmsg("+18094584686",msg, nueva_hora.hour, nueva_hora.minute, 15, True, 3)
+            pywhatkit.sendwhatmsg("+18574928689",msg, nueva_hora.hour, nueva_hora.minute, 15, True, 3)
             talk(f"Enviando mensaje al número seleccionado")
             print(va_template + "Enviando mensaje al número seleccionado")
         except:
@@ -342,86 +447,143 @@ def send():
             talk("Error en el envío de mensaje, por favor, vuelve a intentarlo.")
         # pywhatkit.sendwhatmsg("numero con prefijo","mensaje", 23,57)
 
-def time():
-    if 'qué hora es' in text:
+
+    elif 'qué hora es' in text['text']:
         # print(f"Son las {datetime.datetime.now().strftime("%I:%M")}")
         # talk(f"Son las {datetime.datetime.now().strftime("%I:%M")}")
-        time = datetime.datetime.now().strftime("%I:%M")
-        time_es = datetime.datetime.now().strftime("%I:%M:%p")
+
+        # time = datetime.datetime.now().strftime("%I:%M")
+        time = datetime.datetime.now().strftime(time_format[slice(0,5)])
+        # time_es = datetime.datetime.now().strftime("%I:%M:%p")
+        time_es = datetime.datetime.now().strftime(time_format)
         
         # print(time)
         # print(time_es)
-        #print(type(time)) es string
+
+        if(time.startswith('0')):
+            time = time[slice(1,(time.__len__()+1))]
+            time_es = time_es[slice(1,(time.__len__()+1))]
+            # print('Ajustado: '+ time)
+            # print('Ajustado: '+ time_es)
 
         changeShape = random.randint(0,2)
         # print(changeShape)
 
         if(changeShape == 0):
             print(va_template + f"Son las {time}")
-            talk(va_template + f"Son las {time}")
+            talk(f"Son las {time}")
 
         elif(changeShape == 1):
             if(datetime.datetime.now().strftime('%p') == 'PM'):
                 print(va_template + f"Son las {time} de la tarde")
-                talk(va_template + f"Son las {time} de la tarde")
+                talk(f"Son las {time} de la tarde")
             else:
                 print(va_template + f"Son las {time} de la mañana")
-                talk(va_template + f"Son las {time} de la mañana")
+                talk(f"Son las {time} de la mañana")
         else:
             print(va_template + f"Son las {time_es}")
-            talk(va_template + f"Son las {time_es}")
+            talk(f"Son las {time_es}")
 
 
-def disponibilidad():
     #! IMPORTANTE
     #* Con global le indico que la variable text sera global en lugar de local, como la variable text existe, entonces estoy indicando que quiero utilizar la variable global y no crear una variable nueva dentro de la función, esto deberia solucionar el error de "UnboundLocalError" 
-    global text
-    if 'estás ahí' in text:
+    # global text
+    elif 'estás ahí' in text['text']:
         print(True)
         print(va_template + 'Sí, ¿En qué te puedo ayudar?')
         talk('Sí, ¿En qué te puedo ayudar?')
         text = name + ' ' + listen()
 
-def who_i_am():
-    global text
-    if 'cómo de llamas' in text:
+
+    # global text
+    elif 'cómo te llamas' in text['text']:
         print(name)
-        talk('Soy' + name + '¿Cómo puedo ayudarte?')
-        text = listen()
+        talk('Soy' + name + '¿Cómo te puedo ayudar?')
+        # text = listen()
+
+    elif 'muestrame el archivo de configuración' in text['text'] or 'muéstrame el archivo de configuración' in text['text']:
+        print('Mostrando el contenido del archivo de configuración')
+        talk('Mostrando el contenido del archivo de configuración')
+
+        print('Nombre del asistente: ' + name)
+        print('Idioma: ' + lang)
+        print('Idioma de wikipedia: ' + wiki_lang)
+        print('Formato de hora: ' + time_format)
+        print('Indice de voz: ' + voice)
+
+        talk('Nombre del asistente: ' + name)
+        talk('Idioma: ' + lang)
+        talk('Idioma de wikipedia: ' + wiki_lang)
+        talk('Formato de hora: ' + '12' if time_format.startswith('%I') else '24' + 'horas')
+        talk('Indice de voz: ' + voice)
+        
+    
+    elif 'crea una nueva configuración' in text['text'] :
+        talk('Creando archivo de configuración nuevamente')
+        initial_config()
+        load_data(readfile().values())
+
+
+    elif 'hasta luego' in text['text']:
+        talk(f'Hasta pronto')
+        os._exit(0)
+
+
+    # elif 'cuántos suscriptores tiene' in text or 'cuantos suscriptores tiene' in text:
+    #     key = os.getenv('GOOGLE_API_KEY_YOUTUBE')
+    #     name_subs = text.replace('cuantos suscriptores tiene', '')
+    #     data = urllib.request.urlopen(f'https://www.googleapis.com/youtube/v3/channels?part=statistics&forUsername={name_subs.strip()}&key={key}').read()
+    #     subs = json.loads(data)["items"][0]["statistics"]["subscriberCount"]
+    #     talk(name_subs + " tiene +{:,d}".format(int(subs)) + "suscriptores!")
 
 
 # print('Nombre asistente: '+name)
 # print('Texto: '+text)}# print(name in text)
 #* Ejecutar funciones que ejecutan acciones a peticion
-try:
-    if(name in text):
-        try:
-            run()
-            search()
-            info()
-            send()
-            time()
-            disponibilidad()
-            who_i_am()
-        except NameError as err:
-            print("Entrada de audio inválida, intentalo nuevamente")
-            talk("Entrada de audio inválida, intentalo nuevamente")
-            print(err)
-        except KeyboardInterrupt:
-            print(err_template + 'Acción cancelada por el usuario.')
-except TypeError:
-    pass
+# try:
+#     if(name in text):
+#         try:
+#             finish()
+#             run()
+#             search()
+#             info()
+#             send()
+#             time()
+#             disponibilidad()
+#             who_i_am()
+#         except NameError as err:
+#             print("Entrada de audio inválida, intentalo nuevamente")
+#             talk("Entrada de audio inválida, intentalo nuevamente")
+#             print(err)
+#         except KeyboardInterrupt:
+#             print(err_template + 'Acción cancelada por el usuario.')
+# except TypeError:
+#     pass
 
+#* NUEVO MODULO PARA EJECUCIÓN DE ACCIONES
+try:
+    run()
+except NameError as err:
+    print("Entrada de audio inválida, intentalo nuevamente")
+    talk("Entrada de audio inválida, intentalo nuevamente")
+    print(err)
+except KeyboardInterrupt:
+    print(err_template + 'Acción cancelada por el usuario.')
+
+
+#! LINEA TEMPORAL
+# run()
 
 #* Ejecutar acción sin decir jarvis antes
-def justRun():
-    run()
-    search()
-    info()
-    send()
-    time()
-    disponibilidad()
-    who_i_am()
+# def justRun():
+#     finish()
+#     run()
+#     search()
+#     info()
+#     send()
+#     time()
+#     disponibilidad()
+#     who_i_am()
 
 #* GEMINI Pro
 # google_api_key = os.getenv('GOOGLE_API_KEY')

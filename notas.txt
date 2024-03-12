@@ -11,3 +11,5 @@ Hasta ahora el software VA tiene los siguientes errores por solucionar:
 Los errores mencionados anteriormente son producto de una prueba del software en una maquina que desde 0, en dicha prueba se descago el idioma español, las dependencias o modulos necesarios, la instalacion de extenciones de desarrollo y la ejecución normal (sin depuracion) del archivo vai.py.
 
 La prueba mencionada anteriormente fue ejecutada en un sistema operativo Windows 11 version: 23H2
+
+Los archivos individuales dependientes para el funcionamiento del asistente como el config.py y el readfile.py tienen diferencias en cuanto a sus funciones con relación a las funciones que hay en el archivo transfer_data.py, el archivo transfer_data se creo ultimo y planeo mejorar y optimizar las funciones ya existentes en los demas archivos para aumentar la eficiencia del asistente y disminuir la redundancia.
