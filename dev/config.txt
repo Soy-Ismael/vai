@@ -1,4 +1,0 @@
-name: jarvis
-lang: es-ES
-
-voice_number: 0 

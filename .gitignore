@@ -4,13 +4,19 @@ __pycache__
 *.env
 *.cs
 *.rar
-# dev/audio.py
+dev/audio.py
 # dev/config.py
-# dev/pruebas.py
+dev/pruebas.py
+dev/pruebas2.py
 # dev/config.txt
 # dev/transfer_data.py
 # config.txt
 # contacts.txt
-# log.txt
-# *.js
-# *.html
+log.txt
+*.js
+*.html
+dev/banners.txt
+dev/config.txt
+dev/contacts.txt
+dev/readcon.py
+dev/
