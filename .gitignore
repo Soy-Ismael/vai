@@ -4,12 +4,13 @@ __pycache__
 *.env
 *.cs
 *.rar
-dev/audio.py
-dev/banner.py
-dev/config.py
-dev/pruebas.py
-dev/config.txt
-log.txt
-*.js
-*.html
-contacts.txt
+# dev/audio.py
+# dev/config.py
+# dev/pruebas.py
+# dev/config.txt
+# dev/transfer_data.py
+# config.txt
+# contacts.txt
+# log.txt
+# *.js
+# *.html
