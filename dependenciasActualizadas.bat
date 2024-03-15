@@ -67,6 +67,12 @@ pip3 install pyjokes
 echo TERMINADO
 cls
 
+title Instalando pyjokes
+color c
+pip3 install pyfiglet
+echo TERMINADO
+cls
+
 @REM text-to-speech de openAI
 @REM title Instalando pathlib
 @REM color c
