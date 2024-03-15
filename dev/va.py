@@ -62,6 +62,9 @@ from openai import OpenAI
 #  assistant_role: "Eres un asistente virtual que habla en verso y responde de manera cortez."
 # prompt = "Dime de manera detallada como puedo crear una función en python."
 
+# Instanciar clase Transaction
+Data_transfer = Transaction()
+
 #* Colors
 green_color = "\033[92m"
 cian_color = "\033[96m"
@@ -232,6 +235,8 @@ try:
         (err_template+'Datos de configuración corruptos o inexistentes')
         talk('Error en datos de configuración, por favor restablezca el archivo.')
         initial_config()
+
+        data = readfile()
         load_data(data.values())
     else:
         load_data(data.values())
@@ -272,9 +277,9 @@ va_template = f"{negrita}{name}: {normal_color}"
 
 #* Ejecutar la función para escuchar al usuario
 # text = listen()
-text = 'envia cómo estas a raylin'
-print(Transaction)
-print(type(Transaction))
+text = {'text' : 'envía Hola ¿cómo estas? a raylin', 'status': True}
+# print(Transaction)
+# print(type(Transaction))
 
 # listen()
 #* =========================
@@ -404,10 +409,9 @@ def run():
 
 
     elif 'envía' in text['text']:
-        msg = text['text'].replace('envia', '')
+        text = text['text'].replace('envía', '')
 
         #! EJEMPLO DE LO QUE SE ESPERA COMO ENTRADA "ENVIAR MENSAJE A DANIEL", ELIMINAR LA FRASE ENVIAR O ENVIA Y TOMAR LA VOCAL "A" COMO SEPARADOR, LO QUE ESTA DESPUES DE LA "A" SERA EL CONTACTO A QUIEN SE LE ENVIARA QUE SE DEBERA BUSCAR EN EL ARCHIVO CONTACTS.TXT Y LO QUE ESTA ANTES DE "A" Y DESPUES DE "ENVIA" O "ENVIAR" SERA EL MENSAJE.
-
 
         # "Esto es un mensaje de prueba desde python"
 
@@ -439,9 +443,20 @@ def run():
         #* print(nueva_hora.strftime("%I:%M"))
         # print(nueva_hora_formateada)
         try:
-            pywhatkit.sendwhatmsg("+18574928689",msg, nueva_hora.hour, nueva_hora.minute, 15, True, 3)
-            talk(f"Enviando mensaje al número seleccionado")
-            print(va_template + "Enviando mensaje al número seleccionado")
+            msg, contact = text.split(' a ')
+            # print('Mensaje ' + msg)
+            # print('contacto ' + contact)
+
+            contact = Data_transfer.read_phone_numbers(contact)
+
+            #? talk(f"El mensaje se enviara en unos segundos")
+            talk(f"El mensaje se enviara en unos segundos")
+            # print(contact, msg, nueva_hora.hour, nueva_hora.minute, 15, True, 3)
+
+            # pywhatkit.sendwhatmsg(contact, msg, nueva_hora.hour, nueva_hora.minute, 15, True, 3)
+            pywhatkit.sendwhatmsg('+18574928689', msg, nueva_hora.hour, nueva_hora.minute, 3, True, 5)
+            talk(f"Mensaje enviado al número seleccionado")
+            print(va_template + "Mensaje enviado al número seleccionado")
         except:
             print(err_template + "en el envío de mensaje, por favor, vuelve a intentarlo.")
             talk("Error en el envío de mensaje, por favor, vuelve a intentarlo.")
@@ -508,7 +523,7 @@ def run():
         print('Nombre del asistente: ' + name)
         print('Idioma: ' + lang)
         print('Idioma de wikipedia: ' + wiki_lang)
-        print('Formato de hora: ' + time_format)
+        print('Formato de hora: ' + '12' if time_format.startswith('%I') else '24' + 'horas')
         print('Indice de voz: ' + voice)
 
         talk('Nombre del asistente: ' + name)

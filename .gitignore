@@ -6,12 +6,13 @@ __pycache__
 *.rar
 dev/audio.py
 # dev/config.py
-dev/pruebas.py
+dev/prueba.py
 dev/pruebas2.py
 # dev/config.txt
 # dev/transfer_data.py
 # config.txt
 # contacts.txt
+HISTORY.md
 log.txt
 *.js
 *.html
@@ -19,4 +20,4 @@ dev/banners.txt
 dev/config.txt
 dev/contacts.txt
 dev/readcon.py
-dev/
+dev/regEx.py

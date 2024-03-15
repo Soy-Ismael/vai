@@ -1,3 +1,5 @@
+from pyfiglet import Figlet
+
 green_color = "\033[92m"
 cian_color = "\033[96m"
 blue_color = "\033[94m"
@@ -77,6 +79,8 @@ banners = [
     },
 ]
 
+banners_with_figlet = ('ogre', 'puffy', 'poison', 'rectangles', 'red_phoenix', 'rounded', 'santa_clara', 'script', 'serifcap', 'slant', 'slscript', 'small', 'small_slant', 'soft', 'speed', 'spliff', 'standard', 'straight', 'varsity', 'train', 'tinker-toy', 'sweet', 'swamp_land', 'swan')
+
 def printBanner(color: str = blue_color, bold: bool = True):
     if(bold == True):
         print(f'''{negrita} {color}
@@ -121,6 +125,32 @@ def printBanner2(color: str = blue_color, bold: bool = True):
 if __name__ == "__main__":
     # printBanner(yellow_color, False)
     # printBanner2()
-    print(banners[2])
+    # print(banners[2])
+
+    # print(Figlet().getFonts())
+
+    #* font_width = 140
+    # font_index = 8
+    # text = 'PROM2023-2024'
+
+    # custom_fig = Figlet(font=banners_with_figlet[font_index], width=font_width)
+    #* print(custom_fig.renderText(text))
+
+    font_width = 140
+    text = 'PROM2023-2024'
+    for font in banners_with_figlet:
+        # font_index = 8
+
+        custom_fig = Figlet(font=font, width=font_width)
+        print(custom_fig.renderText(text))
+    # for font in Figlet().getFonts():
+        # try:
+            #* ogre - puffy - poison - rectangles - red_phoenix - rounded - santa_clara - script - serifcap - slant - slscript - small - small_slant - soft - speed - spliff - standard - straight - varsity - train - tinker-toy - sweet - swamp_land - swan
+            # custom_fig = Figlet(font=font, width=font_width)
+            # print(font)
+            # print(custom_fig.renderText('PROM2023-2024'))
+        # except:
+        #     continue
+
 
 # NOTA: Crear más banners con utilidad de linea de comandos

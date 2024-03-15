@@ -46,6 +46,13 @@ Deben ejecutar los siguientes comandos:
 
 ***
 
+## Variables de entorno
+Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno a su archivo .env
+
+`OPENAI_API_KEY`
+
+***
+
 ## Ejemplos de uso
 * reproduce romeo santos / reproduce sus huellas ⭐
 * busca que es incoloro
@@ -85,16 +92,18 @@ Deben ejecutar los siguientes comandos:
 - [x] Creaer una palabra clave para saber si el asistente esta a la escucha
 - [x] Preguntas si el usuario quiere formato de 12 o 24 horas en el asistente de configuración
 - [x] Revisar porque al mostrar el banner "PROM2023-2024" lanza una advertencia
+- [x] Crear archivo para almacenar contactos con sus números
+- [x] Preguntar al usurio que voz de pyttsx3 desea en función de las disponibles (controlar excepción)
+- [x] Tomar datos del archivo **config.txt**
 
 ### Funciones en desarrollo o por desarrollar
 
 - [ ] Mantenerse escuchando siempre (while True:)
+- [ ] Hacer que el envio de mensaje por whatapp sea asincrono
+- [ ] Reparar envio de mensajes por whatapp con pywhatkit
 - [ ] Preguntar a usuario si quiere usar pywhatkit.send() (ver anotaciones)
-- [ ] Crear archivo para almacenar contactos con sus números
 - [ ] Mejorar forma en la que se crea archivo config.txt (regular expressions)
 - [ ] Optimizar archivo de readfile.py
-- [ ] Preguntar al usurio que voz de pyttsx3 desea en función de las disponibles (controlar excepción)
-- [ ] Tomar datos del archivo **config.txt**
 - [ ] Utilizar modelo de IA y/o IA generativa
 - [ ] Recordar peticiones anteriores para charla amena
 - [ ] Conteo de suscriptores de un youtuber
@@ -156,8 +165,7 @@ Deben ejecutar los siguientes comandos:
 * Versión de [**dependencias:**](requirements.txt)
 * [**Pilares**](assets/estructuras_de_control.jpeg) del proyecto
 
-#### Es necesario tener clave API de:
-* OPENAI
+### Informaciones adicionalesz1
 
-Explicación de códigos y funciones en [**DOCUMENTATION.md**](DOCUMENTATION.md)
-Más información en [**HISTORY.md**](HISTORY.md)
+Explicación de códigos y funciones en [**documentation.**](DOCUMENTATION.md)
+Más información en [**historia.**](HISTORY.md)
