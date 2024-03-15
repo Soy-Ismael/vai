@@ -1,3 +1,5 @@
+import re #Expresión regular
+
 # Este fichero contendra una clase con todos los métodos y propiedades necesarios para la transferencia de informaciónes entre disitntos archivos, esto con el fin de tener un código más modularizado y limpio.
 
 # Revisar archivo de notas.txt
@@ -76,6 +78,21 @@ class Transaction:
             name = f"name: {name}"
             lang = input('Idioma preferido (es-ES / en-US): ')
 
+            #* Expresión regular para idioma
+            def request_lang(text_input):
+                regEx = re.search(r"\w{2}-\w{2}", text_input)
+
+                if regEx:
+                    return regEx.group()
+                else:
+                    return False
+
+            lang = False
+            while lang == False:
+                lang = request_lang(input('Idioma preferido (es-ES / en-US): '))
+                
+            # lang = request_lang(input('Idioma preferido (es-ES / en-US): '))
+
             while lang != 'es-ES':
                 if lang == 'en-US':
                     break
@@ -84,7 +101,9 @@ class Transaction:
 
             lang = f"language: {lang}"
 
+            #* User re.sub para remplazar en expresión regular para formato de hora
             hour_format = int(input('Formato de hora (12 / 24): '))
+            regEx = re.findall(r'\d{2,2}')
             while hour_format != 12:
                 if hour_format == 24:
                     break
@@ -197,6 +216,8 @@ class Transaction:
 
                 # test,num = archivo.readline().strip().replace(' ', '').split(':')
                 for line in archivo.readlines():
+                    line = line.replace('\n', '')
+                    
                     name_in_db,number = line.replace(' ', '').split(':')
                     # name_in_db.replace('á', 'a').replace('é', 'e')
 
