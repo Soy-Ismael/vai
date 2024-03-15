@@ -278,6 +278,7 @@ va_template = f"{negrita}{name}: {normal_color}"
 #* Ejecutar la función para escuchar al usuario
 # text = listen()
 text = {'text' : 'envía Hola ¿cómo estas? a raylin', 'status': True}
+
 # print(Transaction)
 # print(type(Transaction))
 
