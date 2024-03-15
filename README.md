@@ -165,6 +165,11 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 * Versión de [**dependencias:**](requirements.txt)
 * [**Pilares**](assets/estructuras_de_control.jpeg) del proyecto
 
+### Explicación de ramas
+**main ->** rama principal, no se trabaja sobre esta rama, es unicamente para mergear todos los cambios
+**file ->** rama para trabajar con nuevos modulos o modulos existentes para el proyecto
+**feature ->** rama para desarrollar una nueva caracteristica en el propio archivo del asistente (va.py)
+
 ### Informaciones adicionalesz1
 
 Explicación de códigos y funciones en [**documentation.**](DOCUMENTATION.md)
