@@ -4,13 +4,16 @@
     <img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=500&height=70&duration=5000&lines=¡Hola+a+todos!+👋;+¡Somos+informática+de+6to!+😊;" />
 </h1>
 
-<div align="center"> 
+<!-- <div align="center"> 
   <a href="https://www.instagram.com/informaticade_6to?igsh=MjJycm12bXZpbjk4">
     <img src="https://img.shields.io/badge/Instagram-333333?style=for-the-badge&logo=instagram&logoColor=red" />
   </a>
-</div>
+</div> -->
 
 <h1 align="center">PROYECTO VA</h1>
+<a href="https://www.instagram.com/informaticade_6to?igsh=MjJycm12bXZpbjk4">
+    <img src="https://img.shields.io/badge/Instagram-333333?style=for-the-badge&logo=instagram&logoColor=red" />
+</a>
 
 El proyecto VA será un asistente virtual potenciado con IA con la capacidad de cambiar el nombre de llamada por uno cómodo para el usuario. VA será desarrollado inicialmente en Python y tendrá la capacidad de ejecutarse en todos los sistemas operativos. Su objetivo principal será el de ofrecer información y ayudar con tareas ambiguas al usuario.
 
@@ -26,8 +29,10 @@ El proyecto VA será un asistente virtual potenciado con IA con la capacidad de 
 [![Curso de git y github desde 0](https://img.youtube.com/vi/3GymExBkKjE/maxresdefault.jpg "Curso de git y github desde cero")](https://youtu.be/3GymExBkKjE?si=rHF7tfVCrc3IHw0i)
 
 <div align="center">
-    <img src="https://skillicons.dev/icons?i=html,css,vscode,github,tailwind,git,batch" />
+    <br>
+    <img src="https://skillicons.dev/icons?i=html,css,vscode,github,tailwind,git" />
     <img src="https://skillicons.dev/icons?i=nodejs,python,javascript,firebase,mysql" /><br>
+    <br>
 </div>
 
 ### Configuración del repositorio en local
@@ -188,12 +193,14 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 **backup ->** rama para realizar copias de seguridad con regularidad, no se trabaja en esta rama
 
 ### Comandos para cambiar de rama
-<strong color="#E61B08">Cuando inicies a trabajar</strong>
+<strong style="color:#E61B08;">Cuando inicies a trabajar</strong>
 ```git checkout nombre_rama```
-<strong color="#E61B08">Cuando termines de trabajar</strong>
+
+<strong style="color:#E61B08;">Cuando termines de trabajar</strong>
 ```git push origin nombre_rama```
 
 <div align="center">
+  <br>
   <h2>🐍 Mis contribuciones 🐍</h2>
   <br>
   <img alt="snake eating my contributions" src="https://raw.githubusercontent.com/salesp07/salesp07/output/github-contribution-grid-snake-dark.svg" />
@@ -203,4 +210,5 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 
 ### Informaciones adicionales
 *Explicación de códigos y funciones en* [**documentation.**](DOCUMENTATION.md)
+
 *Más información en* [**historia.**](HISTORY.md)
