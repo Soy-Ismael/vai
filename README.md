@@ -1,7 +1,7 @@
 <img align="right" src="https://visitor-badge.laobi.icu/badge?page_id=Soy-Ismael.Soy-Ismael" />
 
 <h1 align="center">
-    <img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=500&height=70&duration=4000&lines=¡Hola+a+todos!+👋;+¡Somos+informática+de+6to!+😊;" />
+    <img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=500&height=70&duration=5000&lines=¡Hola+a+todos!+👋;+¡Somos+informática+de+6to!+😊;" />
 </h1>
 
 <div align="center"> 
@@ -24,6 +24,11 @@ El proyecto VA será un asistente virtual potenciado con IA con la capacidad de 
 
 
 [![Curso de git y github desde 0](https://img.youtube.com/vi/3GymExBkKjE/maxresdefault.jpg "Curso de git y github desde cero")](https://youtu.be/3GymExBkKjE?si=rHF7tfVCrc3IHw0i)
+
+<div align="center">
+    <img src="https://skillicons.dev/icons?i=html,css,vscode,github,tailwind,git,batch" />
+    <img src="https://skillicons.dev/icons?i=nodejs,python,javascript,firebase,mysql" /><br>
+</div>
 
 ### Configuración del repositorio en local
 Deben ejecutar los siguientes comandos:
@@ -180,15 +185,19 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 **backup ->** rama para realizar copias de seguridad con regularidad, no se trabaja en esta rama
 
 ### Comandos para cambiar de rama
-**Cuando inicies a trabajar**
+<strong color="#E61B08">Cuando inicies a trabajar</strong>
 ```git checkout nombre_rama```
-
-**Cuando termines de trabajar**
+<strong color="#E61B08">Cuando termines de trabajar</strong>
 ```git push origin nombre_rama```
 
+<div align="center">
+  <h2>🐍 Mis contribuciones 🐍</h2>
+  <br>
+  <img alt="snake eating my contributions" src="https://raw.githubusercontent.com/salesp07/salesp07/output/github-contribution-grid-snake-dark.svg" />
+  
+  <br/><br/>
+</div>
 
-### Informaciones adicionalesz1
-
-Explicación de códigos y funciones en [**documentation.**](DOCUMENTATION.md)
-
-Más información en [**historia.**](HISTORY.md)
+### Informaciones adicionales
+*Explicación de códigos y funciones en* [**documentation.**](DOCUMENTATION.md)
+*Más información en* [**historia.**](HISTORY.md)
