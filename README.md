@@ -10,10 +10,8 @@
   </a>
 </div> -->
 
+<a align="right" href="https://www.instagram.com/informaticade_6to?igsh=MjJycm12bXZpbjk4"><img src="https://img.shields.io/badge/Instagram-333333?style=for-the-badge&logo=instagram&logoColor=red" /></a>
 <h1 align="center">PROYECTO VA</h1>
-<a href="https://www.instagram.com/informaticade_6to?igsh=MjJycm12bXZpbjk4">
-    <img src="https://img.shields.io/badge/Instagram-333333?style=for-the-badge&logo=instagram&logoColor=red" />
-</a>
 
 El proyecto VA será un asistente virtual potenciado con IA con la capacidad de cambiar el nombre de llamada por uno cómodo para el usuario. VA será desarrollado inicialmente en Python y tendrá la capacidad de ejecutarse en todos los sistemas operativos. Su objetivo principal será el de ofrecer información y ayudar con tareas ambiguas al usuario.
 
@@ -193,17 +191,17 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 **backup ->** rama para realizar copias de seguridad con regularidad, no se trabaja en esta rama
 
 ### Comandos para cambiar de rama
-<strong style="color:#E61B08;">Cuando inicies a trabajar</strong>
+**Cuando inicies a trabajar**
 ```git checkout nombre_rama```
 
-<strong style="color:#E61B08;">Cuando termines de trabajar</strong>
+**Cuando termines de trabajar**
 ```git push origin nombre_rama```
 
 <div align="center">
   <br>
   <h2>🐍 Mis contribuciones 🐍</h2>
   <br>
-  <img alt="snake eating my contributions" src="https://raw.githubusercontent.com/salesp07/salesp07/output/github-contribution-grid-snake-dark.svg" />
+  <img alt="snake eating my contributions" src="https://raw.githubusercontent.com/Soy-Ismael/Soy-Ismael/output/github-contribution-grid-snake-dark.svg" />
   
   <br/><br/>
 </div>
