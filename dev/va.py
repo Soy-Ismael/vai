@@ -353,8 +353,8 @@ def run():
         else:
             music = text['text'].replace('reproduce', '')
             music = music.replace('jarvis', '')
-            pywhatkit.playonyt(music)
             talk('Reproduciendo ' + music)
+            pywhatkit.playonyt(music)
             # print(f'{negrita}{name}: {normal_color}Reproduciendo ' + music)
             print(va_template + 'Reproduciendo' + music)
 
