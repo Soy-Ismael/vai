@@ -4,16 +4,15 @@
     <img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=500&height=70&duration=5000&lines=¡Hola+a+todos!+👋;+¡Somos+informática+de+6to!+😊;" />
 </h1>
 
-<!-- <div align="center"> 
-  <a href="https://www.instagram.com/informaticade_6to?igsh=MjJycm12bXZpbjk4">
-    <img src="https://img.shields.io/badge/Instagram-333333?style=for-the-badge&logo=instagram&logoColor=red" />
-  </a>
-</div> -->
 
-<a align="right" href="https://www.instagram.com/informaticade_6to?igsh=MjJycm12bXZpbjk4"><img src="https://img.shields.io/badge/Instagram-333333?style=for-the-badge&logo=instagram&logoColor=red" /></a>
 <h1 align="center">PROYECTO VA</h1>
 
 El proyecto VA será un asistente virtual potenciado con IA con la capacidad de cambiar el nombre de llamada por uno cómodo para el usuario. VA será desarrollado inicialmente en Python y tendrá la capacidad de ejecutarse en todos los sistemas operativos. Su objetivo principal será el de ofrecer información y ayudar con tareas ambiguas al usuario.
+<div align="center"> 
+  <a href="https://www.instagram.com/informaticade_6to?igsh=MjJycm12bXZpbjk4">
+    <img src="https://img.shields.io/badge/Instagram-333333?style=for-the-badge&logo=instagram&logoColor=red" />
+  </a>
+</div>
 
 ***
 
@@ -182,13 +181,10 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 * [**Pilares**](assets/estructuras_de_control.jpeg) del proyecto
 
 ### Explicación de ramas
-**main ->** rama principal, no se trabaja sobre esta rama, es unicamente para mergear todos los cambios
-
-**file ->** rama para trabajar con nuevos modulos o modulos existentes para el proyecto
-
-**feature ->** rama para desarrollar una nueva caracteristica en el propio archivo del asistente (va.py)
-
-**backup ->** rama para realizar copias de seguridad con regularidad, no se trabaja en esta rama
+* **main** rama principal, no se trabaja sobre esta rama, es unicamente para mergear todos los cambios
+* **file** rama para trabajar con nuevos modulos o modulos existentes para el proyecto
+* **feature** rama para desarrollar una nueva caracteristica en el propio archivo del asistente (va.py)
+* **backup** rama para realizar copias de seguridad con regularidad, no se trabaja en esta rama
 
 ### Comandos para cambiar de rama
 **Cuando inicies a trabajar**
@@ -201,7 +197,7 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
   <br>
   <h2>🐍 Mis contribuciones 🐍</h2>
   <br>
-  <img alt="snake eating my contributions" src="https://raw.githubusercontent.com/Soy-Ismael/Soy-Ismael/output/github-contribution-grid-snake-dark.svg" />
+  <img alt="snake eating my contributions" src="https://raw.githubusercontent.com/salesp07/salesp07/output/github-contribution-grid-snake-dark.svg" />
   
   <br/><br/>
 </div>
