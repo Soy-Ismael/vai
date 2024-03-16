@@ -180,8 +180,11 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 
 ### Explicación de ramas
 **main ->** rama principal, no se trabaja sobre esta rama, es unicamente para mergear todos los cambios
+
 **file ->** rama para trabajar con nuevos modulos o modulos existentes para el proyecto
+
 **feature ->** rama para desarrollar una nueva caracteristica en el propio archivo del asistente (va.py)
+
 **backup ->** rama para realizar copias de seguridad con regularidad, no se trabaja en esta rama
 
 ### Comandos para cambiar de rama
