@@ -1,9 +1,11 @@
 import re #Expresión regular
+import socket
 
 # Este fichero contendra una clase con todos los métodos y propiedades necesarios para la transferencia de informaciónes entre disitntos archivos, esto con el fin de tener un código más modularizado y limpio.
 
 # Revisar archivo de notas.txt
 import os
+nombre_archivo = 'config.txt'
 
 class Transaction:
     def __init__(self):
@@ -32,6 +34,8 @@ class Transaction:
         self.inverted_yellow_text       = "\033[7;93m"
         self.bold_yellow_background     = "\033[1;43m"
         self.bold_green_background      = "\033[1;42m"
+        self.warning_template = f"{self.yellow_color}{self.negrita}ADVERTENCIA: {self.normal_color}"
+        self.err_template = f"{self.red_color}{self.negrita}ERROR: {self.normal_color}"
 
     def test_colors(self):
         print(self.white_color + ' Hola ¿Cómo estás? ' + color.normal_color)
@@ -63,45 +67,42 @@ class Transaction:
     def create_config_file(self):
         with open('dev\\'+nombre_archivo, 'w') as archivo:
             return True
+        return False
 
 
     def initial_config(self):
         try:
             text_plain_enter = '\n'
+            print(self.black_on_white_color + 'Inicializando configuración...' + self.normal_color + '\n')
 
             name = input('Nombre del asistente: ')
             while(len(name) < 1):
-                print(f"{err_template} {red_color} {negrita}DATO INVALIDO. {normal_color}")
-                print(f"{err_template} {red_color} {negrita}El nombre debe tener algún carácter.{normal_color}")
+                # print(f"{self.err_template} {self.red_color} {self.negrita}DATO INVALIDO. {self.normal_color}")
+                print(f"{self.err_template} {self.red_color} {self.negrita}El nombre debe contener algún carácter.{self.normal_color}")
                 name = input('Nombre del asistente: ')
-                
             name = f"name: {name}"
-            lang = input('Idioma preferido (es-ES / en-US): ')
-
-            #* Expresión regular para idioma
-            def request_lang(text_input):
-                regEx = re.search(r"\w{2}-\w{2}", text_input)
-
-                if regEx:
-                    return regEx.group()
-                else:
-                    return False
-
-            lang = False
-            while lang == False:
-                lang = request_lang(input('Idioma preferido (es-ES / en-US): '))
                 
-            # lang = request_lang(input('Idioma preferido (es-ES / en-US): '))
 
-            while lang != 'es-ES':
-                if lang == 'en-US':
-                    break
-                print(warning_template+'Entrada invalida, intentalo nuevamente')
-                lang = input('Idioma preferido (es-ES / en-US): ')
+            # lang = input('Idioma preferido (es-ES / en-US): ')
+            #* Expresión regular para idioma
+            def validate_lang(text_input:str):
+                text_input.strip()
+                regEx = re.search(r"^[a-z]{2}-[A-Z]{2}$", text_input)
+                return regEx.group() if regEx else False
+
+            lang = validate_lang(input('Idioma preferido (es-ES / en-US): '))
+            while lang == False:
+                lang = validate_lang(input('Idioma preferido (es-ES / en-US): '))
 
             lang = f"language: {lang}"
 
             #* User re.sub para remplazar en expresión regular para formato de hora
+            def validate_hour(text_input:str):
+                text_input.strip()
+                if re.match(r"^12*24*$", text_input):
+                    print('correcto')
+                else:
+                    print('Incorrecto')
             hour_format = int(input('Formato de hora (12 / 24): '))
             regEx = re.findall(r'\d{2,2}')
             while hour_format != 12:
@@ -121,7 +122,7 @@ class Transaction:
             engine = pyttsx3.init()
             try:
                 voices = engine.getProperty('voices')
-                print(f"{yellow_color}Las voces disponibles son proporcionales a la cantidad de idiomas instalados{normal_color} {text_plain_enter}")
+                print(f"{self.yellow_color}Las voces disponibles son proporcionales a la cantidad de idiomas instalados{self.normal_color} {text_plain_enter}")
 
                 index = 0
                 for voice in voices:
@@ -129,39 +130,39 @@ class Transaction:
                     voice_name = voice_name.replace('Microsoft', '')
                     voice_name = voice_name.replace('Desktop', '')
                     # ϟ ↦ ↯ ↪ ⇆ ⇢ ⇉ ⇨ ➜ ➠ ➸ ➵ ⤨ ⟼ ☠ ✘ ッ ヅ ツ 
-                    print(f'{red_color} {negrita} ID: {green_color} {index}  {red_color} ヅ {normal_color}{cian_color} {voice_name} {normal_color}')
-                    print(f'{yellow_color} - - - - - - - - - - - - {normal_color}')
+                    print(f'{self.red_color} {self.negrita} ID: {self.green_color} {index}  {self.red_color} ヅ {self.normal_color}{self.cian_color} {voice_name} {self.normal_color}')
+                    print(f'{self.yellow_color} - - - - - - - - - - - - {self.normal_color}')
                     index = index + 1
 
-                print(f"{yellow_color}{negrita}= = Escoge una voz escribiendo su ID = = {normal_color} {text_plain_enter}")
+                print(f"{self.yellow_color}{self.negrita}= = Escoge una voz escribiendo su ID = = {self.normal_color} {text_plain_enter}")
                 voice_number = int(input('Voz preferida (0, 1, 2...)(int): '))
 
                 while(voice_number < 0 or voice_number > len(voices)):
                     voice_number = 0
-                    print(f"{err_template} {red_color} {negrita}DATO INVALIDO. {normal_color}")
+                    print(f"{self.err_template} {self.red_color} {self.negrita}DATO INVALIDO. {self.normal_color}")
                     voice_number = int(input('Voz preferida (0, 1, 2...): '))
 
                 engine.setProperty('voice', voices[voice_number].id)
             except IndexError as err:
-                print(f"{err_template} {err}")
+                print(f"{self.err_template} {err}")
                 print(f"{warning_template}Aplicando configuración por defecto...")
                 voice_number = 0
                 engine.setProperty('voice', voices[voice_number].id)
             except ValueError as err:
-                print(f"{err_template} {err}")
+                print(f"{self.err_template} {err}")
                 print(f"{warning_template}Aplicando configuración por defecto...")
                 voice_number = 0
                 engine.setProperty('voice', voices[voice_number].id)
 
             voice = f"voice_number: {voice_number}"
 
-            print(f"{green_color}= = Configuración finalizada. = ={normal_color}")
-            print(f"{green_color}{negrita}= = Resumen de configuración: = ={normal_color} {text_plain_enter}")
+            print(f"{self.green_color}= = Configuración finalizada. = ={self.normal_color}")
+            print(f"{self.green_color}{self.negrita}= = Resumen de configuración: = ={self.normal_color} {text_plain_enter}")
 
-            print(f"{yellow_color} {name} {normal_color}")
-            print(f"{yellow_color} {lang} {normal_color}")
-            print(f"{yellow_color} {hour_format} {normal_color}")
-            print(f"{yellow_color} {voice} {normal_color}")
+            print(f"{self.yellow_color} {name} {self.normal_color}")
+            print(f"{self.yellow_color} {lang} {self.normal_color}")
+            print(f"{self.yellow_color} {hour_format} {self.normal_color}")
+            print(f"{self.yellow_color} {voice} {self.normal_color}")
 
             data_dictionary = [name+text_plain_enter, lang+text_plain_enter, hour_format+text_plain_enter, voice]
 
@@ -173,7 +174,7 @@ class Transaction:
 
 
 
-    def check_file_integrity(self, ruta:str = 'dev\\config.txt', lines:int = 3):
+    def check_file_integrity(self, ruta:str = 'dev\\'+nombre_archivo, lines:int = 3):
         if(os.path.isfile(ruta)):
             with open(ruta, 'r') as archivo:
                 if(len(archivo.readlines()) <= lines):
@@ -201,9 +202,9 @@ class Transaction:
                 else:
                     return data
         except ValueError:
-            print(err_template+'en archivo de configuración')
+            print(self.err_template+'en archivo de configuración')
         except Exception as e:
-            print(err_template+f"Ocurrio un error al leer el archivo de configuración: {e}")
+            print(self.err_template+f"Ocurrio un error al leer el archivo de configuración: {e}")
             return False
 
 
@@ -228,7 +229,14 @@ class Transaction:
                 return False
         else:
             # return 'Error en archivo'
-            pass
+            return 'Archivo no encontrado'
+
+    def check_internet_connection():
+        try:
+            socket.create_connection(("www.google.com", 80), timeout=5)
+            print("Conexión a Internet exitosa.")
+        except (socket.error, socket.timeout):
+            print("Sin conexión a Internet.")
         
 
 
@@ -236,6 +244,8 @@ if __name__ == '__main__':
     transactions = Transaction()
     # color = Transaction()
     # color.test_colors()
+    # transactions.initial_config()
+    transactions.check_internet_connection()
     
     # if(os.path.isfile('dev\\contacts.txt')):
     #     print('en ruta')
@@ -247,7 +257,7 @@ if __name__ == '__main__':
     # else:
         # print(False)
     
-    number = transactions.read_phone_numbers('raylin')
-    print(number)
+    # number = transactions.read_phone_numbers('raylin')
+    # print(number)
 
     # print(transactions.read_phone_numbers())
