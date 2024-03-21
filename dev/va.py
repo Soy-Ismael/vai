@@ -26,12 +26,14 @@ import winsound #Nuevo modulo para reproducir sonido, (no es necesario instalar 
 import pyjokes
 import spoty
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
-from banner import printBanner #Nuevo modulo para banner
+# from banner import printBanner #Nuevo modulo para banner
+from banner import figlet_banner #Nuevo modulo para banner
 from config import check_config, create_config_file, initial_config #Nuevo modulo para configuracion de asistente
 from readfile import check_file_integrity, readfile
 from transfer_data import Transaction
 # Open AI - Chat Gpt
 from openai import OpenAI
+# from audio import tts
 # Google - Gemini
 # import pathlib
 # import textwrap
@@ -112,7 +114,7 @@ except IndexError:
 
 # for voice in voices:
 #     print(voice)
-
+figlet_banner(text='USAR API CON PRUDENCIA', banner_index=3)
 def talk(text):
     engine.say(text)
     engine.runAndWait()
@@ -129,7 +131,6 @@ rec = sr.Recognizer()
 
 # 2300 tiene problemas para entender
 # rec.energy_threshold = 2900
-
 #* Función para escuchar la petición del usuario, se puede invocar durante la ejecución del programa, lo que permite que el asistente pueda volver a escuchar en cualquier punto del programa con solo invocar la función
 def listen():
     # Acceder al microfono del dispositivo
@@ -296,25 +297,53 @@ load_dotenv()
 # Variables de entorno
 
 #* Chat GPT
-# try:
-#     client = OpenAI()
-#    # print(client.api_key)
-# except:
-#     print(err_template+'No se pudo obtener el api de OPEN AI')
-#     talk('No se pudo obtener el api de OPEN AI, por favor revise el archivo .env')
 
 # *INICIO CHAT GPT - Modulo 3 & 4
 #* Este primer bloque se utiliza para interacciones con usuario
-# try:
-#     completion = client.chat.completions.create(
-#     model="gpt-3.5-turbo",
-#     messages=[
-#         {"role": "system", "content": "Eres un asistente virtual que habla en verso y responde de manera cortez."},
-#         {"role": "user", "content": prompt}
-#     ])
-#     print(completion.choices[0].message)
-# except Exception as err:
-#     print(err)
+def run_gpt():
+    try:
+        client = OpenAI(
+            api_key=os.environ.get("OPENAI_API_KEY"),
+        )
+        # exprint(client.api_key)
+
+        # chat_completion = client.chat.completions.create(
+        #     messages=[
+        #         {"role": "system", 
+        #         "content": "Eres un asistente virtual que habla en verso y responde de manera cortez, clara y objetiva."},
+        #         {"role": "user", 
+        #         "content": text}
+        #     ],
+        #     model="gpt-3.5-turbo",
+        # )
+
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo-0125",
+            messages=[
+                {
+                    "role": "user",
+                    "content": text['text'],
+                }
+            ]
+        )
+        # print(response.headers.get("X-My-Header"))
+        
+        # print('response')
+
+        # print(response.choices[0].message.role)
+        print(response.choices[0].message.content)
+        return response.choices[0].message.content
+        
+        # print(response.choices[0].message.content)
+        # print(response.choices)
+        # for line in response.iter_lines():
+        #     print(line)
+
+    except Exception as err:
+        print('err')
+        print(err)
+
+# run_gpt()
 
 #* Modulo 5
 #* Este segundo bloque se utiliza para interpretación y ejecución de peticiones de usuario (se ejecuta por detras)
@@ -357,6 +386,7 @@ def run():
             pywhatkit.playonyt(music)
             # print(f'{negrita}{name}: {normal_color}Reproduciendo ' + music)
             print(va_template + 'Reproduciendo' + music)
+        return True
 
     elif 'busca' in text['text']:
         busqueda = text['text'].replace('busca', '')
@@ -365,6 +395,7 @@ def run():
         pywhatkit.search(busqueda)
         # Esta funcion busca en el motor de busqueda google.com, valga la redundancia
         print(f"{va_template}Buscando {busqueda}")
+        return True
 
     elif 'información sobre' in text['text'] and 'ingles' in text['text']:
 
@@ -380,6 +411,7 @@ def run():
         talk(pywhatkit.info(info))
         # Esta funcion unicamente devuelve resumen en la consola (no puedo almacenar el resumen en variable), y lo devuelve en ingles, para almacenar el resumen y poder cambiar el idioma necesito utilizar el modulo de wikipedia (ejemplo mostrado arriba), que es el mismo modulo que utiliza pywhatkit internamente.
         print(f"{va_template}resumiendo {info} en wikipedia en ingles")
+        return True
     
     elif 'información sobre' in text['text']:
         # wikipedia.set_lang = 'es'
@@ -394,6 +426,7 @@ def run():
         resumen = wikipedia.summary(info)
         print(va_template + resumen)
         talk(resumen)
+        return True
 
 # * Diferencia entre search e info
 # search: La función pywhatkit.search("Palabra clave") abre tu navegador predeterminado y realiza una búsqueda en Google con la “Palabra clave” que proporcionaste. Te mostrará todos los resultados de búsqueda relacionados con esa palabra clave en Google.
@@ -406,7 +439,9 @@ def run():
         chiste = pyjokes.get_joke(wiki_lang)
         print(va_template + chiste)
         talk(chiste)
+        # tts(chiste)
         winsound.PlaySound('sounds/redoble_de_tambores.wav', winsound.SND_FILENAME)
+        return True
 
 
     elif 'envía' in text['text']:
@@ -462,6 +497,7 @@ def run():
             print(err_template + "en el envío de mensaje, por favor, vuelve a intentarlo.")
             talk("Error en el envío de mensaje, por favor, vuelve a intentarlo.")
         # pywhatkit.sendwhatmsg("numero con prefijo","mensaje", 23,57)
+        return True
 
 
     elif 'qué hora es' in text['text']:
@@ -499,6 +535,7 @@ def run():
         else:
             print(va_template + f"Son las {time_es}")
             talk(f"Son las {time_es}")
+        return True
 
 
     #! IMPORTANTE
@@ -509,6 +546,7 @@ def run():
         print(va_template + 'Sí, ¿En qué te puedo ayudar?')
         talk('Sí, ¿En qué te puedo ayudar?')
         text = name + ' ' + listen()
+        return True
 
 
     # global text
@@ -516,6 +554,7 @@ def run():
         print(name)
         talk('Soy' + name + '¿Cómo te puedo ayudar?')
         # text = listen()
+        return True
 
     elif 'muestrame el archivo de configuración' in text['text'] or 'muéstrame el archivo de configuración' in text['text']:
         print('Mostrando el contenido del archivo de configuración')
@@ -532,17 +571,20 @@ def run():
         talk('Idioma de wikipedia: ' + wiki_lang)
         talk('Formato de hora: ' + '12' if time_format.startswith('%I') else '24' + 'horas')
         talk('Indice de voz: ' + voice)
+        return True
         
     
     elif 'crea una nueva configuración' in text['text'] :
         talk('Creando archivo de configuración nuevamente')
         initial_config()
         load_data(readfile().values())
+        return True
 
 
     elif 'hasta luego' in text['text']:
         talk(f'Hasta pronto')
         os._exit(0)
+        return True
 
 
     # elif 'cuántos suscriptores tiene' in text or 'cuantos suscriptores tiene' in text:
@@ -578,13 +620,20 @@ def run():
 
 #* NUEVO MODULO PARA EJECUCIÓN DE ACCIONES
 try:
+    print('Si quiere usar inteligencia artificial en su respuesta, por favor, descomenta la linea 624, recuerda utilizar la API con prudencia puesto que supone un costo cada petición')
     run()
+    # if not run():
+    #     talk(run_gpt())
+
 except NameError as err:
     print("Entrada de audio inválida, intentalo nuevamente")
-    talk("Entrada de audio inválida, intentalo nuevamente")
-    print(err)
+    # talk("Entrada de audio inválida, intentalo nuevamente")
+    # print(err)
 except KeyboardInterrupt:
     print(err_template + 'Acción cancelada por el usuario.')
+except TypeError:
+    print("Entrada de audio inválida, intentalo nuevamente")
+
 
 
 #! LINEA TEMPORAL
