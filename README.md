@@ -1,18 +1,18 @@
 <img align="right" src="https://visitor-badge.laobi.icu/badge?page_id=Soy-Ismael.Soy-Ismael" />
 
 <h1 align="center">
-    <img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=500&height=70&duration=5000&lines=¡Hola+a+todos!+👋;+¡Somos+informática+de+6to!+😊;" />
+    <img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=500&height=70&duration=5000&lines=¡Hola+a+todos!+👋;+¡Somos+informática+de+6to!+😊;+¡Promoción+2023-2024!🔥" />
 </h1>
-
-
-<h1 align="center">PROYECTO VA</h1>
-
-El proyecto VA será un asistente virtual potenciado con IA con la capacidad de cambiar el nombre de llamada por uno cómodo para el usuario. VA será desarrollado inicialmente en Python y tendrá la capacidad de ejecutarse en todos los sistemas operativos. Su objetivo principal será el de ofrecer información y ayudar con tareas ambiguas al usuario.
 <div align="center"> 
   <a href="https://www.instagram.com/informaticade_6to?igsh=MjJycm12bXZpbjk4">
     <img src="https://img.shields.io/badge/Instagram-333333?style=for-the-badge&logo=instagram&logoColor=red" />
   </a>
 </div>
+
+
+<h1 align="center">PROYECTO VA</h1>
+
+El proyecto VA será un asistente virtual potenciado con IA con la capacidad de cambiar el nombre de llamada por uno cómodo para el usuario. VA será desarrollado inicialmente en Python y tendrá la capacidad de ejecutarse en todos los sistemas operativos. Su objetivo principal será el de ofrecer información y ayudar con tareas ambiguas al usuario.
 
 ***
 
@@ -27,8 +27,8 @@ El proyecto VA será un asistente virtual potenciado con IA con la capacidad de 
 
 <div align="center">
     <br>
-    <img src="https://skillicons.dev/icons?i=html,css,vscode,github,tailwind,git" />
-    <img src="https://skillicons.dev/icons?i=nodejs,python,javascript,firebase,mysql" /><br>
+    <img src="https://skillicons.dev/icons?i=vscode,github,git,python" />
+    <!-- <img src="https://skillicons.dev/icons?i=nodejs,javascript,firebase,mysql" /><br> -->
     <br>
 </div>
 
@@ -61,10 +61,10 @@ Deben ejecutar los siguientes comandos:
 
 ***
 
-## Variables de entorno
+<!-- ## Variables de entorno
 Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno a su archivo .env
 
-`OPENAI_API_KEY`
+`OPENAI_API_KEY` -->
 
 ***
 
@@ -110,16 +110,19 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 - [x] Crear archivo para almacenar contactos con sus números
 - [x] Preguntar al usurio que voz de pyttsx3 desea en función de las disponibles (controlar excepción)
 - [x] Tomar datos del archivo **config.txt**
+- [x] Utilizar modelo de IA y/o IA generativa
 
 ### Funciones en desarrollo o por desarrollar
 
 - [ ] Mantenerse escuchando siempre (while True:)
+- [ ] Revisar porque funcion "check_internet_connection" no funciona (data_transfer)
+- [ ] Hacer que el audio resultado de openai tts-1 se reproduzca de inmediato
+- [ ] Implementar reconocimiento de voz con whisper(intento de mejora)
 - [ ] Hacer que el envio de mensaje por whatapp sea asincrono
 - [ ] Reparar envio de mensajes por whatapp con pywhatkit
 - [ ] Preguntar a usuario si quiere usar pywhatkit.send() (ver anotaciones)
 - [ ] Mejorar forma en la que se crea archivo config.txt (regular expressions)
 - [ ] Optimizar archivo de readfile.py
-- [ ] Utilizar modelo de IA y/o IA generativa
 - [ ] Recordar peticiones anteriores para charla amena
 - [ ] Conteo de suscriptores de un youtuber
 - [ ] Reproducir contenido en plataformas distintas a youtube
@@ -161,7 +164,7 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 | Titulo principal | Analisis capacidades | notas.txt | Placa de desarrollo |
 | Analizar características, funciones y organización del proyecto | Programar las funciones o características propuestas bajo un mismo estándar de orden | Realizar pruebas en diferentes escenarios de ejecución simulados para garantizar el correcto funcionamiento |Una vez listo el proyecto, cargarlo en la placa de desarrollo y esperar el día de la presentación |
 
-#### Errores en el programa
+### Errores en el programa
 * Las voces de **pttsx3** dependen de los idiomas del **usuario** host
 * Manejar **excepción** en caso de que se ejecute el programa **sin** conexión a **internet**
 
@@ -178,13 +181,14 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 * Versión de python: 3.12.1
 * Versión de pip: 23.3.2
 * Versión de [**dependencias:**](requirements.txt)
-* [**Pilares**](assets/estructuras_de_control.jpeg) del proyecto
+* [**Pilares**](assets/checkpoints_va.jpeg) del proyecto
 
 ### Explicación de ramas
 * **main** rama principal, no se trabaja sobre esta rama, es unicamente para mergear todos los cambios
 * **file** rama para trabajar con nuevos modulos o modulos existentes para el proyecto
 * **feature** rama para desarrollar una nueva caracteristica en el propio archivo del asistente (va.py)
 * **backup** rama para realizar copias de seguridad con regularidad, no se trabaja en esta rama
+* **display** rama para el desarrollo de la interfaz gráfica del asistente
 
 ### Comandos para cambiar de rama
 **Cuando inicies a trabajar**

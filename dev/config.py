@@ -30,7 +30,7 @@ def create_config_file():
         print(err_template+f'Ocurrio un error al crear el archivo de configuración: {e}')
         # Retorna false si el archivo de configuración no se crea, ya sea por ausencia de permisos de escritura para el usuario que ejecuta el software o por cualquier otro motivo
         return False
-    
+
 
 # initial_config()
 def initial_config():

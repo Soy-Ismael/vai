@@ -1,133 +1,22 @@
 from pyfiglet import Figlet
 
-green_color = "\033[92m"
-cian_color = "\033[96m"
-blue_color = "\033[94m"
-yellow_color = "\033[93m"
-red_color = "\033[91m"
-negrita = "\033[1m"
-subrayado = "\033[4m"
-normal_color = "\033[0m"
+banners_with_figlet = ('ogre', 'puffy', 'rectangles', 'red_phoenix', 'rounded', 'santa_clara', 'script', 'serifcap', 'slant', 'slscript', 'small', 'small_slant', 'soft', 'speed', 'spliff', 'standard', 'straight', 'varsity', 'train', 'tinker-toy', 'sweet', 'poison', 'swamp_land', 'swan')
 
-# Banner para la terminal al ejecutar
-
-banners = [
-    {
-        '''
-            ____________ ________  ___ _____  _____  _____  _____        _____  _____  _____   ___ 
-            | ___ \\ ___ \\  _  |  \\/  |/ __  \\|  _  |/ __  \\|____ |      / __  \\|  _  |/ __  \\ /   |
-            | |_/ / |_/ / | | | .  . |`' / /'| |/' |`' / /'    / /______`' / /'| |/' |`' / /'/ /| |
-            |  __/|    /| | | | |\\/| |  / /  |  /| |  / /      \\ \\______| / /  |  /| |  / / / /_| |
-            | |   | |\\ \\\\ \\_/ / |  | |./ /___\\ |_/ /./ /___.___/ /      ./ /___\\ |_/ /./ /__\\___  |
-            \\_|   \\_| \\_|\\___/\\_|  |_/\\_____/ \\___/ \\_____/\\____/       \\_____/ \\___/ \\_____/   |_/
-        '''
-    },
-    {
-        '''
-            ██████╗ ██████╗  ██████╗ ███╗   ███╗██████╗  ██████╗ ██████╗ ██████╗       ██████╗  ██████╗ ██████╗ ██╗  ██╗
-            ██╔══██╗██╔══██╗██╔═══██╗████╗ ████║╚════██╗██╔═████╗╚════██╗╚════██╗      ╚════██╗██╔═████╗╚════██╗██║  ██║
-            ██████╔╝██████╔╝██║   ██║██╔████╔██║ █████╔╝██║██╔██║ █████╔╝ █████╔╝█████╗ █████╔╝██║██╔██║ █████╔╝███████║
-            ██╔═══╝ ██╔══██╗██║   ██║██║╚██╔╝██║██╔═══╝ ████╔╝██║██╔═══╝  ╚═══██╗╚════╝██╔═══╝ ████╔╝██║██╔═══╝ ╚════██║
-            ██║     ██║  ██║╚██████╔╝██║ ╚═╝ ██║███████╗╚██████╔╝███████╗██████╔╝      ███████╗╚██████╔╝███████╗     ██║
-            ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝ ╚═════╝ ╚══════╝╚═════╝       ╚══════╝ ╚═════╝ ╚══════╝     ╚═╝
-        '''
-    },
-    {
-        '''
-            here
-        '''
-    },
-    {
-        '''
-            here
-        '''
-    },
-    {
-        '''
-            here
-        '''
-    },
-    {
-        '''
-            here
-        '''
-    },
-    {
-        '''
-            here
-        '''
-    },
-    {
-        '''
-            here
-        '''
-    },
-    {
-        '''
-            here
-        '''
-    },
-    {
-        '''
-            here
-        '''
-    },
-    {
-        '''
-            here
-        '''
-    },
-]
-
-banners_with_figlet = ('ogre', 'puffy', 'poison', 'rectangles', 'red_phoenix', 'rounded', 'santa_clara', 'script', 'serifcap', 'slant', 'slscript', 'small', 'small_slant', 'soft', 'speed', 'spliff', 'standard', 'straight', 'varsity', 'train', 'tinker-toy', 'sweet', 'swamp_land', 'swan')
-
-def printBanner(color: str = blue_color, bold: bool = True):
-    if(bold == True):
-        print(f'''{negrita} {color}
-        ____________ ________  ___ _____  _____  _____  _____        _____  _____  _____   ___ 
-        | ___ \\ ___ \\  _  |  \\/  |/ __  \\|  _  |/ __  \\|____ |      / __  \\|  _  |/ __  \\ /   |
-        | |_/ / |_/ / | | | .  . |`' / /'| |/' |`' / /'    / /______`' / /'| |/' |`' / /'/ /| |
-        |  __/|    /| | | | |\\/| |  / /  |  /| |  / /      \\ \\______| / /  |  /| |  / / / /_| |
-        | |   | |\\ \\\\ \\_/ / |  | |./ /___\\ |_/ /./ /___.___/ /      ./ /___\\ |_/ /./ /__\\___  |
-        \\_|   \\_| \\_|\\___/\\_|  |_/\\_____/ \\___/ \\_____/\\____/       \\_____/ \\___/ \\_____/   |_/
-        {normal_color}''')
+# Función para imprimir distintos banners con el módulo figlet, recibe algunos parametros para aumentar la personalización
+def figlet_banner(text:str = 'PROM2023-2024', color:str = "\033[93m", banner_index:int = 0, bold:bool = True, font_width:int = 140, align:str = 'center'):
+    if bold:
+        negrita = "\033[1m"
     else:
-        print(f'''{color}
-        ____________ ________  ___ _____  _____  _____  _____        _____  _____  _____   ___ 
-        | ___ \\ ___ \\  _  |  \\/  |/ __  \\|  _  |/ __  \\|____ |      / __  \\|  _  |/ __  \\ /   |
-        | |_/ / |_/ / | | | .  . |`' / /'| |/' |`' / /'    / /______`' / /'| |/' |`' / /'/ /| |
-        |  __/|    /| | | | |\\/| |  / /  |  /| |  / /      \\ \\______| / /  |  /| |  / / / /_| |
-        | |   | |\\ \\\\ \\_/ / |  | |./ /___\\ |_/ /./ /___.___/ /      ./ /___\\ |_/ /./ /__\\___  |
-        \\_|   \\_| \\_|\\___/\\_|  |_/\\_____/ \\___/ \\_____/\\____/       \\_____/ \\___/ \\_____/   |_/
-        {normal_color}''')
+        negrita = ''
+    
+    custom_fig = Figlet(font=banners_with_figlet[banner_index], width=font_width, justify=align)
+    print(f"{color}{negrita}{custom_fig.renderText(text)}")
+    return f"{color}{negrita}{custom_fig.renderText(text)}"
 
-def printBanner2(color: str = blue_color, bold: bool = True):
-    if(bold == True):
-        print(f'''{negrita} {color}
-        ██████╗ ██████╗  ██████╗ ███╗   ███╗██████╗  ██████╗ ██████╗ ██████╗       ██████╗  ██████╗ ██████╗ ██╗  ██╗
-        ██╔══██╗██╔══██╗██╔═══██╗████╗ ████║╚════██╗██╔═████╗╚════██╗╚════██╗      ╚════██╗██╔═████╗╚════██╗██║  ██║
-        ██████╔╝██████╔╝██║   ██║██╔████╔██║ █████╔╝██║██╔██║ █████╔╝ █████╔╝█████╗ █████╔╝██║██╔██║ █████╔╝███████║
-        ██╔═══╝ ██╔══██╗██║   ██║██║╚██╔╝██║██╔═══╝ ████╔╝██║██╔═══╝  ╚═══██╗╚════╝██╔═══╝ ████╔╝██║██╔═══╝ ╚════██║
-        ██║     ██║  ██║╚██████╔╝██║ ╚═╝ ██║███████╗╚██████╔╝███████╗██████╔╝      ███████╗╚██████╔╝███████╗     ██║
-        ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝ ╚═════╝ ╚══════╝╚═════╝       ╚══════╝ ╚═════╝ ╚══════╝     ╚═╝
-                                                                                                            
-        {normal_color}''')
-    else:
-        print(f'''{color}
-        ____________ ________  ___ _____  _____  _____  _____        _____  _____  _____   ___ 
-        | ___ \\ ___ \\  _  |  \\/  |/ __  \\|  _  |/ __  \\|____ |      / __  \\|  _  |/ __  \\ /   |
-        | |_/ / |_/ / | | | .  . |`' / /'| |/' |`' / /'    / /______`' / /'| |/' |`' / /'/ /| |
-        |  __/|    /| | | | |\\/| |  / /  |  /| |  / /      \\ \\______| / /  |  /| |  / / / /_| |
-        | |   | |\\ \\\\ \\_/ / |  | |./ /___\\ |_/ /./ /___.___/ /      ./ /___\\ |_/ /./ /__\\___  |
-        \\_|   \\_| \\_|\\___/\\_|  |_/\\_____/ \\___/ \\_____/\\____/       \\_____/ \\___/ \\_____/   |_/
-        {normal_color}''')
+
 
 if __name__ == "__main__":
-    # printBanner(yellow_color, False)
-    # printBanner2()
-    # print(banners[2])
-
-    # print(Figlet().getFonts())
+    print(figlet_banner())
 
     #* font_width = 140
     # font_index = 8
@@ -136,16 +25,15 @@ if __name__ == "__main__":
     # custom_fig = Figlet(font=banners_with_figlet[font_index], width=font_width)
     #* print(custom_fig.renderText(text))
 
-    font_width = 140
-    text = 'PROM2023-2024'
-    for font in banners_with_figlet:
+    # font_width = 140
+    # text = 'PROM2023-2024'
+    # for font in banners_with_figlet:
         # font_index = 8
 
-        custom_fig = Figlet(font=font, width=font_width)
-        print(custom_fig.renderText(text))
+        #todo custom_fig = Figlet(font=font, width=font_width)
+        #todo print(custom_fig.renderText(text))
     # for font in Figlet().getFonts():
         # try:
-            #* ogre - puffy - poison - rectangles - red_phoenix - rounded - santa_clara - script - serifcap - slant - slscript - small - small_slant - soft - speed - spliff - standard - straight - varsity - train - tinker-toy - sweet - swamp_land - swan
             # custom_fig = Figlet(font=font, width=font_width)
             # print(font)
             # print(custom_fig.renderText('PROM2023-2024'))
