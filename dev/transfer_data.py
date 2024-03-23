@@ -1,5 +1,6 @@
 import re #Expresión regular
 import socket
+import pyttsx3
 
 # Este fichero contendra una clase con todos los métodos y propiedades necesarios para la transferencia de informaciónes entre disitntos archivos, esto con el fin de tener un código más modularizado y limpio.
 
@@ -34,9 +35,11 @@ class Transaction:
         self.inverted_yellow_text       = "\033[7;93m"
         self.bold_yellow_background     = "\033[1;43m"
         self.bold_green_background      = "\033[1;42m"
+        self.subrayado                  = "\033[4m"
         self.warning_template = f"{self.yellow_color}{self.negrita}ADVERTENCIA: {self.normal_color}"
         self.err_template = f"{self.red_color}{self.negrita}ERROR: {self.normal_color}"
 
+    #* Función para probar que todos los códigos de color funcionan correctamente
     def test_colors(self):
         print(self.white_color + ' Hola ¿Cómo estás? ' + color.normal_color)
         print(self.negrita + ' Hola ¿Cómo estás? ' + color.normal_color)
@@ -63,13 +66,15 @@ class Transaction:
         print(self.inverted_yellow_text + ' Hola ¿Cómo estás? ' + color.normal_color)
         print(self.bold_yellow_background + ' Hola ¿Cómo estás? ' + color.normal_color)
         print(self.bold_green_background + ' Hola ¿Cómo estás? ' + color.normal_color)
+        print(self.subrayado + ' Hola ¿Cómo estás? ' + color.normal_color)
 
+    #* Función de config file optimizada para crear archivo de configuración
     def create_config_file(self):
         with open('dev\\'+nombre_archivo, 'w') as archivo:
             return True
         return False
 
-
+    #* Rellenar archivo de configuración con datos ingresados por usuario
     def initial_config(self):
         try:
             text_plain_enter = '\n'
@@ -97,30 +102,28 @@ class Transaction:
             lang = f"language: {lang}"
 
             #* User re.sub para remplazar en expresión regular para formato de hora
-            def validate_hour(text_input:str):
-                text_input.strip()
-                if re.match(r"^12*24*$", text_input):
-                    print('correcto')
+            def validate_hour(hour):
+                if re.match(r"^12$", hour):
+                    return "%H:%M %p"
+                elif re.match(r"^24$", hour):
+                    return "%H:%M %p"
                 else:
-                    print('Incorrecto')
-            hour_format = int(input('Formato de hora (12 / 24): '))
-            regEx = re.findall(r'\d{2,2}')
-            while hour_format != 12:
-                if hour_format == 24:
-                    break
-                print(warning_template+'Entrada invalida, intentalo nuevamente')
-                hour_format = int(input('Formato de hora (12 / 24): '))
+                    return False
 
-            if hour_format == 12:
-                hour_format = "%I:%M %p"
-            else:
-                hour_format = "%H:%M %p"
+            hour_format = validate_hour(input('Formato de hora (12 / 24): ').strip().replace(' ', ''))
+            while hour_format == False:
+                print(self.warning_template+'Entrada invalida, intentalo nuevamente')
+                hour_format = validate_hour(input('Formato de hora (12 / 24): ').strip().replace(' ', ''))
 
             hour_format = f"hour_format: {hour_format}"
 
             #* Seleccionar voz
-            engine = pyttsx3.init()
+            def validate_voice(index:int, max_lengh:int):
+                return index if type(index) == int and index in range(max_lengh+1) else False
+
+
             try:
+                engine = pyttsx3.init()
                 voices = engine.getProperty('voices')
                 print(f"{self.yellow_color}Las voces disponibles son proporcionales a la cantidad de idiomas instalados{self.normal_color} {text_plain_enter}")
 
@@ -130,50 +133,53 @@ class Transaction:
                     voice_name = voice_name.replace('Microsoft', '')
                     voice_name = voice_name.replace('Desktop', '')
                     # ϟ ↦ ↯ ↪ ⇆ ⇢ ⇉ ⇨ ➜ ➠ ➸ ➵ ⤨ ⟼ ☠ ✘ ッ ヅ ツ 
-                    print(f'{self.red_color} {self.negrita} ID: {self.green_color} {index}  {self.red_color} ヅ {self.normal_color}{self.cian_color} {voice_name} {self.normal_color}')
+                    print(f'{self.red_color} {self.negrita} ID: {self.green_color} {index}  {self.red_color} ヅ {self.normal_color}{self.cian_color}{voice_name} {self.normal_color}')
                     print(f'{self.yellow_color} - - - - - - - - - - - - {self.normal_color}')
                     index = index + 1
 
-                print(f"{self.yellow_color}{self.negrita}= = Escoge una voz escribiendo su ID = = {self.normal_color} {text_plain_enter}")
-                voice_number = int(input('Voz preferida (0, 1, 2...)(int): '))
+                print(f"{self.yellow_color}{self.negrita}= = Escoge una voz escribiendo su ID = ={self.normal_color} {text_plain_enter}")
 
-                while(voice_number < 0 or voice_number > len(voices)):
-                    voice_number = 0
-                    print(f"{self.err_template} {self.red_color} {self.negrita}DATO INVALIDO. {self.normal_color}")
-                    voice_number = int(input('Voz preferida (0, 1, 2...): '))
-
+                voice_number = validate_voice(int(input('Voz preferida (0, 1, 2...)(int): ')), len(voices))
+                # is para comprobar que sea exactamente igual a False y que el '0' no se interprete como False
+                while voice_number is False:
+                    voice_number = validate_voice(int(input('Voz preferida (0, 1, 2...)(int): ')), len(voices))
                 engine.setProperty('voice', voices[voice_number].id)
+
             except IndexError as err:
                 print(f"{self.err_template} {err}")
-                print(f"{warning_template}Aplicando configuración por defecto...")
+                print(f"{self.warning_template}Aplicando configuración por defecto...")
                 voice_number = 0
                 engine.setProperty('voice', voices[voice_number].id)
             except ValueError as err:
                 print(f"{self.err_template} {err}")
-                print(f"{warning_template}Aplicando configuración por defecto...")
+                print(f"{self.warning_template}Aplicando configuración por defecto...")
                 voice_number = 0
                 engine.setProperty('voice', voices[voice_number].id)
 
             voice = f"voice_number: {voice_number}"
 
-            print(f"{self.green_color}= = Configuración finalizada. = ={self.normal_color}")
-            print(f"{self.green_color}{self.negrita}= = Resumen de configuración: = ={self.normal_color} {text_plain_enter}")
+            def summary():
+                # print(f"{self.green_color}= = Configuración finalizada. = ={self.normal_color}")
+                print(f"{self.green_color}{self.negrita}= = Resumen de configuración: = ={self.normal_color} {text_plain_enter}")
 
-            print(f"{self.yellow_color} {name} {self.normal_color}")
-            print(f"{self.yellow_color} {lang} {self.normal_color}")
-            print(f"{self.yellow_color} {hour_format} {self.normal_color}")
-            print(f"{self.yellow_color} {voice} {self.normal_color}")
+                print(f"{self.yellow_color} {name} {self.normal_color}")
+                print(f"{self.yellow_color} {lang} {self.normal_color}")
+                print(f"{self.yellow_color} {hour_format} {self.normal_color}")
+                print(f"{self.yellow_color} {voice} {self.normal_color}")
 
             data_dictionary = [name+text_plain_enter, lang+text_plain_enter, hour_format+text_plain_enter, voice]
 
-            with open('dev\\'+nombre_archivo, 'w') as archivo:
-                archivo.writelines(data_dictionary)
-                return True
+            def fill_file(data:dict):
+                with open('dev\\'+nombre_archivo, 'w') as archivo:
+                    archivo.writelines(data_dictionary)
+                    return True
+
+            return fill_file(data_dictionary)
         except KeyboardInterrupt:
-            print(f'\n{warning_template}Acción cancelada por el usuario.')
+            print(f'\n{self.warning_template}Acción cancelada por el usuario.')
 
 
-
+    #* Comprobar si el archivo de configuración está correcto (comprueba si existe y si tiene todo el contenido)
     def check_file_integrity(self, ruta:str = 'dev\\'+nombre_archivo, lines:int = 3):
         if(os.path.isfile(ruta)):
             with open(ruta, 'r') as archivo:
@@ -185,7 +191,7 @@ class Transaction:
             return False
 
 
-
+    #* Leer archivo de configuración y devolver diccionario con los resultados obtenidos
     def readfile(self):
         try:
             with open('dev\\'+nombre_archivo, 'r') as archivo:
@@ -208,7 +214,7 @@ class Transaction:
             return False
 
 
-
+    #* Función para leer archivo de números telefonico
     def read_phone_numbers(self, name:str):
         #! ESTA FUNCIÓN NO CONTROLA ACENTOS HASTA AHORA.
         if(self.check_file_integrity('dev\\contacts.txt', 3)):
@@ -231,6 +237,7 @@ class Transaction:
             # return 'Error en archivo'
             return 'Archivo no encontrado'
 
+    #* Función para revisar si el usuario tiene conección a internet (para ejecutar módulo de gpt) (Aun no esta lista la función)
     def check_internet_connection():
         try:
             socket.create_connection(("www.google.com", 80), timeout=5)
@@ -244,8 +251,8 @@ if __name__ == '__main__':
     transactions = Transaction()
     # color = Transaction()
     # color.test_colors()
-    # transactions.initial_config()
-    transactions.check_internet_connection()
+    transactions.initial_config()
+    # transactions.check_internet_connection()
     
     # if(os.path.isfile('dev\\contacts.txt')):
     #     print('en ruta')
