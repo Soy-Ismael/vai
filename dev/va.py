@@ -13,26 +13,25 @@
 #todo 6 - Convertir en audio y reproducir 🦻
 
 # Importaciones 
-import speech_recognition as sr
-import pyttsx3
-from dotenv import load_dotenv
-import datetime
-import pywhatkit
-import os
-import random #Nuevo modulo para generar números aleatorios
+import speech_recognition as sr # Módulo para reconocer audio y convertir a texto (STT)
+import pyttsx3 # Módulo para convertir de texto a audio (TTS)
+from dotenv import load_dotenv # Módulo para cargar api-key en archivo .env
+import datetime # Módulo para manejar la hora
+import pywhatkit # Módulo para enviar mensajes de whatapp y abrir contenido en youtube (es un kit)
+import os # Módulo para administrar cosas afines al sistema operativo (rutas, cierre de programas, etc.)
+import random #Nuevo módulo para generar números aleatorios
 import wikipedia #Nuevo modulo para resumir articulos de wikipedia
 import winsound #Nuevo modulo para reproducir sonido, (no es necesario instalar con pip)
 # import urllib.request #Nuevo modulo para conteo de suscriptores
-import pyjokes
-import spoty
+import pyjokes # Módulo para chistes
+# import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
-# from banner import printBanner #Nuevo modulo para banner
-from banner import figlet_banner #Nuevo modulo para banner
-from config import check_config, create_config_file, initial_config #Nuevo modulo para configuracion de asistente
-from readfile import check_file_integrity, readfile
-from transfer_data import Transaction
+from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
+from config import check_config, create_config_file, initial_config # Módulo local para configuracion de asistente (config.txt file)
+from readfile import check_file_integrity, readfile # Módulo local para leer archivo de configuración
+from transfer_data import Transaction # Módulo local para sustituir a config y readfile, ademas, añade nuevos métodos
 # Open AI - Chat Gpt
-from openai import OpenAI
+from openai import OpenAI # Módulo para inteligencia artificial
 # from audio import tts
 # Google - Gemini
 # import pathlib
@@ -67,24 +66,33 @@ from openai import OpenAI
 # Instanciar clase Transaction
 Data_transfer = Transaction()
 
-#* Colors
-green_color = "\033[92m"
-cian_color = "\033[96m"
-blue_color = "\033[94m"
-yellow_color = "\033[93m"
-red_color = "\033[91m"
-negrita = "\033[1m"
-subrayado = "\033[4m"
-normal_color = "\033[0m"
+#* Color templates
+# green_color = "\033[92m"
+# cian_color = "\033[96m"
+# blue_color = "\033[94m"
+# yellow_color = "\033[93m"
+# red_color = "\033[91m"
+# negrita = "\033[1m"
+# subrayado = "\033[4m"
+# normal_color = "\033[0m"
 
-#* Templates
+green_color = Data_transfer.green_color
+cian_color = Data_transfer.cian_color
+blue_color = Data_transfer.blue_color
+yellow_color = Data_transfer.yellow_color
+red_color = Data_transfer.red_color
+negrita = Data_transfer.negrita
+subrayado = Data_transfer.subrayado
+normal_color = Data_transfer.normal_color
+
+#* text templates
 user_template = f"{negrita}Usuario: {normal_color}"
 # va_template = f"{negrita}{name}: {normal_color}" #Declarada más abajo
 err_template = f"{red_color}{negrita}ERROR: {normal_color}"
 warning_template = f"{yellow_color}{negrita}ADVERTENCIA: {normal_color}"
 
 
-# De texto a voz - Modulo 6
+#* De texto a voz - Modulo 6
 engine = pyttsx3.init()
 
 try:
@@ -115,16 +123,19 @@ except IndexError:
 # for voice in voices:
 #     print(voice)
 figlet_banner(text='USAR API CON PRUDENCIA', banner_index=3)
+
+#* Función para hablar, recibe el texto a reproducir como parametro
 def talk(text):
     engine.say(text)
     engine.runAndWait()
 
+#* Función para detener el habla en caso de ser necesario
 def no_talk():
     engine.stop()
 # talk("Hola, ¿como estas?")
 
 
-# De voz a texto - Modulo 1 & 2
+#* De voz a texto - Modulo 1 & 2
 rec = sr.Recognizer()
 
 # Ajuste del umbral de audio (En términos simples, si la energía (volumen) de la señal de audio es mayor que el umbral, el sistema considera que está recibiendo voz. Si la energía es menor que el umbral, el sistema considera que no hay voz y que cualquier sonido que esté recibiendo es simplemente ruido)
@@ -198,13 +209,10 @@ def listen():
 
 
 #* IMPORTACIÓN DE FUNCIONES DE ARCHIVOS EXTERNOS
-# La funcion printBanner se importa del archivo banner.py y recibe el color del banner como primer parametro opcional y un segundo parametro opcional booleano que define si el banner se imprime en negrita o no
+# figlet_banner()
 
-# printBanner()
-# check_config()
-
-# print('Check config', check_config())
 try:
+    #* Función para cargar los datos de archivo de configuración en las variables de asistente
     def load_data(data_to_extract):
         global name, lang, wiki_lang, time_format, voice
         # config_name, config_lang, time_format, voice = data_to_extract
@@ -229,7 +237,7 @@ try:
         # print('Formato de hora: ' + time_format)
         # print('Indice de voz: ' + voice)
 
-
+    #* Ejecutar función que lee archivo de configuración
     data = readfile()
     if type(data) != dict or not check_file_integrity():
         # print(err_template+'Archivos de configuración corruptos')
@@ -245,6 +253,7 @@ except KeyboardInterrupt:
     print(f'\n{warning_template}Acción cancelada por el usuario.')
 
 
+#* Función para crear archivo de configuración (config.txt) mediante la voz (no se usa aun)
 def init_configuration():
     try:
         response:str = listen()
@@ -273,20 +282,17 @@ def init_configuration():
 
 # init_configuration()
 
-#* Templates 2
+#* Templates 2 - variable faltante, es necesario colocarla aquí luego de que se tiene el valor de "name"
 va_template = f"{negrita}{name}: {normal_color}"
 
-#* Ejecutar la función para escuchar al usuario
+#* Ejecutar la función para escuchar al usuario y almacenar resultado en variable text para su futura evaluación
 text = listen()
 # text = {'text' : 'envía Hola ¿cómo estas? a raylin', 'status': True}
 
 # print(Transaction)
 # print(type(Transaction))
 
-# listen()
-#* =========================
-#* PARTE DE Ismael Y Xaviel - con open AI
-#* =========================
+#* PARTE DE Ismael Y Xaviel - con open AI - módulo 3
 # Cargar las variables de entorno (variables contenidas en archivos .env)
 load_dotenv()
 
@@ -298,7 +304,7 @@ load_dotenv()
 
 #* Chat GPT
 
-# *INICIO CHAT GPT - Modulo 3 & 4
+# *INICIO CHAT GPT - Modulo 3, 4 & 5
 #* Este primer bloque se utiliza para interacciones con usuario
 def run_gpt():
     try:
@@ -345,8 +351,7 @@ def run_gpt():
 
 # run_gpt()
 
-#* Modulo 5
-#* Este segundo bloque se utiliza para interpretación y ejecución de peticiones de usuario (se ejecuta por detras)
+#* Este segundo bloque se utiliza para interpretación y ejecución de peticiones de usuario (se ejecuta por detras) (No se usa aun)
 
 # try:
 #     completion = client.chat.completions.create(
@@ -361,8 +366,6 @@ def run_gpt():
 #     print(err)
 # *FINAL CHAT GPT
 
-#* Ejecutar accion (funcion para escuchar musica en youtube)
-
 #* Enviar mensajes de whatapp
 # pywhatkit sirve para enviar mensajes de WhatsApp: Utilice la función pywhatkit.sendwhatmsg() para enviar mensajes de WhatsApp a cualquier número de WhatsApp en un momento determinado. La sintaxis es la siguiente: pywhatkit.sendwhatmsg("número de móvil del receptor", "mensaje", horas, minutos). Asegúrese de que el número de móvil del receptor esté en formato de cadena y el código del país se mencione antes del número de móvil. Las horas siguen el formato de 24 horas. Los minutos son los minutos de la hora programada para el mensaje (00-59). Por ejemplo, para enviar un mensaje a un número de WhatsApp a las 22:28, utilice la siguiente sintaxis: pywhatkit.sendwhatmsg("+91xxxxxxxxxx", "Hola desde Mi Diario Python", 22, 28)
 
@@ -370,6 +373,7 @@ def run_gpt():
 # print(text['text'])
 # print(text['status'])
 
+#* Módulo 4 - realización de acciones según palabras claves de activación
 def run():
     global text
     if 'reproduce' in text['text']:
@@ -382,8 +386,8 @@ def run():
         else:
             music = text['text'].replace('reproduce', '')
             music = music.replace('jarvis', '')
-            talk('Reproduciendo ' + music)
             pywhatkit.playonyt(music)
+            talk('Reproduciendo ' + music)
             # print(f'{negrita}{name}: {normal_color}Reproduciendo ' + music)
             print(va_template + 'Reproduciendo' + music)
         return True
@@ -618,9 +622,9 @@ def run():
 # except TypeError:
 #     pass
 
-#* NUEVO MODULO PARA EJECUCIÓN DE ACCIONES
+#* EJECUCIÓN DE ACCIONES - con control de excepciones
 try:
-    print('Si quiere usar inteligencia artificial en su respuesta, por favor, descomenta la linea 624, recuerda utilizar la API con prudencia puesto que supone un costo cada petición')
+    print('Si quiere usar inteligencia artificial, por favor, descomenta la linea 624, recuerda utilizar la API con prudencia puesto que supone un costo cada petición')
     run()
     # if not run():
     #     talk(run_gpt())
