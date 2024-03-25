@@ -1,0 +1,22 @@
+name: Merge to Main
+
+on:
+  push:
+    branches:
+      - feature
+      - display
+      - file
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Merge changes to main branch
+        run: |
+          git checkout main
+          git merge ${{ github.ref }}
+          git push origin main

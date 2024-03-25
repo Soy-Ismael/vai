@@ -4,7 +4,7 @@ __pycache__
 *.env
 *.cs
 *.rar
-# dev/audio.py
+dev/audio.py
 # dev/config.py
 dev/prueba.py
 dev/pruebas2.py
