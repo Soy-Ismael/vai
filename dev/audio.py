@@ -1,10 +1,12 @@
 import openai
 import os
 import winsound
+import dotenv
 
 # Initialize the OpenAI client
-client = openai.OpenAI(api_key='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')
-# print(client.api_key)
+dotenv.load_dotenv()
+client = openai.OpenAI(api_key = os.environ.get('OPENAI_API_KEY'))
+print(client.api_key)
 
 # Set the audio file path
 def listen():
@@ -80,7 +82,7 @@ def tts(input_text:str = "Hola, esto es una prueba", voice:str = "nova", openai_
     # with open("dev/output.mp3", "wb") as f:
         # f.write(response.stream_to_file())
 
-# tts('¿Podrias decirme la definición de clima?')
+tts('Dos elefantes se balanceaban sobre la tela de una araña')
 # winsound.PlaySound('sounds/output.mp3', winsound.SND_FILENAME)
 
 # whisper() tiene problemas
