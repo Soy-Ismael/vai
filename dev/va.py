@@ -631,10 +631,7 @@ def run():
 
 #* EJECUCIÓN DE ACCIONES - con control de excepciones
 try:
-    print('Si quiere usar inteligencia artificial, por favor, descomenta la linea 624, recuerda utilizar la API con prudencia puesto que supone un costo cada petición')
     run()
-    # if not run():
-    #     talk(run_gpt())
 
 except NameError as err:
     print("Entrada de audio inválida, intentalo nuevamente")
