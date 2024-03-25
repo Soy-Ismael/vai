@@ -23,7 +23,7 @@ El proyecto VA será un asistente virtual potenciado con IA con la capacidad de 
 ([**Curso de GIT (opcional)**](https://youtu.be/VdGzPZ31ts8?si=Y8XVWMdyve40dQ8G))   
 
 
-[![Curso de git y github desde 0](https://img.youtube.com/vi/3GymExBkKjE/maxresdefault.jpg "Curso de git y github desde cero")](https://youtu.be/3GymExBkKjE?si=rHF7tfVCrc3IHw0i)
+[![Curso de git y GitHub desde 0](https://img.youtube.com/vi/3GymExBkKjE/maxresdefault.jpg "Curso de git y github desde cero")](https://youtu.be/3GymExBkKjE?si=rHF7tfVCrc3IHw0i)
 
 <div align="center">
     <br>
@@ -59,7 +59,7 @@ Deben ejecutar los siguientes comandos:
 
 **Nota:** Los comentarios deben describir el cambio realizado que se va a subir
 
-***
+<!-- *** -->
 
 <!-- ## Variables de entorno
 Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno a su archivo .env
@@ -69,15 +69,15 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 ***
 
 ## Ejemplos de uso
-* reproduce romeo santos / reproduce sus huellas ⭐
-* busca que es incoloro
-* ofréceme información sobre la primera guerra mundial ⭐
-* ofréceme información en ingles sobre la primera guerra mundial
-* envia "como estas" a Daniel (en desarrollo) ⭐
-* qué hora es
-* ¿estás ahí?
-* ¿cómo te llamas?
-* hasta luego
+* Reproduce romeo santos / reproduce sus huellas ⭐
+* Busca que es incoloro
+* Ofréceme información sobre la Primera Guerra Mundial ⭐
+* Ofréceme información en inglés sobre la Primera Guerra Mundial
+* Envía "cómo estás" a Daniel (en desarrollo) ⭐
+* ¿Qué hora es?
+* ¿Estás ahí?
+* ¿Cómo te llamas?
+* Hasta luego
 
 ## Dependencias / Módulos
 ### En Windows
@@ -92,65 +92,88 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 ## Análisis de capacidades
 
 ### Hasta el momento el asistente es capaz de:
+**1.0**
 - [x] Reproducir contenido en YouTube
 - [x] Buscar información en Google
 - [x] Resumir artículos de Wikipedia en inglés
 - [x] Enviar mensajes por WhatsApp web
 - [x] Responder con la hora actual a petición
 - [x] Emitir sonido cuando se pueda hablar
-- [x] Imprimir frase "PROMOCION 2023-2024" en la terminal al ejecutar
+- [x] Imprimir frase "PROMOCIÓN 2023-2024" en la terminal al ejecutar
 - [x] Colorear de verde el texto "escuchando..." de verde en la terminal
 - [x] Resumir artículos de Wikipedia en español
 - [x] Añadir texto "Usuario:" y "nombre_asistente:" antes del mensaje en terminal
 - [x] Responder únicamente cuando se mencione el nombre
 - [x] Almacenar la variable de nombre de un archivo local
-- [x] Creaer una palabra clave para saber si el asistente esta a la escucha
+- [x] Crear una palabra clave para saber si el asistente está a la escucha
 - [x] Preguntas si el usuario quiere formato de 12 o 24 horas en el asistente de configuración
 - [x] Revisar porque al mostrar el banner "PROM2023-2024" lanza una advertencia
 - [x] Crear archivo para almacenar contactos con sus números
-- [x] Preguntar al usurio que voz de pyttsx3 desea en función de las disponibles (controlar excepción)
+- [x] Preguntar al usuario qué voz de pyttsx3 desea en función de las disponibles (controlar excepción)
 - [x] Tomar datos del archivo **config.txt**
 - [x] Utilizar modelo de IA y/o IA generativa
+- [x] Revisar porque la función "check_internet_connection" no funciona (data_transfer)
+- [x] Mejorar forma en la que se crea archivo config.txt (regular expressions)
+- [x] Optimizar archivo de readfile.py (se mejoró en "data_transfer.py")
+**2.0**
 
 ### Funciones en desarrollo o por desarrollar
+**RECUERDEN OPTIMIZAR AL MÁXIMO UTILIZANDO LA MENOR CANTIDAD DE MÓDULOS SIEMPRE.**
+**RECUERDEN AÑADIR COMENTARIOS DE TODO LO QUE VAYAN HACIENDO.**
 
-- [ ] Mantenerse escuchando siempre (while True:)
-- [ ] Revisar porque funcion "check_internet_connection" no funciona (data_transfer)
-- [ ] Hacer que el audio resultado de openai tts-1 se reproduzca de inmediato
-- [ ] Implementar reconocimiento de voz con whisper(intento de mejora)
-- [ ] Hacer que el envio de mensaje por whatapp sea asincrono
-- [ ] Reparar envio de mensajes por whatapp con pywhatkit
+**Adamarie**
+- [ ] Hacer que el asistente pueda ofrecer la temperatura y tiempo climático
+- [ ] Crear comando para apagar el computador (quizás ejecutando un archivo .bat con los comandos correctos desde Python)
+
+**Xaviel**
+- [ ] Hacer que el audio resultado de OpenAI tts-1 se reproduzca de inmediato (no crear archivo de audio)
+- [ ] Implementar reconocimiento de voz con Whisper
+
+**Elianny**
+- [ ] Reparar envío de mensajes por WhatsApp con pywhatkit
+- [ ] Hacer que el envío de mensaje por WhatsApp sea asíncrono
+
+**Jairon**
 - [ ] Preguntar a usuario si quiere usar pywhatkit.send() (ver anotaciones)
-- [ ] Mejorar forma en la que se crea archivo config.txt (regular expressions)
-- [ ] Optimizar archivo de readfile.py
-- [ ] Recordar peticiones anteriores para charla amena
-- [ ] Conteo de suscriptores de un youtuber
-- [ ] Reproducir contenido en plataformas distintas a youtube
-- [ ] Eliminar todo el texto anterior a la palabra clave donde sea necesario (utilidad de VA)
-- [ ] Guardar en un **log.txt** el historial de peticiones 
-- [ ] Compatibilidad con productos Govee
-    
-    El archivo log.txt se mantendrá **oculto** y se mostrará a **petición de usuario**, esto por un comando de voz o bien por un botón mediante una posible interfaz gráfica
+- [ ] Optimizar funciones de archivo data_transfer.py
+
+**Jared**
+- [ ] Desarrollo de interfaz gráfica
+
+**Jhasmin**
+- [ ] Realizar conteo de suscriptores de un youtuber
+- [ ] Reproducir contenido en plataformas distintas a YouTube (Spotify)
+
+**Nayeli**
+- [ ] Recordar peticiones anteriores para charla amena (IA)
+- [ ] Eliminar todo el texto anterior a la palabra clave donde sea necesario (utilidad de VA - .slice() tal vez)
+
+**Raysa**
+- [ ] Guardar en un archivo **log.txt** el historial de peticiones y respuestas 
+- [ ] Compatibilidad con productos Govee (encender, apagar, cambiar color, intensidad y más (para luces govee))
+
+**No hacer**
+- [ ] Mantenerse escuchando siempre (while True:)
 
 ***
 
 ## Anotaciones
-* Si el usuario quiere utilizar pywhatkit.send() (enviar mensajes mediante whatapp web) entonces esto se debe guardar en el archivo de config.txt, si su respuesta es sí, entonces debe crear un archivo contacts.txt con el formato clave:valor con el número de telefono de todas las personas que el usuario desee (como se muestra en contacts.example.txt)
-* El archivo **log.txt** debe estar oculto en un principio
-* El archivo **PyWhatKit_DB.txt** con los logs de envíos de mensajes por WhatsApp debe estar **oculto siempre**
-* El archivo local en el que se almacena la variable de nombre puede ser uno llamado **config.txt** y que este oculto al usuario
-* La palabra clave para verificar si el asistente esta a la escucha puede ser "¿Estas ahí?" y el asistente responde si escucha y si no responde es porque no escucha.
-* Se debe crear un archivo en formato clave valor con el nombre del contacto y su número de telefono para enviar mensajes de whatapp mediante whatapp web con la utilidad pywhatkit.send()
+* Si el usuario quiere utilizar pywhatkit.send() (enviar mensajes mediante WhatsApp web) entonces esto se debe guardar en el archivo de config.txt, si su respuesta es sí, entonces debe crear un archivo contacts.txt con el formato clave:valor con el número de teléfono de todas las personas que el usuario desee (como se muestra en contacts.example.txt), si su respuesta es no entonces se guarda esta información en config.txt y no se realiza nada más.
+* El archivo **log.txt** debe estar **oculto** en un principio y se mostrará a **petición de usuario**, esto por un comando de voz o bien por un botón mediante una posible interfaz gráfica.
+* El archivo **PyWhatKit_DB.txt** con los logs de envíos de mensajes por WhatsApp debe estar **oculto siempre**.
+* El archivo local en el que se almacena la variable de nombre puede ser uno llamado **config.txt** y que esté oculto al usuario.
+* La palabra clave para verificar si el asistente está a la escucha puede ser "¿Estás ahí?", y el asistente responde si escucha y si no responde es porque no escucha.
+* Se debe crear un archivo en formato clave valor con el nombre del contacto y su número de teléfono para enviar mensajes de WhatsApp mediante WhatsApp web con la utilidad pywhatkit.send()
 * Antes de cada mensaje se debe añadir el rol de quien propone dicho mensaje, antes del mensaje del usuario debe aparecer el texto "Usuario: ..." y antes del mensaje del asistente "nombre_asistente: ..."
-* El archivo **config.txt** va a contener informaciones para la configuración del asistente y se ejecutara la primera vez que se ejecute el software, para saber cuando se ejecuta por primera vez podemos preguntar con Python "¿el archivo config.txt existe?", si no existe es la primera vez que se ejecuta, se crea el archivo con los siguientes datos:
+* El archivo **config.txt** va a contener informaciones para la configuración del asistente y se ejecutará la primera vez que se ejecute el software, para saber cuando se ejecuta por primera vez podemos preguntar con Python "¿el archivo config.txt existe?", si no existe es la primera vez que se ejecuta, se crea el archivo con los siguientes datos:
     1. Nombre del asistente
     2. Formato de fecha preferido
-    3. Idioma para la conversion del audio de entrada
+    3. Idioma para la conversión del audio de entrada
     4. Voz del asistente
     5. Rol o postura del asistente
-* Es necesario optimizar el programa para que corra más rapidamente, para esto podemos utilizar la menor cantidad de modulos posibles y en lugar de importa todo un modulo, solo importar las funciones o propiedades que necesitamos de un modulo.
+* Es necesario optimizar el programa para que corra más rápidamente, para esto podemos utilizar la menor cantidad de módulos posibles y, en lugar de importar todo un módulo, solo importar las funciones o propiedades que necesitamos de un módulo.
 
-**NOTA:** Importar un mismo modulo en 2 archivos distintos no añade peso al programa, el modulo se carga una vez y a partir de ahí siempre que se necesite hace referencia al modulo cargado en memoria.
+**NOTA:** Importar un mismo módulo en 2 archivos distintos no añade peso al programa, el módulo se carga una vez y a partir de ahí siempre que se necesite hace referencia al módulo cargado en memoria.
 
 ***
 
@@ -161,34 +184,35 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 
 | Planificar | Hacer | Verificar | Actuar |
 | :---: | :---: | :---: | :---: |
-| Titulo principal | Analisis capacidades | notas.txt | Placa de desarrollo |
+| Título principal | Análisis de capacidades | notas.txt | Placa de desarrollo |
 | Analizar características, funciones y organización del proyecto | Programar las funciones o características propuestas bajo un mismo estándar de orden | Realizar pruebas en diferentes escenarios de ejecución simulados para garantizar el correcto funcionamiento |Una vez listo el proyecto, cargarlo en la placa de desarrollo y esperar el día de la presentación |
 
 ### Errores en el programa
 * Las voces de **pttsx3** dependen de los idiomas del **usuario** host
-* Manejar **excepción** en caso de que se ejecute el programa **sin** conexión a **internet**
 
-**NOTA:** es necesario un buen microfono para utilizar el software con normalidad, de lo contrario se deberia utilizar la linea alternativa para que el asistente pare de escuchar indefinidamente.
+**NOTA:** es necesario un buen micrófono para utilizar el software con normalidad, de lo contrario se debería utilizar la línea alternativa para que el asistente pare de escuchar indefinidamente.
 
 ### Errores corregidos
-* Manejar la **excepción** en caso de que speech_recognition **no encuentre** microfono
+* Manejar **excepción** en caso de que se ejecute el programa **sin** conexión a **internet**
+* Manejar la **excepción** en caso de que speech_recognition **no encuentre** micrófono
 * Manejar **excepción** en caso de que no se encuentren las **variables de entorno** (.env)
 
 ***
 
 ## Informaciones de interés para los desarrolladores.
 
-* Versión de python: 3.12.1
+* Versión de Python: 3.12.1
 * Versión de pip: 23.3.2
 * Versión de [**dependencias:**](requirements.txt)
 * [**Pilares**](assets/checkpoints_va.jpeg) del proyecto
 
 ### Explicación de ramas
-* **main** rama principal, no se trabaja sobre esta rama, es unicamente para mergear todos los cambios
-* **file** rama para trabajar con nuevos modulos o modulos existentes para el proyecto
-* **feature** rama para desarrollar una nueva caracteristica en el propio archivo del asistente (va.py)
+* **main** rama principal, no se trabaja sobre esta rama, es únicamente para mergear todos los cambios
+* **file** rama para trabajar con nuevos módulos o módulos existentes para el proyecto
+* **feature** rama para desarrollar una nueva característica en el propio archivo del asistente (va.py)
 * **backup** rama para realizar copias de seguridad con regularidad, no se trabaja en esta rama
 * **display** rama para el desarrollo de la interfaz gráfica del asistente
+* **ia** rama para el desarrollo de características relacionadas con inteligencia artificial
 
 ### Comandos para cambiar de rama
 **Cuando inicies a trabajar**
