@@ -38,9 +38,7 @@ import pyjokes # Módulo para chistes
 # import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
 from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
-from config import check_config, create_config_file, initial_config # Módulo local para configuracion de asistente (config.txt file)
-from readfile import check_file_integrity, readfile # Módulo local para leer archivo de configuración
-# Open AI - Chat Gpt
+#* Open AI - Chat Gpt
 from openai import OpenAI # Módulo para inteligencia artificial
 # from audio import tts
 # Google - Gemini
@@ -245,14 +243,14 @@ try:
         # print('Indice de voz: ' + voice)
 
     #* Ejecutar función que lee archivo de configuración
-    data = readfile()
-    if type(data) != dict or not check_file_integrity():
+    data = Data_transfer.readfile()
+    if type(data) != dict or not Data_transfer.check_file_integrity():
         # print(err_template+'Archivos de configuración corruptos')
         (err_template+'Datos de configuración corruptos o inexistentes')
         talk('Error en datos de configuración, por favor restablezca el archivo.')
-        initial_config()
+        Data_transfer.initial_config()
 
-        data = readfile()
+        data = Data_transfer.readfile()
         load_data(data.values())
     else:
         load_data(data.values())
@@ -267,8 +265,8 @@ def init_configuration():
 
         if('sí' in response or 'si' in response):
             print('Entro en si en respuesta')
-            create_config_file()
-            initial_config()
+            Data_transfer.create_config_file()
+            Data_transfer.initial_config()
 
         else:
             print('Entro en no en respuesta')
@@ -587,8 +585,8 @@ def run():
     
     elif 'crea una nueva configuración' in text['text'] :
         talk('Creando archivo de configuración nuevamente')
-        initial_config()
-        load_data(readfile().values())
+        Data_transfer.initial_config()
+        load_data(Data_transfer.readfile().values())
         return True
 
 
