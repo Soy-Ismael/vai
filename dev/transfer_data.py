@@ -1,5 +1,5 @@
 import re #Expresión regular
-import socket
+from socket import gethostbyname, create_connection, error
 import pyttsx3
 
 # Este fichero contendra una clase con todos los métodos y propiedades necesarios para la transferencia de informaciónes entre disitntos archivos, esto con el fin de tener un código más modularizado y limpio.
@@ -218,32 +218,28 @@ class Transaction:
     def read_phone_numbers(self, name:str):
         #! ESTA FUNCIÓN NO CONTROLA ACENTOS HASTA AHORA.
         if(self.check_file_integrity('dev\\contacts.txt', 3)):
-            # return 'Correcto'
             with open('dev\\contacts.txt', 'r') as archivo:
-
-                # test,num = archivo.readline().strip().replace(' ', '').split(':')
                 for line in archivo.readlines():
                     line = line.replace('\n', '')
-                    
-                    name_in_db,number = line.replace(' ', '').split(':')
-                    # name_in_db.replace('á', 'a').replace('é', 'e')
+                    name_in_db,number = line.replace(' ', '').split(':')                    
 
-                    if name.lower() == name_in_db:
-                        # return {'number':number, 'status':True}
-                        # return int(number)
+                    if name.lower() == name_in_db.lower():
                         return number
                 return False
         else:
-            # return 'Error en archivo'
             return 'Archivo no encontrado'
 
     #* Función para revisar si el usuario tiene conección a internet (para ejecutar módulo de gpt) (Aun no esta lista la función)
-    def check_internet_connection():
+    def check_internet_connection(self):
         try:
-            socket.create_connection(("www.google.com", 80), timeout=5)
-            print("Conexión a Internet exitosa.")
-        except (socket.error, socket.timeout):
-            print("Sin conexión a Internet.")
+            gethostbyname("google.com")
+            conexion = create_connection(("google.com", 80), 1)
+            conexion.close()
+            return True
+            # return "Hay conexión a internet..."
+        except error:
+            return False
+            # return "No hay conexión a internet..."
         
 
 
@@ -251,7 +247,8 @@ if __name__ == '__main__':
     transactions = Transaction()
     # color = Transaction()
     # color.test_colors()
-    transactions.initial_config()
+    # transactions.initial_config()
+    print(transactions.check_internet_connection())
     # transactions.check_internet_connection()
     
     # if(os.path.isfile('dev\\contacts.txt')):

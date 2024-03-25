@@ -12,13 +12,24 @@
 #todo 5 - Preparar respuesta (en texto) 💬
 #todo 6 - Convertir en audio y reproducir 🦻
 
+#* Comprobar conectividad del usuario
+from transfer_data import Transaction # Módulo local para sustituir a config y readfile, ademas, añade nuevos métodos
+import os # Módulo para administrar cosas afines al sistema operativo (rutas, cierre de programas, etc.)
+
+# Instanciar clase Transaction
+Data_transfer = Transaction()
+
+if Data_transfer.check_internet_connection():
+    continue
+else:
+    os._exit()
+
 # Importaciones 
 import speech_recognition as sr # Módulo para reconocer audio y convertir a texto (STT)
 import pyttsx3 # Módulo para convertir de texto a audio (TTS)
 from dotenv import load_dotenv # Módulo para cargar api-key en archivo .env
 import datetime # Módulo para manejar la hora
 import pywhatkit # Módulo para enviar mensajes de whatapp y abrir contenido en youtube (es un kit)
-import os # Módulo para administrar cosas afines al sistema operativo (rutas, cierre de programas, etc.)
 import random #Nuevo módulo para generar números aleatorios
 import wikipedia #Nuevo modulo para resumir articulos de wikipedia
 import winsound #Nuevo modulo para reproducir sonido, (no es necesario instalar con pip)
@@ -29,7 +40,6 @@ import pyjokes # Módulo para chistes
 from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
 from config import check_config, create_config_file, initial_config # Módulo local para configuracion de asistente (config.txt file)
 from readfile import check_file_integrity, readfile # Módulo local para leer archivo de configuración
-from transfer_data import Transaction # Módulo local para sustituir a config y readfile, ademas, añade nuevos métodos
 # Open AI - Chat Gpt
 from openai import OpenAI # Módulo para inteligencia artificial
 # from audio import tts
@@ -62,9 +72,6 @@ from openai import OpenAI # Módulo para inteligencia artificial
 #* Default const - open AI mode#
 #  assistant_role: "Eres un asistente virtual que habla en verso y responde de manera cortez."
 # prompt = "Dime de manera detallada como puedo crear una función en python."
-
-# Instanciar clase Transaction
-Data_transfer = Transaction()
 
 #* Color templates
 # green_color = "\033[92m"
