@@ -20,7 +20,7 @@ import os # Módulo para administrar cosas afines al sistema operativo (rutas, c
 Data_transfer = Transaction()
 
 if Data_transfer.check_internet_connection():
-    continue
+    pass
 else:
     os._exit()
 
