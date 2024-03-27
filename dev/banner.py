@@ -1,4 +1,5 @@
 from pyfiglet import Figlet
+from transfer_data import Transaction
 
 banners_with_figlet = ('ogre', 'puffy', 'rectangles', 'red_phoenix', 'rounded', 'santa_clara', 'script', 'serifcap', 'slant', 'slscript', 'small', 'small_slant', 'soft', 'speed', 'spliff', 'standard', 'straight', 'varsity', 'train', 'tinker-toy', 'sweet', 'poison', 'swamp_land', 'swan')
 
@@ -10,8 +11,8 @@ def figlet_banner(text:str = 'PROM2023-2024', color:str = "\033[93m", banner_ind
         negrita = ''
     
     custom_fig = Figlet(font=banners_with_figlet[banner_index], width=font_width, justify=align)
-    print(f"{color}{negrita}{custom_fig.renderText(text)}")
-    return f"{color}{negrita}{custom_fig.renderText(text)}"
+    print(f"{color}{negrita}{custom_fig.renderText(text)}{Transaction().normal_color}")
+    return f"{color}{negrita}{custom_fig.renderText(text)}{Transaction().normal_color}"
 
 
 

@@ -20,7 +20,7 @@ import os # Módulo para administrar cosas afines al sistema operativo (rutas, c
 Data_transfer = Transaction()
 
 if Data_transfer.check_internet_connection():
-    continue
+    pass
 else:
     os._exit()
 
@@ -35,6 +35,7 @@ import wikipedia #Nuevo modulo para resumir articulos de wikipedia
 import winsound #Nuevo modulo para reproducir sonido, (no es necesario instalar con pip)
 # import urllib.request #Nuevo modulo para conteo de suscriptores
 import pyjokes # Módulo para chistes
+import time # Módulo para temporizador
 # import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
 from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
@@ -293,7 +294,7 @@ def init_configuration():
 va_template = f"{negrita}{name}: {normal_color}"
 
 #* Ejecutar la función para escuchar al usuario y almacenar resultado en variable text para su futura evaluación
-text = listen()
+# text = listen() - Ahora se ejecuta dentro de la función run, de modo que run se hace más autosuficiente
 # text = {'text' : 'envía Hola ¿cómo estas? a raylin', 'status': True}
 
 # print(Transaction)
@@ -381,8 +382,18 @@ def run_gpt():
 # print(text['status'])
 
 #* Módulo 4 - realización de acciones según palabras claves de activación
-def run():
-    global text
+def run(text:str = '', status=True):
+
+    if text == '':
+        text = listen()
+    else:
+        text = {'text':text, 'status':status}
+
+    # print(text)
+    # print(text['text'])
+    # print(text['status'])
+
+    # global text
     if 'reproduce' in text['text']:
         if 'spotify' in text['text']:
             music = text['text'].replace('reproduce', '')
@@ -549,6 +560,30 @@ def run():
         return True
 
 
+    elif 'temporizador' in text['text'] :
+        text = text['text'].replace('temporizador')
+        text, time = text.split('de')
+
+        if 'y' in time:
+            time, time_2 = time.split('y')
+
+        time.replace('segundo', '')
+        time.replace('segundos', '')
+        time.replace('minuto', '')
+        time.replace('minutos', '')
+        time.replace('hora', '')
+        time.replace('horas', '')
+
+        print(text, time)
+        # if 'segundo' in text or 'segundos' in text:
+        # if 'hora' in text or 'horas' in text:
+        if 'minuto' in text or 'minutos' in text:
+            print(int(time)*60)
+            time.sleep(int(time)*60)
+
+        return True
+
+
     #! IMPORTANTE
     #* Con global le indico que la variable text sera global en lugar de local, como la variable text existe, entonces estoy indicando que quiero utilizar la variable global y no crear una variable nueva dentro de la función, esto deberia solucionar el error de "UnboundLocalError" 
     # global text
@@ -630,13 +665,19 @@ def run():
 #     pass
 
 #* EJECUCIÓN DE ACCIONES - con control de excepciones
+# run('qué hora es')
 try:
-    run()
+    # run('qué hora es')
+
+    #* Implementando funcionalidad para que el asistente se mantenga escuchando
+    while True:
+        run('establece un temporizador de 10 minutos')
+        time.sleep(1)
 
 except NameError as err:
     print("Entrada de audio inválida, intentalo nuevamente")
-    # talk("Entrada de audio inválida, intentalo nuevamente")
-    # print(err)
+    talk("Entrada de audio inválida, intentalo nuevamente")
+    print(err)
 except KeyboardInterrupt:
     print(err_template + 'Acción cancelada por el usuario.')
 except TypeError:
