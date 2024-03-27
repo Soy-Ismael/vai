@@ -1,0 +1,23 @@
+name: Merge to Feature
+
+on:
+  push:
+    branches:
+      - main
+      - display
+      - file
+      - ia
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Merge changes to feature branch
+        run: |
+          git checkout feature
+          git merge ${{ github.ref }}
+          git push origin feature
