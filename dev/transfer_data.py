@@ -1,6 +1,7 @@
 import re #Expresión regular
 from socket import gethostbyname, create_connection, error
 import pyttsx3
+import time
 
 # Este fichero contendra una clase con todos los métodos y propiedades necesarios para la transferencia de informaciónes entre disitntos archivos, esto con el fin de tener un código más modularizado y limpio.
 
