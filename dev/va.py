@@ -27,7 +27,7 @@ else:
 # Importaciones 
 import speech_recognition as sr # Módulo para reconocer audio y convertir a texto (STT)
 import pyttsx3 # Módulo para convertir de texto a audio (TTS)
-from dotenv import load_dotenv # Módulo para cargar api-key en archivo .env
+from dotenv import get_key # Módulo para cargar api-key en archivo .env
 import datetime # Módulo para manejar la hora
 import pywhatkit # Módulo para enviar mensajes de whatapp y abrir contenido en youtube (es un kit)
 import random #Nuevo módulo para generar números aleatorios
@@ -299,7 +299,7 @@ text = listen()
 
 #* PARTE DE Ismael Y Xaviel - con open AI - módulo 3
 # Cargar las variables de entorno (variables contenidas en archivos .env)
-load_dotenv()
+# load_dotenv()
 
 # Almanecar variable de entorno en una variable de python con dotenv
 # open_ai_api = os.getenv('OPENAI_API_KEY')
@@ -314,9 +314,9 @@ load_dotenv()
 def run_gpt():
     try:
         client = OpenAI(
-            api_key=os.environ.get("OPENAI_API_KEY"),
+            api_key=get_key('dev/.env','OPENAI_API_KEY'),
         )
-        # exprint(client.api_key)
+        print(client.api_key)
 
         # chat_completion = client.chat.completions.create(
         #     messages=[
@@ -631,8 +631,8 @@ def run():
 try:
     print('Si quiere usar inteligencia artificial, por favor, descomenta la linea 624, recuerda utilizar la API con prudencia puesto que supone un costo cada petición')
     run()
-    # if not run():
-    #     talk(run_gpt())
+    if not run():
+        talk(run_gpt())
 
 except NameError as err:
     print("Entrada de audio inválida, intentalo nuevamente")
