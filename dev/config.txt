@@ -1,0 +1,4 @@
+name: jarvis
+language: es-ES
+hour_format: %I:%M %p
+voice_number: 0
