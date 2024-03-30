@@ -27,7 +27,7 @@ else:
 # Importaciones 
 import speech_recognition as sr # Módulo para reconocer audio y convertir a texto (STT)
 import pyttsx3 # Módulo para convertir de texto a audio (TTS)
-from dotenv import load_dotenv # Módulo para cargar api-key en archivo .env
+from dotenv import get_key # Módulo para cargar api-key en archivo .env
 import datetime # Módulo para manejar la hora
 import pywhatkit # Módulo para enviar mensajes de whatapp y abrir contenido en youtube (es un kit)
 import random #Nuevo módulo para generar números aleatorios
@@ -39,9 +39,7 @@ import time # Módulo para temporizador
 # import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
 from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
-from config import check_config, create_config_file, initial_config # Módulo local para configuracion de asistente (config.txt file)
-from readfile import check_file_integrity, readfile # Módulo local para leer archivo de configuración
-# Open AI - Chat Gpt
+#* Open AI - Chat Gpt
 from openai import OpenAI # Módulo para inteligencia artificial
 # from audio import tts
 # Google - Gemini
@@ -246,14 +244,14 @@ try:
         # print('Indice de voz: ' + voice)
 
     #* Ejecutar función que lee archivo de configuración
-    data = readfile()
-    if type(data) != dict or not check_file_integrity():
+    data = Data_transfer.readfile()
+    if type(data) != dict or not Data_transfer.check_file_integrity():
         # print(err_template+'Archivos de configuración corruptos')
         (err_template+'Datos de configuración corruptos o inexistentes')
         talk('Error en datos de configuración, por favor restablezca el archivo.')
-        initial_config()
+        Data_transfer.initial_config()
 
-        data = readfile()
+        data = Data_transfer.readfile()
         load_data(data.values())
     else:
         load_data(data.values())
@@ -268,8 +266,8 @@ def init_configuration():
 
         if('sí' in response or 'si' in response):
             print('Entro en si en respuesta')
-            create_config_file()
-            initial_config()
+            Data_transfer.create_config_file()
+            Data_transfer.initial_config()
 
         else:
             print('Entro en no en respuesta')
@@ -302,7 +300,7 @@ va_template = f"{negrita}{name}: {normal_color}"
 
 #* PARTE DE Ismael Y Xaviel - con open AI - módulo 3
 # Cargar las variables de entorno (variables contenidas en archivos .env)
-load_dotenv()
+# load_dotenv()
 
 # Almanecar variable de entorno en una variable de python con dotenv
 # open_ai_api = os.getenv('OPENAI_API_KEY')
@@ -317,9 +315,9 @@ load_dotenv()
 def run_gpt():
     try:
         client = OpenAI(
-            api_key=os.environ.get("OPENAI_API_KEY"),
+            api_key=get_key('dev/.env','OPENAI_API_KEY'),
         )
-        # exprint(client.api_key)
+        print(client.api_key)
 
         # chat_completion = client.chat.completions.create(
         #     messages=[
@@ -622,8 +620,8 @@ def run(text:str = '', status=True):
     
     elif 'crea una nueva configuración' in text['text'] :
         talk('Creando archivo de configuración nuevamente')
-        initial_config()
-        load_data(readfile().values())
+        Data_transfer.initial_config()
+        load_data(Data_transfer.readfile().values())
         return True
 
 
@@ -667,12 +665,14 @@ def run(text:str = '', status=True):
 #* EJECUCIÓN DE ACCIONES - con control de excepciones
 # run('qué hora es')
 try:
+    if not run():
+        talk(run_gpt())
     # run('qué hora es')
 
     #* Implementando funcionalidad para que el asistente se mantenga escuchando
-    while True:
-        run('establece un temporizador de 10 minutos')
-        time.sleep(1)
+    # while True:
+        # run('establece un temporizador de 10 minutos')
+        # time.sleep(1)
 
 except NameError as err:
     print("Entrada de audio inválida, intentalo nuevamente")
