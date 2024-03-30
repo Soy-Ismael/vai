@@ -115,11 +115,13 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 - [x] Revisar porque la función "check_internet_connection" no funciona (data_transfer)
 - [x] Mejorar forma en la que se crea archivo config.txt (regular expressions)
 - [x] Optimizar archivo de readfile.py (se mejoró en "data_transfer.py")
-**2.0**
+
 
 ### Funciones en desarrollo o por desarrollar
 **RECUERDEN OPTIMIZAR AL MÁXIMO UTILIZANDO LA MENOR CANTIDAD DE MÓDULOS SIEMPRE.**
 **RECUERDEN AÑADIR COMENTARIOS DE TODO LO QUE VAYAN HACIENDO.**
+
+**2.0**
 
 **Adamarie**
 - [ ] Hacer que el asistente pueda ofrecer la temperatura y tiempo climático
@@ -143,17 +145,21 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 **Jhasmin**
 - [ ] Realizar conteo de suscriptores de un youtuber
 - [ ] Reproducir contenido en plataformas distintas a YouTube (Spotify)
+- [ ] Decir que día fue hace x cantidad de días (datetime.now / datetime.delta())
 
 **Nayeli**
 - [ ] Recordar peticiones anteriores para charla amena (IA)
-- [ ] Eliminar todo el texto anterior a la palabra clave donde sea necesario (utilidad de VA - .slice() tal vez)
+- [ ] Realizar operaciones matemáticas básicas a petición
+- [ ] Eliminar todo el texto anterior a la palabra clave donde sea necesario (.slice() tal vez / expresiones regulares)
 
 **Raysa**
 - [ ] Guardar en un archivo **log.txt** el historial de peticiones y respuestas 
 - [ ] Compatibilidad con productos Govee (encender, apagar, cambiar color, intensidad y más (para luces govee))
 
-**No hacer**
-- [ ] Mantenerse escuchando siempre (while True:)
+**Ismael**
+- [x] Capacidad de temporizador
+- [x] Mantenerse escuchando siempre (while True:)
+- [ ] Hacer que el temporizador sea asíncrono
 
 ***
 

@@ -27,7 +27,7 @@ else:
 # Importaciones 
 import speech_recognition as sr # Módulo para reconocer audio y convertir a texto (STT)
 import pyttsx3 # Módulo para convertir de texto a audio (TTS)
-from dotenv import load_dotenv # Módulo para cargar api-key en archivo .env
+from dotenv import get_key # Módulo para cargar api-key en archivo .env
 import datetime # Módulo para manejar la hora
 import pywhatkit # Módulo para enviar mensajes de whatapp y abrir contenido en youtube (es un kit)
 import random #Nuevo módulo para generar números aleatorios
@@ -35,7 +35,9 @@ import wikipedia #Nuevo modulo para resumir articulos de wikipedia
 import winsound #Nuevo modulo para reproducir sonido, (no es necesario instalar con pip)
 # import urllib.request #Nuevo modulo para conteo de suscriptores
 import pyjokes # Módulo para chistes
-import time # Módulo para temporizador
+import time # Módulo para temporizador - importado solo en caso de que se necesite
+start_time = time.time()
+import re # Módulo expresiones regulares
 # import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
 from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
@@ -130,7 +132,7 @@ except IndexError:
 
 # for voice in voices:
 #     print(voice)
-figlet_banner(text='USAR API CON PRUDENCIA', banner_index=3)
+# figlet_banner(text='USAR API CON PRUDENCIA', banner_index=5)
 
 #* Función para hablar, recibe el texto a reproducir como parametro
 def talk(text):
@@ -302,7 +304,7 @@ va_template = f"{negrita}{name}: {normal_color}"
 
 #* PARTE DE Ismael Y Xaviel - con open AI - módulo 3
 # Cargar las variables de entorno (variables contenidas en archivos .env)
-load_dotenv()
+# load_dotenv()
 
 # Almanecar variable de entorno en una variable de python con dotenv
 # open_ai_api = os.getenv('OPENAI_API_KEY')
@@ -317,7 +319,7 @@ load_dotenv()
 def run_gpt():
     try:
         client = OpenAI(
-            api_key=os.environ.get("OPENAI_API_KEY"),
+            api_key=get_key("OPENAI_API_KEY"),
         )
         # exprint(client.api_key)
 
@@ -384,9 +386,13 @@ def run_gpt():
 #* Módulo 4 - realización de acciones según palabras claves de activación
 def run(text:str = '', status=True):
 
+    # print(text)
+    # print(text == '')
     if text == '':
         text = listen()
+        # print('entro en if')
     else:
+        # print('no entro en if')
         text = {'text':text, 'status':status}
 
     # print(text)
@@ -462,6 +468,7 @@ def run(text:str = '', status=True):
         print(va_template + chiste)
         talk(chiste)
         # tts(chiste)
+        # windound no soporta formato mp3
         winsound.PlaySound('sounds/redoble_de_tambores.wav', winsound.SND_FILENAME)
         return True
 
@@ -560,29 +567,67 @@ def run(text:str = '', status=True):
         return True
 
 
+    # Condicional para que el programa tenga un temporizador
     elif 'temporizador' in text['text'] :
-        text = text['text'].replace('temporizador')
-        text, time = text.split('de')
+        import time
+        wait = 0
+        # text = text['text'].replace('temporizador', '')
+        text, timer = text['text'].split('de')
 
-        if 'y' in time:
-            time, time_2 = time.split('y')
+        hour = re.findall(r"\d+\s*[h]{1,5}",timer)
+        minute = re.findall(r"\d+\s*[m]{1,7}",timer)
+        seconds = re.findall(r"\d+\s*[s]{1,8}",timer)
 
-        time.replace('segundo', '')
-        time.replace('segundos', '')
-        time.replace('minuto', '')
-        time.replace('minutos', '')
-        time.replace('hora', '')
-        time.replace('horas', '')
+        # hour = int(hour[0].replace('h','').split()[0]) if len(hour) > 0 else None
+        # minute = int(minute[0].replace('m','').split()[0]) if len(minute) > 0 else None
+        # seconds = int(seconds[0].replace('s','').split()[0]) if len(seconds) > 0 else None
 
-        print(text, time)
-        # if 'segundo' in text or 'segundos' in text:
-        # if 'hora' in text or 'horas' in text:
-        if 'minuto' in text or 'minutos' in text:
-            print(int(time)*60)
-            time.sleep(int(time)*60)
+        # wait = wait + (hour*3600) if hour != None else 0
+        # wait = wait + (minute*60) if minute != None else 0
+        # wait = wait + seconds if seconds != None else 0
 
+        hour = int(hour[0].replace('h','')) if len(hour) > 0 else 0
+        minute = int(minute[0].replace('m','')) if len(minute) > 0 else 0
+        seconds = int(seconds[0].replace('s','')) if len(seconds) > 0 else 0
+
+        wait = (hour*3600) + (minute*60) + seconds
+
+        # print(hour)
+        # print(minute)
+        # print(seconds)
+        # print(f'{hour} horas, {minute} minutos y {seconds} segundos son: {wait} segundos en total')
+        print(f'Temporizador fijado para {wait} segundos...')
+        talk(f'Temporizador fijado para {wait} segundos...')
+        time.sleep(wait)
+
+        # if 'hora' in timer or 'horas' in timer:
+        #     timer = re.search(r"\d+",timer).group()
+        #     # print(int(timer)*3600)
+        #     print(f'Temporizador fijado para {int(timer)*3600} segundos...')
+        #     talk(f'Temporizador fijado para {int(timer)*3600} segundos...')
+        #     time.sleep(int(timer)*3600)
+
+        # if 'minuto' in timer or 'minutos' in timer:
+        #     timer = re.search(r"\d+",timer).group()
+        #     # print(int(timer)*60)
+        #     print(timer)
+        #     print(f'Temporizador fijado para {int(timer)*60} segundos...')
+        #     talk(f'Temporizador fijado para {int(timer)*60} segundos...')
+        #     time.sleep(int(timer)*60)
+
+        # if 'segundo' in timer or 'segundos' in timer:
+        #     timer = re.search(r"\d+",timer).group()
+        #     # print(int(timer))
+        #     print(f'Temporizador fijado para {int(timer)} segundos...')
+        #     talk(f'Temporizador fijado para {int(timer)} segundos...')
+        #     time.sleep(int(timer))
+
+        print(f'Terminado!')
+        talk(f'Terminado!')
+
+        for i in range(5):
+            winsound.PlaySound('sounds/redoble_de_tambores.wav', winsound.SND_FILENAME)
         return True
-
 
     #! IMPORTANTE
     #* Con global le indico que la variable text sera global en lugar de local, como la variable text existe, entonces estoy indicando que quiero utilizar la variable global y no crear una variable nueva dentro de la función, esto deberia solucionar el error de "UnboundLocalError" 
@@ -667,21 +712,26 @@ def run(text:str = '', status=True):
 #* EJECUCIÓN DE ACCIONES - con control de excepciones
 # run('qué hora es')
 try:
-    # run('qué hora es')
+    import time
+    # run()
 
     #* Implementando funcionalidad para que el asistente se mantenga escuchando
+    # run('dime un chiste')
     while True:
-        run('establece un temporizador de 10 minutos')
+        run('dime un chiste')
         time.sleep(1)
 
-except NameError as err:
-    print("Entrada de audio inválida, intentalo nuevamente")
-    talk("Entrada de audio inválida, intentalo nuevamente")
-    print(err)
 except KeyboardInterrupt:
     print(err_template + 'Acción cancelada por el usuario.')
-except TypeError:
-    print("Entrada de audio inválida, intentalo nuevamente")
+# except NameError as err:
+#     print("Entrada de audio inválida, intentalo nuevamente")
+#     talk("Entrada de audio inválida, intentalo nuevamente")
+    # print(err)
+#     # print("EXCEPT 1")
+# except TypeError:
+#     talk("Entrada de audio inválida, intentalo nuevamente")
+#     print("Entrada de audio inválida, intentalo nuevamente")
+    # print("EXCEPT 2")
 
 
 
@@ -739,3 +789,5 @@ except TypeError:
 # prompt = "¿Qué es la inteligencia artificial?" # Define tu entrada de texto
 # response = model.generateContent(prompt=prompt) # Genera una respuesta de texto
 # print(response) # Imprime la respuesta
+
+print(f'{Transaction().yellow_color} PROGRAMA FINALIZADO CON UNA DURACIÓN DE:{Transaction().bright_cyan_color}{Transaction().negrita} {int(time.time() - start_time)} segundos {Transaction().normal_color}')
