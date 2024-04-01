@@ -20,7 +20,7 @@ import os # Módulo para administrar cosas afines al sistema operativo (rutas, c
 Data_transfer = Transaction()
 
 if Data_transfer.check_internet_connection():
-    print(Transaction().green_color+'Conección a internet ✔️')
+    print(Transaction().green_color+'Conexión a internet ✔️')
     pass
 else:
     print(Transaction().err_template+'Conección a internet ✖️')
@@ -600,13 +600,18 @@ def run(text:str = '', status=True):
         # print(f'{hour} horas, {minute} minutos y {seconds} segundos son: {wait} segundos en total')
         print(f'Temporizador fijado para {wait} segundos...')
         talk(f'Temporizador fijado para {wait} segundos...')
-        time.sleep(wait)
+        
+        async def async_sleep(time_to_wait:int) -> None:
+            time.sleep(time_to_wait)
 
-        print(f'Terminado!')
-        talk(f'Terminado!')
+            print(f'Terminado!')
+            talk(f'Terminado!')
 
-        for i in range(5):
-            winsound.PlaySound('sounds/redoble_de_tambores.wav', winsound.SND_FILENAME)
+            for i in range(5):
+                winsound.PlaySound('sounds/redoble_de_tambores.wav', winsound.SND_FILENAME)
+        
+        # await async_sleep()
+        asyncio.run(async_sleep(wait))
         return True
 
     #! IMPORTANTE
@@ -700,7 +705,8 @@ try:
     #* Implementando funcionalidad para que el asistente se mantenga escuchando
     # run('dime un chiste')
     while True:
-        run('temporizador de 15 segundos')
+        # run('temporizador de 15 segundos')
+        print(run('temporizador de 15 segundos'))
         time.sleep(1)
 
 except KeyboardInterrupt:
