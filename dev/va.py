@@ -20,8 +20,10 @@ import os # Módulo para administrar cosas afines al sistema operativo (rutas, c
 Data_transfer = Transaction()
 
 if Data_transfer.check_internet_connection():
+    print(Transaction().green_color+'Conexión a internet ✔️')
     pass
 else:
+    print(Transaction().err_template+'Conección a internet ✖️')
     os._exit()
 
 # Importaciones 
@@ -39,6 +41,7 @@ import pyjokes # Módulo para chistes
 import time # Módulo para temporizador - importado solo en caso de que se necesite
 start_time = time.time()
 import re # Módulo expresiones regulares
+import asyncio # Módulo para ejecutar código asíncrono
 # import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
 from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
@@ -597,35 +600,18 @@ def run(text:str = '', status=True):
         # print(f'{hour} horas, {minute} minutos y {seconds} segundos son: {wait} segundos en total')
         print(f'Temporizador fijado para {wait} segundos...')
         talk(f'Temporizador fijado para {wait} segundos...')
-        time.sleep(wait)
+        
+        async def async_sleep(time_to_wait:int) -> None:
+            time.sleep(time_to_wait)
 
-        # if 'hora' in timer or 'horas' in timer:
-        #     timer = re.search(r"\d+",timer).group()
-        #     # print(int(timer)*3600)
-        #     print(f'Temporizador fijado para {int(timer)*3600} segundos...')
-        #     talk(f'Temporizador fijado para {int(timer)*3600} segundos...')
-        #     time.sleep(int(timer)*3600)
+            print(f'Terminado!')
+            talk(f'Terminado!')
 
-        # if 'minuto' in timer or 'minutos' in timer:
-        #     timer = re.search(r"\d+",timer).group()
-        #     # print(int(timer)*60)
-        #     print(timer)
-        #     print(f'Temporizador fijado para {int(timer)*60} segundos...')
-        #     talk(f'Temporizador fijado para {int(timer)*60} segundos...')
-        #     time.sleep(int(timer)*60)
-
-        # if 'segundo' in timer or 'segundos' in timer:
-        #     timer = re.search(r"\d+",timer).group()
-        #     # print(int(timer))
-        #     print(f'Temporizador fijado para {int(timer)} segundos...')
-        #     talk(f'Temporizador fijado para {int(timer)} segundos...')
-        #     time.sleep(int(timer))
-
-        print(f'Terminado!')
-        talk(f'Terminado!')
-
-        for i in range(5):
-            winsound.PlaySound('sounds/redoble_de_tambores.wav', winsound.SND_FILENAME)
+            for i in range(5):
+                winsound.PlaySound('sounds/redoble_de_tambores.wav', winsound.SND_FILENAME)
+        
+        # await async_sleep()
+        asyncio.run(async_sleep(wait))
         return True
 
     #! IMPORTANTE
@@ -711,16 +697,17 @@ def run(text:str = '', status=True):
 #* EJECUCIÓN DE ACCIONES - con control de excepciones
 # run('qué hora es')
 try:
-    import time
-    if not run():
-        talk(run_gpt())
+    # import time
+    # if not run():
+    #     talk(run_gpt())
     # run()
 
     #* Implementando funcionalidad para que el asistente se mantenga escuchando
     # run('dime un chiste')
-    # while True:
-        # run('dime un chiste')
-        # time.sleep(1)
+    while True:
+        # run('temporizador de 15 segundos')
+        print(run('temporizador de 15 segundos'))
+        time.sleep(1)
 
 except KeyboardInterrupt:
     print(err_template + 'Acción cancelada por el usuario.')
