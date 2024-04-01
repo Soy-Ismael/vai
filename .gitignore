@@ -1,0 +1,25 @@
+PyWhatKit_DB.txt
+__pycache__
+*.json
+*.env
+*.cs
+*.rar
+# dev/audio.py
+# dev/config.py
+dev/prueba.py
+dev/pruebas2.py
+# dev/config.txt
+# dev/transfer_data.py
+# config.txt
+# contacts.txt
+log.txt
+*.js
+*.html
+dev/banners.txt
+dev/config.txt
+dev/contacts.txt
+dev/readcon.py
+dev/regEx.py
+# .github
+main.txt
+dev/.env.example
