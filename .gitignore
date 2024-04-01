@@ -1,4 +1,5 @@
 PyWhatKit_DB.txt
+dev/__pycache__
 __pycache__
 *.json
 *.env
