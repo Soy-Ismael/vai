@@ -1,16 +1,16 @@
 # Dato curioso a fecha de hoy 5/marzo/2024 3:27 hora dominicana hay un total de 529 lineas de código en va.py, hay 265 lineas de código y otras 264 de cómentarios aproximadamente (los espacios en blanco se contaron como lineas de código).
 # ESTRUCTURA Y REPARTICION DE TRABAJO DEL ASISTENTE
 # *     Jared y Jairon
-#todo 1 - Grabar voz del usuario 🎤
-#todo 2 - Convertir lo que dijo en texto 🖋
+#todo 1 - Grabar voz del usuario 🎤 ✔️
+#todo 2 - Convertir lo que dijo en texto 🖋 ✔️
 # 
 # *     Xaviel e Ismael
-#todo 3 - Procesar la intención del usuario ❓ (modelo de IA)
-#todo 4 - Ejecutar la acción deseada 👨‍🏭
+#todo 3 - Procesar la intención del usuario ❓ (modelo de IA) ✔️
+#todo 4 - Ejecutar la acción deseada 👨‍🏭 ✔️
 #
 # ?      Proximamente
-#todo 5 - Preparar respuesta (en texto) 💬
-#todo 6 - Convertir en audio y reproducir 🦻
+#todo 5 - Preparar respuesta (en texto) 💬 ✔️
+#todo 6 - Convertir en audio y reproducir 🦻 ✔️
 
 #* Comprobar conectividad del usuario
 from transfer_data import Transaction # Módulo local para sustituir a config y readfile, ademas, añade nuevos métodos
@@ -20,10 +20,10 @@ import os # Módulo para administrar cosas afines al sistema operativo (rutas, c
 Data_transfer = Transaction()
 
 if Data_transfer.check_internet_connection():
-    print(Transaction().green_color+'Conexión a internet ✔️')
+    print(Transaction().green_color+'Conexión a internet ✔️'+Transaction().normal_color)
     pass
 else:
-    print(Transaction().err_template+'Conección a internet ✖️')
+    print(Transaction().err_template+'Conección a internet ✖️'+Transaction().normal_color)
     os._exit()
 
 # Importaciones 
@@ -45,6 +45,7 @@ import asyncio # Módulo para ejecutar código asíncrono
 # import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
 from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
+# from voice_synthesizer import synthesize_to_speaker # Módulo local creado para tts de microsoft (más voces y calidad que pyttsx3, no depende de voces en el ordenador)
 #* Open AI - Chat Gpt
 from openai import OpenAI # Módulo para inteligencia artificial
 # from audio import tts
@@ -129,7 +130,8 @@ except IndexError:
         # print(f'Gender:{cian_color} {voice.gender} {normal_color}')
 
     #! No utilizar el exit() para programas reales, lo mejor seria utilizar el sys.exit()
-    exit()
+    os._exit()
+    # exit()
     # sys.exit()
 
 # for voice in voices:
@@ -574,7 +576,7 @@ def run(text:str = '', status=True):
         import time
         wait = 0
         # text = text['text'].replace('temporizador', '')
-        text, timer = text['text'].split('de')
+        _, timer = text['text'].split('de')
 
         hour = re.findall(r"\d+\s*[h]{1,5}",timer)
         minute = re.findall(r"\d+\s*[m]{1,7}",timer)
@@ -602,16 +604,19 @@ def run(text:str = '', status=True):
         talk(f'Temporizador fijado para {wait} segundos...')
         
         async def async_sleep(time_to_wait:int) -> None:
-            time.sleep(time_to_wait)
+            # time.sleep(time_to_wait)
+            await asyncio.sleep(time_to_wait)
 
             print(f'Terminado!')
             talk(f'Terminado!')
 
-            for i in range(5):
+            for i in range(2):
                 winsound.PlaySound('sounds/redoble_de_tambores.wav', winsound.SND_FILENAME)
         
         # await async_sleep()
+        print('Antes de invocación de funcion asíncrona')        
         asyncio.run(async_sleep(wait))
+        print('despues de invocación de funcion asíncrona')        
         return True
 
     #! IMPORTANTE
@@ -706,10 +711,12 @@ try:
     # run('dime un chiste')
     while True:
         # run('temporizador de 15 segundos')
-        print(run('temporizador de 15 segundos'))
+        # run('temporizador de 5 segundos')
+        run('qué hora es')
         time.sleep(1)
 
 except KeyboardInterrupt:
+    no_talk()
     print(err_template + 'Acción cancelada por el usuario.')
 except NameError as err:
     print("Entrada de audio inválida, intentalo nuevamente")

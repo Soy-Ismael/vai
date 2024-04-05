@@ -105,8 +105,10 @@ class Transaction:
             #* User re.sub para remplazar en expresión regular para formato de hora
             def validate_hour(hour):
                 if re.match(r"^12$", hour):
-                    return "%H:%M %p"
+                    print('12')
+                    return "%I:%M %p"
                 elif re.match(r"^24$", hour):
+                    print('24')
                     return "%H:%M %p"
                 else:
                     return False
@@ -168,7 +170,7 @@ class Transaction:
                 print(f"{self.yellow_color} {hour_format} {self.normal_color}")
                 print(f"{self.yellow_color} {voice} {self.normal_color}")
 
-            data_dictionary = [name+text_plain_enter, lang+text_plain_enter, hour_format+text_plain_enter, voice]
+            data_dictionary = [name+text_plain_enter, lang+text_plain_enter, hour_format+text_plain_enter, voice+text_plain_enter]
 
             def fill_file(data:dict):
                 with open('dev\\'+nombre_archivo, 'w') as archivo:
@@ -241,6 +243,10 @@ class Transaction:
         except error:
             return False
             # return "No hay conexión a internet..."
+
+    def write_on_config_file(self, key:str, value:str, file_path:str='dev\\'+nombre_archivo):
+        with open(file_path, 'a') as archivo:
+            archivo.write(f'{key}: {value}\n')
         
 
 
@@ -248,8 +254,12 @@ if __name__ == '__main__':
     transactions = Transaction()
     # color = Transaction()
     # color.test_colors()
+    transactions.initial_config()
+    # print(transactions.check_internet_connection())
+    # transactions.write_on_config_file('Dato1', 'Jarvis')
+    # transactions.write_on_config_file('Dato2', True)
+    # transactions.write_on_config_file('Dato3', 12.25)
     # transactions.initial_config()
-    print(transactions.check_internet_connection())
     # transactions.check_internet_connection()
     
     # if(os.path.isfile('dev\\contacts.txt')):

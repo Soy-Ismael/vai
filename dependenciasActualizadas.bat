@@ -67,9 +67,15 @@ pip3 install pyjokes
 echo TERMINADO
 cls
 
-title Instalando pyjokes
+title Instalando pyfiglet
 color c
 pip3 install pyfiglet
+echo TERMINADO
+cls
+
+title Instalando azure_speech
+color 7
+pip install azure-cognitiveservices-speech
 echo TERMINADO
 cls
 

@@ -2,6 +2,7 @@
 # package>=version
 # package
 # python.exe -m --upgrade pip
+# pip install --upgrade azure-cognitiveservices-speech
 
 SpeechRecognition==3.10.1
 PyAudio==0.2.14
@@ -15,3 +16,4 @@ pathlib==1.0.11
 pyjokes==0.6.0
 spoty==0.1.11
 pyfiglet==1.0.2
+azure-cognitiveservices-speech==1.36.0
