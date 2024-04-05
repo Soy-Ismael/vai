@@ -41,9 +41,9 @@ Deben ejecutar los siguientes comandos:
 * ``git remote add origin url_repositorio`` [repositorio](https://github.com/Soy-Ismael/vai.git)
 * ``git config --global user.name nombre_de_github``
 * ``git config --global user.email email_de_github``
-* ``git branch -M main``
-* ``git pull `` [url_repositorio](https://github.com/Soy-Ismael/vai.git) ``main``
-* ``git branch --set-upstream-to=origin/main main``
+* ``git branch -M nombre_rama``
+* ``git pull `` [url_repositorio](https://github.com/Soy-Ismael/vai.git) ``nombre_rama``
+* ``git branch --set-upstream-to=origin/main nombre_rama``
 
 #### Para descargar cambios
 
@@ -134,6 +134,7 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 **Elianny**
 - [ ] Reparar envío de mensajes por WhatsApp con pywhatkit
 - [ ] Hacer que el envío de mensaje por WhatsApp sea asíncrono
+- [ ] Desarrollar módulo capaz de importar todos los contactos al archivo contacts.txt en el formato aceptado
 
 **Jairon**
 - [ ] Preguntar a usuario si quiere usar pywhatkit.send() (ver anotaciones)
@@ -159,6 +160,7 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 **Ismael**
 - [x] Capacidad de temporizador
 - [x] Mantenerse escuchando siempre (while True:)
+- [x] Desarrollo de módulo para tts con red neuronal de Microsoft
 - [ ] Hacer que el temporizador sea asíncrono
 
 ***
@@ -209,6 +211,7 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 
 * Versión de Python: 3.12.1
 * Versión de pip: 23.3.2
+* Lineas de código totales: 1,604
 * Versión de [**dependencias:**](requirements.txt)
 * [**Pilares**](assets/checkpoints_va.jpeg) del proyecto
 
