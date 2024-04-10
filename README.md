@@ -69,13 +69,16 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 ***
 
 ## Setup
-1. Abrir terminal en la raiz del repositorio e instalar dependencias con ```pip install -r requirements.txt```
-[![Instalar dependencias (para desarrolladores)](assets/install-dependences.mp4 "Instalar dependencias (para desarrolladores)")](requirements.txt)
+1. Abrir terminal en la **raiz** del repositorio e **instalar** dependencias con ```pip install -r requirements.txt```
 
-2. Crear una clave api de OPEN AI
+[![Instalar dependencias (para desarrolladores)](assets/install-dependences.gif "Instalar dependencias (para desarrolladores)")](requirements.txt)
+
+2. Crear una **clave api** de OPEN AI
+
 [![Ejemplo de configuración de archivo .env](assets/env-example.png "Ejemplo de configuración de archivo .env")](dev/.env.example)
 
-3. Ejecutar el archivo principal ```python public/va.py```
+3. **Ejecutar** el archivo **principal** ```python public/va.py```
+
 [![Ejecutar archivo](assets/execute.png "Ejecutar archivo")](public/va.py)
 
 
@@ -91,6 +94,7 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 * ¿Estás ahí?
 * ¿Cómo te llamas?
 * Hasta luego
+* Establece un temporizador de 15 segundos (en desarrollo)
 
 ## Dependencias / Módulos
 ### En Windows
@@ -144,6 +148,7 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 **Xaviel**
 - [ ] Hacer que el audio resultado de OpenAI tts-1 se reproduzca de inmediato (no crear archivo de audio)
 - [ ] Implementar reconocimiento de voz con Whisper
+- [ ] Establecer recordatorios
 
 **Elianny**
 - [ ] Reparar envío de mensajes por WhatsApp con pywhatkit
