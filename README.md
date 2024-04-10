@@ -68,6 +68,19 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 
 ***
 
+## Setup
+1. Abrir terminal en la raiz del repositorio e instalar dependencias con ```pip install -r requirements.txt```
+[![Instalar dependencias (para desarrolladores)](assets/install-dependences.mp4 "Instalar dependencias (para desarrolladores)")](requirements.txt)
+
+2. Crear una clave api de OPEN AI
+[![Ejemplo de configuración de archivo .env](assets/env-example.png "Ejemplo de configuración de archivo .env")](dev/.env.example)
+
+3. Ejecutar el archivo principal ```python public/va.py```
+[![Ejecutar archivo](assets/execute.png "Ejecutar archivo")](public/va.py)
+
+
+***
+
 ## Ejemplos de uso
 * Reproduce romeo santos / reproduce sus huellas ⭐
 * Busca que es incoloro
@@ -126,6 +139,7 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 **Adamarie**
 - [ ] Hacer que el asistente pueda ofrecer la temperatura y tiempo climático
 - [ ] Crear comando para apagar el computador (quizás ejecutando un archivo .bat con los comandos correctos desde Python)
+- [ ] Reproducir contenido en plataformas distintas a YouTube (Spotify)
 
 **Xaviel**
 - [ ] Hacer que el audio resultado de OpenAI tts-1 se reproduzca de inmediato (no crear archivo de audio)
@@ -139,14 +153,11 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 **Jairon**
 - [ ] Preguntar a usuario si quiere usar pywhatkit.send() (ver anotaciones)
 - [ ] Optimizar funciones de archivo data_transfer.py
+- [ ] Realizar conteo de suscriptores de un youtuber
+- [ ] Reproducir música en segundo plano (no abrir pestaña de navegador)
 
 **Jared**
 - [ ] Desarrollo de interfaz gráfica
-
-**Jhasmin**
-- [ ] Realizar conteo de suscriptores de un youtuber
-- [ ] Reproducir contenido en plataformas distintas a YouTube (Spotify)
-- [ ] Decir que día fue hace x cantidad de días (datetime.now / datetime.delta())
 
 **Nayeli**
 - [ ] Recordar peticiones anteriores para charla amena (IA)
@@ -161,6 +172,7 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 - [x] Capacidad de temporizador
 - [x] Mantenerse escuchando siempre (while True:)
 - [x] Desarrollo de módulo para tts con red neuronal de Microsoft
+- [ ] Decir que día fue hace x cantidad de días (datetime.now / datetime.delta())
 - [ ] Hacer que el temporizador sea asíncrono
 
 ***
