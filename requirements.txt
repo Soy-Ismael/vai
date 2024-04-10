@@ -12,8 +12,9 @@ distutils644==0.4
 openai==1.10.0
 pyttsx3==2.90
 pywhatkit==5.4
-pathlib==1.0.11
+pathlib==1.0.1
 pyjokes==0.6.0
-spoty==0.1.11
+# spoty==0.1.11
+wikipedia==1.4.0
 pyfiglet==1.0.2
 azure-cognitiveservices-speech==1.36.0
