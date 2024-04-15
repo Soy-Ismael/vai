@@ -407,13 +407,13 @@ def run(text:str = '', status=True):
     if 'reproduce' in text['text']:
         if 'spotify' in text['text']:
             music = text['text'].replace('reproduce', '')
-            music = music.replace('jarvis', '')
+            music = music.replace(name, '')
             music = music.replace('spotify', '')
             talk('Reproduciendo ' + music)
             spoty.play(keys["spoty_client_id"], keys["spoty_client_secret"], music)
         else:
             music = text['text'].replace('reproduce', '')
-            music = music.replace('jarvis', '')
+            music = music.replace(name, '')
             pywhatkit.playonyt(music)
             talk('Reproduciendo ' + music)
             # print(f'{negrita}{name}: {normal_color}Reproduciendo ' + music)
@@ -705,15 +705,13 @@ try:
     # import time
     # if not run():
     #     talk(run_gpt())
-    # run()
+    run()
 
     #* Implementando funcionalidad para que el asistente se mantenga escuchando
     # run('dime un chiste')
-    while True:
-        # run('temporizador de 15 segundos')
-        # run('temporizador de 5 segundos')
-        run('qué hora es')
-        time.sleep(1)
+    # while True:
+        # run('qué hora es')
+        # time.sleep(1)
 
 except KeyboardInterrupt:
     no_talk()
