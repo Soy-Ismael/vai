@@ -71,7 +71,12 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 ## Setup
 1. Abrir terminal en la **raiz** del repositorio e **instalar** dependencias con ```pip install -r requirements.txt```
 
+O bien puedes ejecutar el archivo "**dependencias**" haciendo doble clic en él.
+
+
 [![Instalar dependencias (para desarrolladores)](assets/install-dependences.gif "Instalar dependencias (para desarrolladores)")](requirements.txt)
+
+
 
 2. Crear una **clave api** de OPEN AI
 
@@ -178,6 +183,7 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 - [x] Mantenerse escuchando siempre (while True:)
 - [x] Desarrollo de módulo para tts con red neuronal de Microsoft
 - [ ] Decir que día fue hace x cantidad de días (datetime.now / datetime.delta())
+- [ ] Realizar reporte de hoja de Excel
 - [ ] Hacer que el temporizador sea asíncrono
 
 ***
