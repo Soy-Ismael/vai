@@ -18,3 +18,5 @@ pyjokes==0.6.0
 wikipedia==1.4.0
 pyfiglet==1.0.2
 azure-cognitiveservices-speech==1.36.0
+openpyxl==3.1.2
+pandas==2.2.2

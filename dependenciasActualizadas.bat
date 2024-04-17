@@ -79,6 +79,18 @@ pip install azure-cognitiveservices-speech
 echo TERMINADO
 cls
 
+title Instalando pandas
+color 3
+pip install pandas
+echo TERMINADO
+cls
+
+title Instalando openpyxl
+color 2
+pip install openpyxl
+echo TERMINADO
+cls
+
 @REM text-to-speech de openAI
 @REM title Instalando pathlib
 @REM color c
