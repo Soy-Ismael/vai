@@ -247,6 +247,17 @@ class Transaction:
     def write_on_config_file(self, key:str, value:str, file_path:str='dev\\'+nombre_archivo):
         with open(file_path, 'a') as archivo:
             archivo.write(f'{key}: {value}\n')
+
+    def read_config_file_line(self, key:str, file_path:str='dev\\'+nombre_archivo):
+        with open(file_path, 'r') as archivo:
+            # print(archivo.readlines())
+            for line in archivo.readlines():
+                line = line.replace('\n', '')
+                key_in_db, value = line.strip().split(': ')
+
+                if(key == key_in_db):
+                    return value
+            return False
         
 
 
@@ -254,7 +265,9 @@ if __name__ == '__main__':
     transactions = Transaction()
     # color = Transaction()
     # color.test_colors()
-    transactions.initial_config()
+    # transactions.initial_config()
+    # data = transactions.read_config_file_line('language')
+    # print(data)
     # print(transactions.check_internet_connection())
     # transactions.write_on_config_file('Dato1', 'Jarvis')
     # transactions.write_on_config_file('Dato2', True)

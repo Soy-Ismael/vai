@@ -42,6 +42,7 @@ import time # Módulo para temporizador - importado solo en caso de que se neces
 start_time = time.time()
 import re # Módulo expresiones regulares
 import asyncio # Módulo para ejecutar código asíncrono
+from days import getDaysAgo 
 # import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
 from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
@@ -619,6 +620,12 @@ def run(text:str = '', status=True):
         print('despues de invocación de funcion asíncrona')        
         return True
 
+    
+    elif 'que dia fue' in text['text'] or 'qué día fue' in text['text']:
+        date = getDaysAgo(text['text'])
+        print(date)
+        talk(date)
+
     #! IMPORTANTE
     #* Con global le indico que la variable text sera global en lugar de local, como la variable text existe, entonces estoy indicando que quiero utilizar la variable global y no crear una variable nueva dentro de la función, esto deberia solucionar el error de "UnboundLocalError" 
     # global text
@@ -705,7 +712,7 @@ try:
     # import time
     # if not run():
     #     talk(run_gpt())
-    run()
+    run('qué día fue hace 5 dias')
 
     #* Implementando funcionalidad para que el asistente se mantenga escuchando
     # run('dime un chiste')
@@ -783,4 +790,4 @@ except TypeError:
 # response = model.generateContent(prompt=prompt) # Genera una respuesta de texto
 # print(response) # Imprime la respuesta
 
-print(f'{Transaction().yellow_color} PROGRAMA FINALIZADO CON UNA DURACIÓN DE:{Transaction().bright_cyan_color}{Transaction().negrita} {int(time.time() - start_time)} segundos {Transaction().normal_color}')
+print(f'{Transaction().yellow_color}PROGRAMA FINALIZADO CON UNA DURACIÓN DE:{Transaction().bright_cyan_color}{Transaction().negrita} {int(time.time() - start_time)} segundos {Transaction().normal_color}')
