@@ -32,3 +32,5 @@ def importar_contactos():
 
 if __name__ == "__importar_contactosq__":
    importar_contactos()
+
+#hasta ahora es esto lo que he escrito, ok, abre la terminal para subirlo en git? en vscode se me olvido como abrirla
