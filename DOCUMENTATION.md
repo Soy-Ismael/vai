@@ -24,7 +24,7 @@ Este primer parametro recibe un color en código ASCII para imprimir el banner d
 **Ejemplo de uso:** printBanner("\033[92m")
 
 #### Argumento2 - bold
-Este segundo parametro recibe un booleano, si se le pasa True como argumento, entonces la función imprime una version en negrita del banner, si se le pasa false la función imprime el banner sin las negritas
+Este segundo parametro recibe un booleano, si se le pasa True como argumento, entonces la función imprime una version en negrita del banner, si se le pasa false la función imprime el banner sin las negritas.
 
 **Ejemplo de uso:** printBanner("\033[92m", True)
 
