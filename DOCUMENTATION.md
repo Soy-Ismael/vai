@@ -18,20 +18,20 @@ Dicho de manera simple, el asistente virtual o proyecto VA sigue los siguientes 
 La programación de VA (Virtual Assistant) gira en torno a la petición y el servicio, o retorno de peticiones, entre el usuario y el asistente. Para esto se crearon funciones específicas que ayudan al óptimo desarrollo de su finalidad.
 
 ## Funciones
-### run (text, True)
+### run (text, True);
 Se puede definir como la función más importante. Esta le asegura a VA que usted se está comunicando con elle, garantizando su inmediata respuesta.
 
-### talk("texto")
+### talk("texto");
 Esta función garantiza la repetición auditiva de VA, siempre y cuando esté escrito como parámetro. Por ejemplo, si escribimos como parámetro "María lava la ropa", esto es lo que dirá en voz alta nuestro asistente.
 
 **Ejemplo de código:**
-talk("texto")
+talk("texto");
 
-### Listen()
+### Listen();
 La función Listen sirve para asegurar que VA escuche correctamente nuestra voz, y pueda responder sin errores a nuestras peticiones. Además, la función se asegura de que sea el mismo idioma con el que trabajen el usuario y el mismo asistente.
 
 **Ejemplo de código:**
-Listen()
+Listen();
 
 ### run_gpt();
 run_gpt() es una función de ayuda para invocar respuestas de inteligencia artificial al momento de dar una respuesta que no se encuentra en los recursos de el asistente VA, solo para ampliar su buen funcionamiento y no presentar fallas.
