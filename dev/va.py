@@ -30,7 +30,6 @@ else:
 import speech_recognition as sr # Módulo para reconocer audio y convertir a texto (STT)
 import pyttsx3 # Módulo para convertir de texto a audio (TTS)
 from dotenv import get_key # Módulo para cargar api-key en archivo .env
-from dotenv import get_key # Módulo para cargar api-key en archivo .env
 import datetime # Módulo para manejar la hora
 import pywhatkit # Módulo para enviar mensajes de whatapp y abrir contenido en youtube (es un kit)
 import random #Nuevo módulo para generar números aleatorios
@@ -46,6 +45,7 @@ from days import getDaysAgo
 # import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
 from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
+from report import create_report # Módulo para crear un reporte de excel de un archivo especifico
 # from voice_synthesizer import synthesize_to_speaker # Módulo local creado para tts de microsoft (más voces y calidad que pyttsx3, no depende de voces en el ordenador)
 #* Open AI - Chat Gpt
 from openai import OpenAI # Módulo para inteligencia artificial
@@ -157,7 +157,7 @@ rec = sr.Recognizer()
 
 # 2300 tiene problemas para entender
 # rec.energy_threshold = 2900
-#* Función para escuchar la petición del usuario, se puede invocar durante la ejecución del programa, lo que permite que el asistente pueda volver a escuchar en cualquier punto del programa con solo invocar la función
+#* Función para escuchar la petición del usuario, se puede invocar durante la ejecución del programa, lo que permite que el asistente pueda volver a escuchar en cualquier punto del programa con solo invocar la función.
 def listen():
     # Acceder al microfono del dispositivo
     try:
@@ -478,6 +478,12 @@ def run(text:str = '', status=True):
         return True
 
 
+    elif 'realiza' in text['text'] and 'reporte' in text['text']:
+        print('Creando reporte')
+        create_report()
+
+
+
     elif 'envía' in text['text']:
         text = text['text'].replace('envía', '')
 
@@ -626,6 +632,10 @@ def run(text:str = '', status=True):
         print(date)
         talk(date)
 
+    elif 'más' in text['text']:
+        # código para obtener los numeros del texto de entrada, sumarlos y devolverlos
+        pass
+
     #! IMPORTANTE
     #* Con global le indico que la variable text sera global en lugar de local, como la variable text existe, entonces estoy indicando que quiero utilizar la variable global y no crear una variable nueva dentro de la función, esto deberia solucionar el error de "UnboundLocalError" 
     # global text
@@ -712,7 +722,8 @@ try:
     # import time
     # if not run():
     #     talk(run_gpt())
-    run('qué día fue hace 5 dias')
+    run('realiza un reporte')
+    pass
 
     #* Implementando funcionalidad para que el asistente se mantenga escuchando
     # run('dime un chiste')

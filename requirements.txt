@@ -20,3 +20,5 @@ pyfiglet==1.0.2
 azure-cognitiveservices-speech==1.36.0
 openpyxl==3.1.2
 pandas==2.2.2
+# matplotlib==3.8.4
+# reportlab==4.2.0
