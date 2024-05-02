@@ -802,3 +802,77 @@ except TypeError:
 # print(response) # Imprime la respuesta
 
 print(f'{Transaction().yellow_color}PROGRAMA FINALIZADO CON UNA DURACIÓN DE:{Transaction().bright_cyan_color}{Transaction().negrita} {int(time.time() - start_time)} segundos {Transaction().normal_color}')
+
+# Recordar peticiones anteriores para charla amena (IA)
+
+historial_solicitudes = {}
+
+def procesar_solicitud (solicitud):
+    if solicitud in historial_solicitudes:
+        repuesta = "Hablamos sobre esto anteriormente. ¿Te interesa hablar sobre algo más?"
+    else:
+        historial_solicitudes [solicitud] = True
+        repuesta = "COOL. ¿Qué más te gustaria conversar?"
+        
+    return repuesta
+
+while True:
+    solicitud_usuario = input("usuario: ")
+    respuesta_ia = procesar_solicitud (solicitud_usuario)
+    print("IA: ", respuesta_ia)
+    
+# Realizar operaciones matemáticas básicas a petición 
+
+def realizar_operaciones (operacion):
+    partes = operacion.split()
+    
+    if len(partes) != 3:
+        return "Formato de operación incorrecto. Por favor, utilice el formato 'número - operador - número'."
+    
+    num1 = float(partes[0])
+    num2 = float(partes[2])
+    operador = partes[1]
+    
+    if operador == '+':
+        resultado = num1 + num2
+    elif operador == '-':
+        resultado = num1 - num2
+    elif operador == '*':
+        resultado = num1 * num2
+    elif operador == '/':
+        if num2 == 0:
+            return "Error: División por cero."
+        else:
+            resultado = num1 / num2
+    else:
+        return "Operador no válido."
+    
+    return resultado
+
+while True:
+    operacion = input("Introduce una operación: ")
+    resultado = realizar_operaciones (operacion)
+    print("Resultado: ", resultado)
+    
+# Eliminar todo el texto anterior a la palabra clave donde sea necesario (.slice() tal vez / expresiones regulares)
+
+import re
+
+def eliminar_texto_anterior (texto, palabra_clave):
+    match = re.search (palabra_clave, texto)
+    
+    if match:
+        palabra_clave1 = match.start()
+        texto_nuevo = texto [palabra_clave1:]
+        return texto_nuevo 
+    else:
+        return "Palabra no encontrada."
+    
+    texto_original = "Vamos a eliminar todo lo anterior a la palabra clave 'eliminar'."
+    palabra_clave = "eliminar"
+    texto_resultante = eliminar_texto_anterior (texto_original, palabra_clave)
+    print("Texto resultante: ",texto_resultante)
+    
+    
+
+             
