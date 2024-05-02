@@ -91,6 +91,18 @@ pip install openpyxl
 echo TERMINADO
 cls
 
+@REM title matplotlib
+@REM color 4
+@REM pip install matplotlib
+@REM echo TERMINADO
+@REM cls
+
+title reportlab
+color c
+pip install reportlab
+echo TERMINADO
+cls
+
 @REM text-to-speech de openAI
 @REM title Instalando pathlib
 @REM color c
