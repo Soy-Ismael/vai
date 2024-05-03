@@ -720,9 +720,9 @@ def run(text:str = '', status=True):
 # run('qué hora es')
 try:
     # import time
-    # if not run():
-    #     talk(run_gpt())
-    run('realiza un reporte')
+    if not run():
+        talk(run_gpt())
+    # run('realiza un reporte')
     pass
 
     #* Implementando funcionalidad para que el asistente se mantenga escuchando

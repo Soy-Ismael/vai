@@ -90,9 +90,51 @@ def getDaysAgo(rec):
         # return "No entendí"
         return ''
 
+def getDaysAhead(rec):
+    value =""
+    if 'mañana' in rec:
+        days = 1
+        value = 'mañana'
+    elif 'pasado' in rec or 'pasado mañana' in rec:
+        days = 2
+        value = 'pasado mañana'
+    else:
+        rec = rec.replace(",","")
+        rec = rec.split()
+        days = 0
+
+        for i in range(len(rec)):
+            try:
+                days = float(rec[i])
+                # days = int(rec[i])
+                break
+            except:
+                pass
+    
+    if days != 0:
+        try:
+            now = date.today() + timedelta(days=days)
+            now = now.strftime("%A, %d de %B del %Y").lower()
+
+            print(f"{value} sera {iterateDays(now)}".strip())
+            if value != "":
+                return f"{value} sera {now}".strip() if transaction.read_config_file_line('language') != 'es-ES' else f"{value} sera {iterateDays(now)}".strip()
+                # return f"{value} fue {now}"
+            else:
+                return f"En {int(days)} días sera {now}" if transaction.read_config_file_line('language') != 'es-ES' else f"Hace {int(days)} días fue {iterateDays(now)}"
+                # return f"Hace {int(days)} días fue {now}"
+        except Exception as e:
+            return "Eres muy optimisca. ¿Por qué no aprovechas tu presente?"
+    else:
+        # return "No entendí"
+        return ''
+
+
+
 
 if __name__ == "__main__":
     # crear_carpeta_oculta('txt',False,True)
-    print(getDaysAgo('que dia fue hace 5 dias'))
+    # print(getDaysAgo('que dia fue hace 5 dias'))
+    print(getDaysAhead('que dia sera en 3 dias'))
     # print(getDay())
     # print(getDaysAgo('que dia fue ayer'))
