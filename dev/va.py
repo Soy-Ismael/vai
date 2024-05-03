@@ -324,7 +324,7 @@ va_template = f"{negrita}{name}: {normal_color}"
 def run_gpt():
     try:
         client = OpenAI(
-            api_key=get_key("OPENAI_API_KEY"),
+            api_key=get_key('dev/.env',"OPENAI_API_KEY"),
         )
         print(client.api_key)
 
