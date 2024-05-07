@@ -184,6 +184,7 @@ O bien puedes ejecutar el archivo "**dependencias**" haciendo doble clic en él.
 - [x] Desarrollo de módulo para tts con red neuronal de Microsoft
 - [x] Decir que día fue hace x cantidad de días (datetime.now / datetime.delta())
 - [x] Realizar reporte de hoja de Excel
+- [ ] Realizar reporte de Power BI
 - [ ] Hacer que el temporizador sea asíncrono
 
 ***
