@@ -30,6 +30,7 @@ else:
 import speech_recognition as sr # Módulo para reconocer audio y convertir a texto (STT)
 import pyttsx3 # Módulo para convertir de texto a audio (TTS)
 from dotenv import get_key # Módulo para cargar api-key en archivo .env
+from dotenv import get_key # Módulo para cargar api-key en archivo .env
 import datetime # Módulo para manejar la hora
 import pywhatkit # Módulo para enviar mensajes de whatapp y abrir contenido en youtube (es un kit)
 import random #Nuevo módulo para generar números aleatorios
@@ -45,7 +46,6 @@ from days import getDaysAgo
 # import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
 from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
-from report import create_report # Módulo para crear un reporte de excel de un archivo especifico
 # from voice_synthesizer import synthesize_to_speaker # Módulo local creado para tts de microsoft (más voces y calidad que pyttsx3, no depende de voces en el ordenador)
 #* Open AI - Chat Gpt
 from openai import OpenAI # Módulo para inteligencia artificial
@@ -157,7 +157,7 @@ rec = sr.Recognizer()
 
 # 2300 tiene problemas para entender
 # rec.energy_threshold = 2900
-#* Función para escuchar la petición del usuario, se puede invocar durante la ejecución del programa, lo que permite que el asistente pueda volver a escuchar en cualquier punto del programa con solo invocar la función.
+#* Función para escuchar la petición del usuario, se puede invocar durante la ejecución del programa, lo que permite que el asistente pueda volver a escuchar en cualquier punto del programa con solo invocar la función
 def listen():
     # Acceder al microfono del dispositivo
     try:
@@ -461,6 +461,7 @@ def run(text:str = '', status=True):
         talk(resumen)
         return True
 
+
 # * Diferencia entre search e info
 # search: La función pywhatkit.search("Palabra clave") abre tu navegador predeterminado y realiza una búsqueda en Google con la “Palabra clave” que proporcionaste. Te mostrará todos los resultados de búsqueda relacionados con esa palabra clave en Google.
 
@@ -476,12 +477,6 @@ def run(text:str = '', status=True):
         # windound no soporta formato mp3
         winsound.PlaySound('sounds/redoble_de_tambores.wav', winsound.SND_FILENAME)
         return True
-
-
-    elif 'realiza' in text['text'] and 'reporte' in text['text']:
-        print('Creando reporte')
-        create_report()
-
 
 
     elif 'envía' in text['text']:
@@ -632,10 +627,6 @@ def run(text:str = '', status=True):
         print(date)
         talk(date)
 
-    elif 'más' in text['text']:
-        # código para obtener los numeros del texto de entrada, sumarlos y devolverlos
-        pass
-
     #! IMPORTANTE
     #* Con global le indico que la variable text sera global en lugar de local, como la variable text existe, entonces estoy indicando que quiero utilizar la variable global y no crear una variable nueva dentro de la función, esto deberia solucionar el error de "UnboundLocalError" 
     # global text
@@ -722,8 +713,7 @@ try:
     # import time
     if not run():
         talk(run_gpt())
-    # run('realiza un reporte')
-    pass
+    # run('hola')
 
     #* Implementando funcionalidad para que el asistente se mantenga escuchando
     # run('dime un chiste')
@@ -802,77 +792,3 @@ except TypeError:
 # print(response) # Imprime la respuesta
 
 print(f'{Transaction().yellow_color}PROGRAMA FINALIZADO CON UNA DURACIÓN DE:{Transaction().bright_cyan_color}{Transaction().negrita} {int(time.time() - start_time)} segundos {Transaction().normal_color}')
-
-# Recordar peticiones anteriores para charla amena (IA)
-
-historial_solicitudes = {}
-
-def procesar_solicitud (solicitud):
-    if solicitud in historial_solicitudes:
-        repuesta = "Hablamos sobre esto anteriormente. ¿Te interesa hablar sobre algo más?"
-    else:
-        historial_solicitudes [solicitud] = True
-        repuesta = "COOL. ¿Qué más te gustaria conversar?"
-        
-    return repuesta
-
-while True:
-    solicitud_usuario = input("usuario: ")
-    respuesta_ia = procesar_solicitud (solicitud_usuario)
-    print("IA: ", respuesta_ia)
-    
-# Realizar operaciones matemáticas básicas a petición 
-
-def realizar_operaciones (operacion):
-    partes = operacion.split()
-    
-    if len(partes) != 3:
-        return "Formato de operación incorrecto. Por favor, utilice el formato 'número - operador - número'."
-    
-    num1 = float(partes[0])
-    num2 = float(partes[2])
-    operador = partes[1]
-    
-    if operador == '+':
-        resultado = num1 + num2
-    elif operador == '-':
-        resultado = num1 - num2
-    elif operador == '*':
-        resultado = num1 * num2
-    elif operador == '/':
-        if num2 == 0:
-            return "Error: División por cero."
-        else:
-            resultado = num1 / num2
-    else:
-        return "Operador no válido."
-    
-    return resultado
-
-while True:
-    operacion = input("Introduce una operación: ")
-    resultado = realizar_operaciones (operacion)
-    print("Resultado: ", resultado)
-    
-# Eliminar todo el texto anterior a la palabra clave donde sea necesario (.slice() tal vez / expresiones regulares)
-
-import re
-
-def eliminar_texto_anterior (texto, palabra_clave):
-    match = re.search (palabra_clave, texto)
-    
-    if match:
-        palabra_clave1 = match.start()
-        texto_nuevo = texto [palabra_clave1:]
-        return texto_nuevo 
-    else:
-        return "Palabra no encontrada."
-    
-    texto_original = "Vamos a eliminar todo lo anterior a la palabra clave 'eliminar'."
-    palabra_clave = "eliminar"
-    texto_resultante = eliminar_texto_anterior (texto_original, palabra_clave)
-    print("Texto resultante: ",texto_resultante)
-    
-    
-
-             
