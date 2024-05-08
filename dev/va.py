@@ -326,7 +326,7 @@ def run_gpt(prompt:str):
         client = OpenAI(
             api_key=get_key('dev/.env',"OPENAI_API_KEY"),
         )
-        print(client.api_key)
+        # print(client.api_key)
 
         # chat_completion = client.chat.completions.create(
         #     messages=[
