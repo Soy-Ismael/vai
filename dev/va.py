@@ -41,12 +41,13 @@ import time # Módulo para temporizador - importado solo en caso de que se neces
 start_time = time.time()
 import re # Módulo expresiones regulares
 import asyncio # Módulo para ejecutar código asíncrono
+from voice_synthesizer import synthesize_to_speaker # Módulo local creado para tts de microsoft (más voces y calidad que pyttsx3, no depende de voces en el ordenador, es necesario crear cuentan de microsoft azure y crear api key para servicios de voz)
 from days import getDaysAgo 
 # import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
 from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
 from report import create_report # Módulo para crear un reporte de excel de un archivo especifico
-# from voice_synthesizer import synthesize_to_speaker # Módulo local creado para tts de microsoft (más voces y calidad que pyttsx3, no depende de voces en el ordenador)
+# from whisperBeta import main # Módulo para reconocer el audio mediante whisper, recibe como parametro el modelo que va a utilizar para reconocer el audio (tiny, base, medium, large), el valor por defecto es base
 #* Open AI - Chat Gpt
 from openai import OpenAI # Módulo para inteligencia artificial
 # from audio import tts
@@ -105,7 +106,6 @@ user_template = f"{negrita}Usuario: {normal_color}"
 err_template = f"{red_color}{negrita}ERROR: {normal_color}"
 warning_template = f"{yellow_color}{negrita}ADVERTENCIA: {normal_color}"
 
-
 #* De texto a voz - Modulo 6
 engine = pyttsx3.init()
 
@@ -141,8 +141,9 @@ except IndexError:
 
 #* Función para hablar, recibe el texto a reproducir como parametro
 def talk(text):
-    engine.say(text)
-    engine.runAndWait()
+    # engine.say(text)
+    # engine.runAndWait()
+    synthesize_to_speaker(text, 'es-MX-DaliaNeural')
 
 #* Función para detener el habla en caso de ser necesario
 def no_talk():
@@ -326,7 +327,6 @@ def run_gpt(prompt:str):
         client = OpenAI(
             api_key=get_key('dev/.env',"OPENAI_API_KEY"),
         )
-        print(client.api_key)
 
         # chat_completion = client.chat.completions.create(
         #     messages=[
@@ -415,9 +415,9 @@ def run(text:str = '', status=True):
             music = text['text'].replace('reproduce', '')
             music = music.replace(name, '')
             pywhatkit.playonyt(music)
-            talk('Reproduciendo ' + music)
-            # print(f'{negrita}{name}: {normal_color}Reproduciendo ' + music)
             print(va_template + 'Reproduciendo' + music)
+            # print(f'{negrita}{name}: {normal_color}Reproduciendo ' + music)
+            talk('Reproduciendo ' + music)
         return {'text' : text['text'], 'status' : True}
 
     elif 'busca' in text['text']:

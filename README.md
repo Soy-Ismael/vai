@@ -157,8 +157,8 @@ O bien puedes ejecutar el archivo "**dependencias**" haciendo doble clic en él.
 
 **Xaviel**
 - [ ] Hacer que el audio resultado de OpenAI tts-1 se reproduzca de inmediato (no crear archivo de audio)
-- [ ] Implementar reconocimiento de voz con Whisper
-- [ ] Establecer recordatorios
+- [x] Implementar reconocimiento de voz con Whisper
+- [x] Establecer recordatorios
 
 **Elianny**
 - [ ] Reparar envío de mensajes por WhatsApp con pywhatkit
