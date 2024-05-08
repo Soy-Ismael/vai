@@ -49,10 +49,13 @@ from banner import figlet_banner # Nuevo módulo local para imprimir banner de l
 # from voice_synthesizer import synthesize_to_speaker # Módulo local creado para tts de microsoft (más voces y calidad que pyttsx3, no depende de voces en el ordenador)
 #* Open AI - Chat Gpt
 from openai import OpenAI # Módulo para inteligencia artificial
+from whisperBeta import main # Módulo para reconocer el audio mediante whisper, recibe como parametro el modelo que va a utilizar para reconocer el audio (tiny, base, medium, large), el valor por defecto es base
 # from audio import tts
 # Google - Gemini
 # import pathlib
 # import textwrap
+
+
 
 # import google.generativeai as genai
 
@@ -393,7 +396,7 @@ def run(text:str = '', status=True):
     # print(text)
     # print(text == '')
     if text == '':
-        text = listen()
+        text = main()
         # print('entro en if')
     else:
         # print('no entro en if')
@@ -459,6 +462,35 @@ def run(text:str = '', status=True):
         print(va_template + resumen)
         talk(resumen)
         return {'text' : text['text'], 'status' : True}
+    
+    elif 'recuérdame' in text['text']:
+        import time
+        tarea_inicio = text['text'].find("Recuérdame") + len("Recuérdame")
+        match = re.search(r'\b(en|después de)\b', text['text'])
+        if match:
+            tarea_fin = match.start()            
+            tarea = text['text'][tarea_inicio:tarea_fin].strip()
+            tiempo_inicio = match.end()
+            tiempo_texto = text['text'][tiempo_inicio:].strip().split()[0]
+            comando = int(tiempo_texto)
+            if "segundo" or "segundos" in tiempo_texto:
+                comando = comando
+            elif "minuto" or "minutos" in tiempo_texto:
+                comando = comando * 60
+            elif "hora" or "horas" in tiempo_texto:
+                comando = comando * 3600
+            elif "día" or "días" in tiempo_texto:
+                comando = comando * 86400
+            talk(f"¡Tarea programada! Te recordaré que debes {tarea} en el tiempo estimado")
+            time.sleep(comando)
+            print(f"Recuerda que {tarea}")
+            talk(f"Recuerda que {tarea}")
+        else:
+            talk("No se encontró la unidad de tiempo. Por favor intente de nuevo")
+        # return True
+        return {'text' : text['text'], 'status' : True}
+
+
 
 # * Diferencia entre search e info
 # search: La función pywhatkit.search("Palabra clave") abre tu navegador predeterminado y realiza una búsqueda en Google con la “Palabra clave” que proporcionaste. Te mostrará todos los resultados de búsqueda relacionados con esa palabra clave en Google.
@@ -727,7 +759,7 @@ try:
 
     if not result['status']:
         talk(run_gpt(result['text']))
-    # run('realiza un reporte')
+    run('Qué hora es?')
     pass
 
     #* Implementando funcionalidad para que el asistente se mantenga escuchando
