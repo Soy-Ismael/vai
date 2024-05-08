@@ -94,18 +94,23 @@ O bien puedes ejecutar el archivo "**dependencias**" haciendo doble clic en él.
 * Busca que es incoloro
 * Ofréceme información sobre la Primera Guerra Mundial ⭐
 * Ofréceme información en inglés sobre la Primera Guerra Mundial
+* Dime un chiste
+* Realiza un reporte de excel
 * Envía "cómo estás" a Daniel (en desarrollo) ⭐
 * ¿Qué hora es?
+* Establece un temporizador de 15 segundos
+* Qué dia fue hace 2 años
 * ¿Estás ahí?
 * ¿Cómo te llamas?
+* Muestrame el archivo de configuración
+* Crea una nueva configuración
 * Hasta luego
-* Establece un temporizador de 15 segundos (en desarrollo)
 
 ## Dependencias / Módulos
 ### En Windows
 * Ejecutar archivo dependencias.bat
 
-### En Linux / macOS
+### En Linux / macOS / Windows
 * Ejecutar requirements.txt
 ``pip install -r requirements.txt``
 
@@ -176,7 +181,6 @@ O bien puedes ejecutar el archivo "**dependencias**" haciendo doble clic en él.
 
 **Raysa**
 - [ ] Guardar en un archivo **log.txt** el historial de peticiones y respuestas 
-- [ ] Compatibilidad con productos Govee (encender, apagar, cambiar color, intensidad y más (para luces govee))
 
 **Ismael**
 - [x] Capacidad de temporizador
@@ -184,7 +188,6 @@ O bien puedes ejecutar el archivo "**dependencias**" haciendo doble clic en él.
 - [x] Desarrollo de módulo para tts con red neuronal de Microsoft
 - [x] Decir que día fue hace x cantidad de días (datetime.now / datetime.delta())
 - [x] Realizar reporte de hoja de Excel
-- [ ] Realizar reporte de Power BI
 - [ ] Hacer que el temporizador sea asíncrono
 
 ***
