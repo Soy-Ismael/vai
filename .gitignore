@@ -24,6 +24,5 @@ dev/regEx.py
 # .github
 main.txt
 dev/.env.example
-dev/whisper-beta.py
-dev/contacts.example.txt
+excel/*.xlsx
 DOCUMENTATION.md

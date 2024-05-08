@@ -35,12 +35,15 @@ Listen();
 
 ### run_gpt();
 run_gpt() es una función de ayuda para invocar respuestas de inteligencia artificial al momento de dar una respuesta que no se encuentra en los recursos de el asistente VA, solo para ampliar su buen funcionamiento y no presentar fallas.
+<<<<<<< HEAD
+=======
 
 #### Conexión de VA
 El proyecto VA trabaja conectado a una red de internet para así poder navegar libremente por la web y acceder a todo lo que necesitemos que no esté dentro de sus dominios, pero sí en una red libre a la que pueda acceder.
 
 ### load_data(data_to_extract):
 Esta es una función que, como algunas, admite parámetros que le permiten acceder a informacioes del archivo interno de configuración en sus variables. Llámese: nombre, lenguaje, formato de fecha, etc...
+>>>>>>> b529d1c260404a670c072529347d197594ab1850
 
 ## banner.py
 Este archivo contiene una función que se encarga de imprimir el banner de la promoción en la que se creo el software. La funcion printBanner() recibe 2 parametros opcionales:
