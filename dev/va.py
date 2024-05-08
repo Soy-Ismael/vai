@@ -790,7 +790,7 @@ except NameError as err:
 except TypeError:
     talk("Entrada de audio inválida, intentalo nuevamente")
     print("Entrada de audio inválida, intentalo nuevamente")
-    print("EXCEPT 2")
+    # print("EXCEPT 2")
 
 
 
