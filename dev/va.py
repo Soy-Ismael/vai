@@ -321,7 +321,7 @@ va_template = f"{negrita}{name}: {normal_color}"
 
 # *INICIO CHAT GPT - Modulo 3, 4 & 5
 #* Este primer bloque se utiliza para interacciones con usuario
-def run_gpt():
+def run_gpt(prompt:str):
     try:
         client = OpenAI(
             api_key=get_key('dev/.env',"OPENAI_API_KEY"),
@@ -343,7 +343,7 @@ def run_gpt():
             messages=[
                 {
                     "role": "user",
-                    "content": text['text'],
+                    "content": prompt,
                 }
             ]
         )
@@ -361,8 +361,7 @@ def run_gpt():
         #     print(line)
 
     except Exception as err:
-        print('err')
-        print(err)
+        print(err_template+str(err))
 
 # run_gpt()
 
@@ -419,7 +418,7 @@ def run(text:str = '', status=True):
             talk('Reproduciendo ' + music)
             # print(f'{negrita}{name}: {normal_color}Reproduciendo ' + music)
             print(va_template + 'Reproduciendo' + music)
-        return True
+        return {'text' : text['text'], 'status' : True}
 
     elif 'busca' in text['text']:
         busqueda = text['text'].replace('busca', '')
@@ -428,7 +427,7 @@ def run(text:str = '', status=True):
         pywhatkit.search(busqueda)
         # Esta funcion busca en el motor de busqueda google.com, valga la redundancia
         print(f"{va_template}Buscando {busqueda}")
-        return True
+        return {'text' : text['text'], 'status' : True}
 
     elif 'información sobre' in text['text'] and 'ingles' in text['text']:
 
@@ -444,7 +443,7 @@ def run(text:str = '', status=True):
         talk(pywhatkit.info(info))
         # Esta funcion unicamente devuelve resumen en la consola (no puedo almacenar el resumen en variable), y lo devuelve en ingles, para almacenar el resumen y poder cambiar el idioma necesito utilizar el modulo de wikipedia (ejemplo mostrado arriba), que es el mismo modulo que utiliza pywhatkit internamente.
         print(f"{va_template}resumiendo {info} en wikipedia en ingles")
-        return True
+        return {'text' : text['text'], 'status' : True}
     
     elif 'información sobre' in text['text']:
         # wikipedia.set_lang = 'es'
@@ -459,7 +458,7 @@ def run(text:str = '', status=True):
         resumen = wikipedia.summary(info)
         print(va_template + resumen)
         talk(resumen)
-        return True
+        return {'text' : text['text'], 'status' : True}
 
 # * Diferencia entre search e info
 # search: La función pywhatkit.search("Palabra clave") abre tu navegador predeterminado y realiza una búsqueda en Google con la “Palabra clave” que proporcionaste. Te mostrará todos los resultados de búsqueda relacionados con esa palabra clave en Google.
@@ -475,12 +474,14 @@ def run(text:str = '', status=True):
         # tts(chiste)
         # windound no soporta formato mp3
         winsound.PlaySound('sounds/redoble_de_tambores.wav', winsound.SND_FILENAME)
-        return True
+        return {'text' : text['text'], 'status' : True}
 
 
     elif 'realiza' in text['text'] and 'reporte' in text['text']:
         print('Creando reporte')
+        talk('Creando reporte')
         create_report()
+        return {'text' : text['text'], 'status' : True}
 
 
 
@@ -537,7 +538,7 @@ def run(text:str = '', status=True):
             print(err_template + "en el envío de mensaje, por favor, vuelve a intentarlo.")
             talk("Error en el envío de mensaje, por favor, vuelve a intentarlo.")
         # pywhatkit.sendwhatmsg("numero con prefijo","mensaje", 23,57)
-        return True
+        return {'text' : text['text'], 'status' : True}
 
 
     elif 'qué hora es' in text['text']:
@@ -575,7 +576,7 @@ def run(text:str = '', status=True):
         else:
             print(va_template + f"Son las {time_es}")
             talk(f"Son las {time_es}")
-        return True
+        return {'text' : text['text'], 'status' : True}
 
 
     # Condicional para que el programa tenga un temporizador
@@ -624,17 +625,14 @@ def run(text:str = '', status=True):
         print('Antes de invocación de funcion asíncrona')        
         asyncio.run(async_sleep(wait))
         print('despues de invocación de funcion asíncrona')        
-        return True
+        return {'text' : text['text'], 'status' : True}
 
     
     elif 'que dia fue' in text['text'] or 'qué día fue' in text['text']:
         date = getDaysAgo(text['text'])
         print(date)
         talk(date)
-
-    elif 'más' in text['text']:
-        # código para obtener los numeros del texto de entrada, sumarlos y devolverlos
-        pass
+        return {'text' : text['text'], 'status' : True}
 
     #! IMPORTANTE
     #* Con global le indico que la variable text sera global en lugar de local, como la variable text existe, entonces estoy indicando que quiero utilizar la variable global y no crear una variable nueva dentro de la función, esto deberia solucionar el error de "UnboundLocalError" 
@@ -644,7 +642,7 @@ def run(text:str = '', status=True):
         print(va_template + 'Sí, ¿En qué te puedo ayudar?')
         talk('Sí, ¿En qué te puedo ayudar?')
         text = name + ' ' + listen()
-        return True
+        return {'text' : text['text'], 'status' : True}
 
 
     # global text
@@ -652,7 +650,7 @@ def run(text:str = '', status=True):
         print(name)
         talk('Soy' + name + '¿Cómo te puedo ayudar?')
         # text = listen()
-        return True
+        return {'text' : text['text'], 'status' : True}
 
     elif 'muestrame el archivo de configuración' in text['text'] or 'muéstrame el archivo de configuración' in text['text']:
         print('Mostrando el contenido del archivo de configuración')
@@ -669,21 +667,26 @@ def run(text:str = '', status=True):
         talk('Idioma de wikipedia: ' + wiki_lang)
         talk('Formato de hora: ' + '12' if time_format.startswith('%I') else '24' + 'horas')
         talk('Indice de voz: ' + voice)
-        return True
+        return {'text' : text['text'], 'status' : True}
         
     
     elif 'crea una nueva configuración' in text['text'] :
         talk('Creando archivo de configuración nuevamente')
         Data_transfer.initial_config()
         load_data(Data_transfer.readfile().values())
-        return True
+        return {'text' : text['text'], 'status' : True}
 
 
     elif 'hasta luego' in text['text']:
         talk(f'Hasta pronto')
         os._exit(0)
-        return True
+        return {'text' : text['text'], 'status' : True}
 
+    # Código aqui
+
+
+    # Esta debe ser la ultima linea de la función run
+    return {'text' : text['text'], 'status' : False}
 
     # elif 'cuántos suscriptores tiene' in text or 'cuantos suscriptores tiene' in text:
     #     key = os.getenv('GOOGLE_API_KEY_YOUTUBE')
@@ -720,8 +723,10 @@ def run(text:str = '', status=True):
 # run('qué hora es')
 try:
     # import time
-    if not run():
-        talk(run_gpt())
+    result = run()
+
+    if not result['status']:
+        talk(run_gpt(result['text']))
     # run('realiza un reporte')
     pass
 
@@ -735,14 +740,14 @@ except KeyboardInterrupt:
     no_talk()
     print(err_template + 'Acción cancelada por el usuario.')
 except NameError as err:
+    print(err)
     print("Entrada de audio inválida, intentalo nuevamente")
     talk("Entrada de audio inválida, intentalo nuevamente")
-    print(err)
     # print("EXCEPT 1")
 except TypeError:
     talk("Entrada de audio inválida, intentalo nuevamente")
     print("Entrada de audio inválida, intentalo nuevamente")
-    # print("EXCEPT 2")
+    print("EXCEPT 2")
 
 
 
@@ -816,10 +821,10 @@ def procesar_solicitud (solicitud):
         
     return repuesta
 
-while True:
-    solicitud_usuario = input("usuario: ")
-    respuesta_ia = procesar_solicitud (solicitud_usuario)
-    print("IA: ", respuesta_ia)
+# while True:
+#     solicitud_usuario = input("usuario: ")
+#     respuesta_ia = procesar_solicitud (solicitud_usuario)
+#     print("IA: ", respuesta_ia)
     
 # Realizar operaciones matemáticas básicas a petición 
 
@@ -849,10 +854,10 @@ def realizar_operaciones (operacion):
     
     return resultado
 
-while True:
-    operacion = input("Introduce una operación: ")
-    resultado = realizar_operaciones (operacion)
-    print("Resultado: ", resultado)
+# while True:
+#     operacion = input("Introduce una operación: ")
+#     resultado = realizar_operaciones (operacion)
+#     print("Resultado: ", resultado)
     
 # Eliminar todo el texto anterior a la palabra clave donde sea necesario (.slice() tal vez / expresiones regulares)
 
@@ -870,7 +875,7 @@ def eliminar_texto_anterior (texto, palabra_clave):
     
     texto_original = "Vamos a eliminar todo lo anterior a la palabra clave 'eliminar'."
     palabra_clave = "eliminar"
-    texto_resultante = eliminar_texto_anterior (texto_original, palabra_clave)
+    # texto_resultante = eliminar_texto_anterior (texto_original, palabra_clave)
     print("Texto resultante: ",texto_resultante)
     
     
