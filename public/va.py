@@ -438,15 +438,38 @@ def run():
         #* print(hora_actual.strftime("%I:%M"))
         #* print(nueva_hora.strftime("%I:%M"))
         # print(nueva_hora_formateada)
+        import pywhatkit as kit
+        import speech_recognition as sr
+        
         try:
-            pywhatkit.sendwhatmsg("+18574928689",msg, nueva_hora.hour, nueva_hora.minute, 15, True, 3)
+            msg, contact = text.split(' a ')
+             # print('Mensaje ' + msg)
+            # print('contacto ' + contact)
+
+            contact = Data_transfer.read_phone_numbers(contact)
+
+            #? talk(f"El mensaje se enviara en unos segundos")
+            #pywhatkit.sendwhatmsg("+18574928689",msg, nueva_hora.hour, nueva_hora.minute, 15, True, 3)
+            kit.sendwhatmsg_instantly("+18574928689", msg)
             talk(f"Enviando mensaje al número seleccionado")
+
             print(va_template + "Enviando mensaje al número seleccionado")
+            contact = "+18574928689"
+            
+            # Función para transcribir el mensaje hablado
+            def transcribir_audio():
+                recognizer = sr.Recognizer()
+                with sr.Microphone() as source:
+                    talk(f"Di el mensaje que deseas enviar por WhatsApp:")
+                    # Ajusta al ruido ambiental
+                    recognizer.adjust_for_ambient_noise(source)  
+                    audio = recognizer.listen(source)
+
         except:
             print(err_template + "en el envío de mensaje, por favor, vuelve a intentarlo.")
             talk("Error en el envío de mensaje, por favor, vuelve a intentarlo.")
         # pywhatkit.sendwhatmsg("numero con prefijo","mensaje", 23,57)
-
+        return msg
 
     elif 'qué hora es' in text['text']:
         # print(f"Son las {datetime.datetime.now().strftime("%I:%M")}")
