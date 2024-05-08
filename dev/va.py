@@ -541,9 +541,9 @@ def run(text:str = '', status=True):
 
             # pywhatkit.sendwhatmsg(contact, msg, nueva_hora.hour, nueva_hora.minute, 15, True, 3)
             # pywhatkit.sendwhatmsg('+18574928689', msg, nueva_hora.hour, nueva_hora.minute, 3, True, 5)
-            kit.sendwhatmsg_instantly("+18574928689", msg)
+            kit.sendwhatmsg_instantly("Ismael", msg)
             # Número de teléfono a enviar mensaje ( formato inter)
-            contact = "+18574928689"
+            contact = "Ismael"
             talk(f"Mensaje enviado al número seleccionado")
             print(va_template + "Mensaje enviado al número seleccionado")
         except:
@@ -735,8 +735,9 @@ def run(text:str = '', status=True):
 # run('qué hora es')
 try:
     # import time
-    if not run():
-        talk(run_gpt())
+    result = run()
+    if not run(result['status']):
+        talk(run_gpt(result['text']))
     # run('realiza un reporte')
     pass
 
