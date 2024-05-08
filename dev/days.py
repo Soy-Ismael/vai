@@ -90,9 +90,41 @@ def getDaysAgo(rec):
         # return "No entendí"
         return ''
 
+def getDaysAhead(rec):
+    value =""
+    if 'mañana' in rec:
+        days = 1
+        value = 'mañana'
+    elif 'pasado' in rec or 'pasado mañana' in rec:
+        days = 2
+        value = 'pasado mañana'
+    else:
+        rec = rec.replace(",","")
+        rec = rec.split()
+        days = 0
+
+        for i in range(len(rec)):
+            try:
+                days = float(rec[i])
+                # days = int(rec[i])
+                break
+            except:
+                pass
+    
+    if days != 0:
+            now = date.today() + timedelta(days=days)
+            now = now.strftime("%A, %d de %B del %Y").lower()
+            return iterateDays(now)
+    else:
+        # return "No entendí"
+        return ''
+
+
+
 
 if __name__ == "__main__":
     # crear_carpeta_oculta('txt',False,True)
-    print(getDaysAgo('que dia fue hace 5 dias'))
+    # print(getDaysAgo('que dia fue hace 5 dias'))
+    print(getDaysAhead('recuerdame comprar el pavo en 5 dias'))
     # print(getDay())
     # print(getDaysAgo('que dia fue ayer'))

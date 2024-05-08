@@ -135,10 +135,10 @@ def datos_servicio_report(archive_path:str='excel\\', file_name:str = 'Datos_de 
         first_row = wb.active.min_row
         last_row = wb.active.max_row
 
-        print(first_col)
-        print(last_col)
-        print(first_row)
-        print(last_row)
+        # print(first_col)
+        # print(last_col)
+        # print(first_row)
+        # print(last_row)
 
         #* Añadir graficas de excel
         # Para hacerlo debemos importar las graficas de openpyxl
@@ -162,7 +162,7 @@ def datos_servicio_report(archive_path:str='excel\\', file_name:str = 'Datos_de 
         # Para insertar el grafico en el excel:
         tab.add_chart(bar_chart, 'B'+str(last_row+3)) # El segundo parametro corresponde a la posición del grafico, en este caso sera en la columna B, 2 lineas despues de que termine la tabla
         
-        print(bar_chart.layout)
+        # print(bar_chart.layout)
         tab.add_chart(bubble_chart, 'B'+str(last_row+15))
         # Añadir estilo al gráfico
         bar_chart.style = 4
