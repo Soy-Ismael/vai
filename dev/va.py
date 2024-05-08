@@ -518,19 +518,31 @@ def run(text:str = '', status=True):
         #* print(hora_actual.strftime("%I:%M"))
         #* print(nueva_hora.strftime("%I:%M"))
         # print(nueva_hora_formateada)
+        import pywhatkit as kit
+        import speech_recognition as sr
+        
         try:
             msg, contact = text.split(' a ')
             # print('Mensaje ' + msg)
             # print('contacto ' + contact)
 
             contact = Data_transfer.read_phone_numbers(contact)
-
+            def transcribir_audio():
+                recognizer = sr.Recognizer()
+                with sr.Microphone() as source:
+                    talk(f"Di el mensaje que deseas enviar por WhatsApp:")
+                    # Ajusta al ruido ambiental
+                    recognizer.adjust_for_ambient_noise(source)  
+                    audio = recognizer.listen(source)
             #? talk(f"El mensaje se enviara en unos segundos")
             talk(f"El mensaje se enviara en unos segundos")
             # print(contact, msg, nueva_hora.hour, nueva_hora.minute, 15, True, 3)
 
             # pywhatkit.sendwhatmsg(contact, msg, nueva_hora.hour, nueva_hora.minute, 15, True, 3)
-            pywhatkit.sendwhatmsg('+18574928689', msg, nueva_hora.hour, nueva_hora.minute, 3, True, 5)
+            # pywhatkit.sendwhatmsg('+18574928689', msg, nueva_hora.hour, nueva_hora.minute, 3, True, 5)
+            kit.sendwhatmsg_instantly("+18574928689", msg)
+            # Número de teléfono a enviar mensaje ( formato inter)
+            contact = "+18574928689"
             talk(f"Mensaje enviado al número seleccionado")
             print(va_template + "Mensaje enviado al número seleccionado")
         except:
@@ -720,8 +732,9 @@ def run(text:str = '', status=True):
 # run('qué hora es')
 try:
     # import time
+    result = run ('como estas')
     if not run():
-        talk(run_gpt())
+        talk(run_gpt(result[text]))
     # run('realiza un reporte')
     pass
 
