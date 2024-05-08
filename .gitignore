@@ -26,3 +26,4 @@ main.txt
 dev/.env.example
 excel/*.xlsx
 DOCUMENTATION.md
+dev/temp.wav
