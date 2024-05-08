@@ -30,6 +30,7 @@ else:
 import speech_recognition as sr # Módulo para reconocer audio y convertir a texto (STT)
 import pyttsx3 # Módulo para convertir de texto a audio (TTS)
 from dotenv import get_key # Módulo para cargar api-key en archivo .env
+from dotenv import get_key # Módulo para cargar api-key en archivo .env
 import datetime # Módulo para manejar la hora
 import pywhatkit # Módulo para enviar mensajes de whatapp y abrir contenido en youtube (es un kit)
 import random #Nuevo módulo para generar números aleatorios
@@ -46,14 +47,16 @@ from days import getDaysAgo
 # import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
 from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
-from report import create_report # Módulo para crear un reporte de excel de un archivo especifico
 # from whisperBeta import main # Módulo para reconocer el audio mediante whisper, recibe como parametro el modelo que va a utilizar para reconocer el audio (tiny, base, medium, large), el valor por defecto es base
 #* Open AI - Chat Gpt
 from openai import OpenAI # Módulo para inteligencia artificial
+from whisperBeta import main # Módulo para reconocer el audio mediante whisper, recibe como parametro el modelo que va a utilizar para reconocer el audio (tiny, base, medium, large), el valor por defecto es base
 # from audio import tts
 # Google - Gemini
 # import pathlib
 # import textwrap
+
+
 
 # import google.generativeai as genai
 
@@ -158,7 +161,7 @@ rec = sr.Recognizer()
 
 # 2300 tiene problemas para entender
 # rec.energy_threshold = 2900
-#* Función para escuchar la petición del usuario, se puede invocar durante la ejecución del programa, lo que permite que el asistente pueda volver a escuchar en cualquier punto del programa con solo invocar la función.
+#* Función para escuchar la petición del usuario, se puede invocar durante la ejecución del programa, lo que permite que el asistente pueda volver a escuchar en cualquier punto del programa con solo invocar la función
 def listen():
     # Acceder al microfono del dispositivo
     try:
@@ -393,7 +396,7 @@ def run(text:str = '', status=True):
     # print(text)
     # print(text == '')
     if text == '':
-        text = listen()
+        text = main()
         # print('entro en if')
     else:
         # print('no entro en if')
@@ -459,6 +462,35 @@ def run(text:str = '', status=True):
         print(va_template + resumen)
         talk(resumen)
         return {'text' : text['text'], 'status' : True}
+    
+    elif 'recuérdame' in text['text']:
+        import time
+        tarea_inicio = text['text'].find("Recuérdame") + len("Recuérdame")
+        match = re.search(r'\b(en|después de)\b', text['text'])
+        if match:
+            tarea_fin = match.start()            
+            tarea = text['text'][tarea_inicio:tarea_fin].strip()
+            tiempo_inicio = match.end()
+            tiempo_texto = text['text'][tiempo_inicio:].strip().split()[0]
+            comando = int(tiempo_texto)
+            if "segundo" or "segundos" in tiempo_texto:
+                comando = comando
+            elif "minuto" or "minutos" in tiempo_texto:
+                comando = comando * 60
+            elif "hora" or "horas" in tiempo_texto:
+                comando = comando * 3600
+            elif "día" or "días" in tiempo_texto:
+                comando = comando * 86400
+            talk(f"¡Tarea programada! Te recordaré que debes {tarea} en el tiempo estimado")
+            time.sleep(comando)
+            print(f"Recuerda que {tarea}")
+            talk(f"Recuerda que {tarea}")
+        else:
+            talk("No se encontró la unidad de tiempo. Por favor intente de nuevo")
+        # return True
+        return {'text' : text['text'], 'status' : True}
+
+
 
 # * Diferencia entre search e info
 # search: La función pywhatkit.search("Palabra clave") abre tu navegador predeterminado y realiza una búsqueda en Google con la “Palabra clave” que proporcionaste. Te mostrará todos los resultados de búsqueda relacionados con esa palabra clave en Google.
@@ -519,19 +551,31 @@ def run(text:str = '', status=True):
         #* print(hora_actual.strftime("%I:%M"))
         #* print(nueva_hora.strftime("%I:%M"))
         # print(nueva_hora_formateada)
+        import pywhatkit as kit
+        import speech_recognition as sr
+        
         try:
             msg, contact = text.split(' a ')
             # print('Mensaje ' + msg)
             # print('contacto ' + contact)
 
             contact = Data_transfer.read_phone_numbers(contact)
-
+            def transcribir_audio():
+                recognizer = sr.Recognizer()
+                with sr.Microphone() as source:
+                    talk(f"Di el mensaje que deseas enviar por WhatsApp:")
+                    # Ajusta al ruido ambiental
+                    recognizer.adjust_for_ambient_noise(source)  
+                    audio = recognizer.listen(source)
             #? talk(f"El mensaje se enviara en unos segundos")
             talk(f"El mensaje se enviara en unos segundos")
             # print(contact, msg, nueva_hora.hour, nueva_hora.minute, 15, True, 3)
 
             # pywhatkit.sendwhatmsg(contact, msg, nueva_hora.hour, nueva_hora.minute, 15, True, 3)
-            pywhatkit.sendwhatmsg('+18574928689', msg, nueva_hora.hour, nueva_hora.minute, 3, True, 5)
+            # pywhatkit.sendwhatmsg('+18574928689', msg, nueva_hora.hour, nueva_hora.minute, 3, True, 5)
+            kit.sendwhatmsg_instantly("Ismael", msg)
+            # Número de teléfono a enviar mensaje ( formato inter)
+            contact = "Ismael"
             talk(f"Mensaje enviado al número seleccionado")
             print(va_template + "Mensaje enviado al número seleccionado")
         except:
@@ -724,10 +768,9 @@ def run(text:str = '', status=True):
 try:
     # import time
     result = run()
-
-    if not result['status']:
+    if not run(result['status']):
         talk(run_gpt(result['text']))
-    # run('realiza un reporte')
+    run('Qué hora es?')
     pass
 
     #* Implementando funcionalidad para que el asistente se mantenga escuchando
