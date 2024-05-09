@@ -408,7 +408,7 @@ def run(text:str = '', status=True):
     # print(text['status'])
 
     # global text
-    if 'reproduce' in text['text']:
+    if 'reproduce' in text['text'] or 'produce' in text['text']:
         if 'spotify' in text['text']:
             music = text['text'].replace('reproduce', '')
             music = music.replace(name, '')
@@ -930,5 +930,3 @@ def eliminar_texto_anterior (texto, palabra_clave):
     print("Texto resultante: ",texto_resultante)
     
     
-
-             
