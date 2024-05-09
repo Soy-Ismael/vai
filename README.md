@@ -69,8 +69,8 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 ***
 
 ## Setup
-1. *Instalar git*
-1. *Instalar python*
+**Instalar** ([**git**](https://git-scm.com/downloads))   
+**Instalar** ([**Python**](https://www.python.org/downloads/))   
 1. ``git clone https://github.com/Soy-Ismael/vai.git``
 1. **Instalar** las dependencias ejecutando **dependencias.bat** en windows 
 
@@ -103,15 +103,15 @@ o bien puedes abrir una terminal en la raiz del proyecto y ejecutar ```pip insta
 * Recuérdame hacer la tarea en 5 minutos
 * Cuentame un chiste
 * Realiza el reporte de excel
-<!-- * Envía "cómo estás" a Daniel (en desarrollo) ⭐ -->
 * ¿Qué hora es?
 * Establece un temporizador de 15 segundos
-<!-- * Qué dia fue hace 2 años -->
 * ¿Estás ahí?
 * ¿Cómo te llamas?
 * Muestrame el archivo de configuración
 * Crea una nueva configuración
 * Hasta luego
+<!-- * Envía "cómo estás" a Daniel (en desarrollo) ⭐ -->
+<!-- * Qué dia fue hace 2 años -->
 
 <!-- ## Dependencias / Módulos
 ### En Windows
@@ -121,7 +121,7 @@ o bien puedes abrir una terminal en la raiz del proyecto y ejecutar ```pip insta
 * Ejecutar requirements.txt
 ``pip install -r requirements.txt`` -->
 
-***
+<!-- *** -->
 
 <!-- ## Análisis de capacidades
 
