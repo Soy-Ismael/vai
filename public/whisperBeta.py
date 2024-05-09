@@ -7,15 +7,7 @@ import os
 import pyttsx3
 import pywhatkit
 
-# pip install pydub
-# pip install -U openai-whisper
-# pip install tempfile
-# pip install ffmpeg
-# pip install ffprobe
-
-
 temp_file = tempfile.mkdtemp()
-# save_path = os.path.join(temp_file, 'temp.wav')
 save_path = 'dev/temp.wav'
 
 listener = sr.Recognizer()
@@ -49,8 +41,6 @@ def recognize_audio(save_path, model):
 
 def main(model:str = 'base'):
         return recognize_audio(listen(), model)
-        # talk(response)
-        # print(response)
 
     
 if __name__ == "__main__":

@@ -5,36 +5,6 @@ from transfer_data import Transaction
 
 transaction = Transaction()
 
-def crear_carpeta_oculta(nombre_carpeta:str, crear_carpeta:bool = True, ocultar:bool = True):
-    try:
-        # Obtiene la ruta del directorio actual
-        directorio_actual = os.getcwd()
-
-        # Crea la ruta de la carpeta con el nombre proporcionado
-        ruta_carpeta = os.path.join(directorio_actual, f".{nombre_carpeta}")
-
-        if crear_carpeta:
-            os.mkdir(ruta_carpeta)
-
-        if ocultar:
-            # Oculta la carpeta estableciendo el atributo "oculto"
-            if os.name == 'nt':  # Windows
-                os.system(f"attrib +h {ruta_carpeta}")
-            else:  # Linux o macOS
-                os.system(f"chflags hidden {ruta_carpeta}")
-            # print(f"Carpeta oculta '{nombre_carpeta}' creada exitosamente en {ruta_carpeta}")
-        else:
-             # Oculta la carpeta estableciendo el atributo "oculto"
-            if os.name == 'nt':  # Windows
-                os.system(f"attrib -h {ruta_carpeta}")
-            else:  # Linux o macOS
-                os.system(f"chflags nohidden {ruta_carpeta}")
-            # print(f"Carpeta '{nombre_carpeta}' mostrada exitosamente en {ruta_carpeta}")
-            
-    except FileExistsError:
-        print(f"La carpeta '{nombre_carpeta}' ya existe en {ruta_carpeta}")
-
-
 day_es = [line.rstrip('\n') for line in open('dev/txt/days_es.txt')]
 day_en = [line.rstrip('\n') for line in open('dev/txt/days_en.txt')]
 
@@ -124,7 +94,7 @@ def getDaysAhead(rec):
 
 # if __name__ == "__main__":
     # crear_carpeta_oculta('txt',False,True)
-    # print(getDaysAgo('que dia fue hace 2 años'))
+    # print(getDaysAgo('que dia fue hace 2 días'))
     # print(getDaysAhead('recuerdame comprar el pavo en 5 dias'))
     # print(getDay())
     # print(getDaysAgo('que dia fue ayer'))
