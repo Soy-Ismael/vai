@@ -122,9 +122,9 @@ def getDaysAhead(rec):
 
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     # crear_carpeta_oculta('txt',False,True)
-    # print(getDaysAgo('que dia fue hace 5 dias'))
-    print(getDaysAhead('recuerdame comprar el pavo en 5 dias'))
+    # print(getDaysAgo('que dia fue hace 2 años'))
+    # print(getDaysAhead('recuerdame comprar el pavo en 5 dias'))
     # print(getDay())
     # print(getDaysAgo('que dia fue ayer'))

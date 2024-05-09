@@ -47,6 +47,7 @@ from days import getDaysAgo
 # import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
 from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
+from report import create_report # Módulo para crear reportes de excel a partir de un archivo con formato definido
 # from whisperBeta import main # Módulo para reconocer el audio mediante whisper, recibe como parametro el modelo que va a utilizar para reconocer el audio (tiny, base, medium, large), el valor por defecto es base
 #* Open AI - Chat Gpt
 from openai import OpenAI # Módulo para inteligencia artificial
@@ -396,7 +397,7 @@ def run(text:str = '', status=True):
     # print(text)
     # print(text == '')
     if text == '':
-        text = main()
+        text = listen()
         # print('entro en if')
     else:
         # print('no entro en if')
@@ -768,10 +769,11 @@ def run(text:str = '', status=True):
 try:
     # import time
     result = run()
-    if not run(result['status']):
+
+    if not result['status']:
         talk(run_gpt(result['text']))
-    run('Qué hora es?')
-    pass
+    # run('Qué hora es?')
+    # pass
 
     #* Implementando funcionalidad para que el asistente se mantenga escuchando
     # run('dime un chiste')
@@ -787,7 +789,8 @@ except NameError as err:
     print("Entrada de audio inválida, intentalo nuevamente")
     talk("Entrada de audio inválida, intentalo nuevamente")
     # print("EXCEPT 1")
-except TypeError:
+except TypeError as err:
+    print(err)
     talk("Entrada de audio inválida, intentalo nuevamente")
     print("Entrada de audio inválida, intentalo nuevamente")
     # print("EXCEPT 2")
