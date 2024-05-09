@@ -14,22 +14,32 @@ err_template = f"{red_color}{negrita}ERROR: {normal_color}"
 
 nombre_archivo = 'config.txt'
 
-def check_config():
-    if(os.path.isfile('dev\\'+nombre_archivo)):
-        return True
+def check_config(ruta_archivo):  # Aquí está la modificación
+    if(os.path.isfile(ruta_archivo)):  # Aquí está la modificación
+        with open(ruta_archivo, 'r') as archivo:
+            config = {}
+            for linea in archivo:
+                clave, valor = linea.strip().split(": ")
+                config[clave] = valor
+            return config
     else:
         return False
 
 
-def create_config_file():
+
+def create_config_file(ruta_archivo, config):  # Aquí está la modificación
     try:
-        with open('dev\\'+nombre_archivo, 'w') as archivo:
-            # Retorna verdadero si el archivo de configuración se crea con exito
+        with open(ruta_archivo, 'w') as archivo:  # Aquí está la modificación
+            for key, value in config.items():
+                archivo.write(f"{key}: {value}\n")
+            # Retorna verdadero si el archivo de configuración se crea con éxito
             return True
     except Exception as e:
-        print(err_template+f'Ocurrio un error al crear el archivo de configuración: {e}')
-        # Retorna false si el archivo de configuración no se crea, ya sea por ausencia de permisos de escritura para el usuario que ejecuta el software o por cualquier otro motivo
+        print(err_template+f'Ocurrió un error al crear el archivo de configuración: {e}')
+        # Retorna falso si el archivo de configuración no se crea, ya sea por ausencia de permisos de escritura para el usuario que ejecuta el software o por cualquier otro motivo
         return False
+
+
 
 
 # initial_config()
