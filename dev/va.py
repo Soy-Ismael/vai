@@ -30,7 +30,6 @@ else:
 import speech_recognition as sr # Módulo para reconocer audio y convertir a texto (STT)
 import pyttsx3 # Módulo para convertir de texto a audio (TTS)
 from dotenv import get_key # Módulo para cargar api-key en archivo .env
-from dotenv import get_key # Módulo para cargar api-key en archivo .env
 import datetime # Módulo para manejar la hora
 import pywhatkit # Módulo para enviar mensajes de whatapp y abrir contenido en youtube (es un kit)
 import random #Nuevo módulo para generar números aleatorios
@@ -229,7 +228,7 @@ def listen():
 
 
 #* IMPORTACIÓN DE FUNCIONES DE ARCHIVOS EXTERNOS
-# figlet_banner()
+figlet_banner()
 
 try:
     #* Función para cargar los datos de archivo de configuración en las variables de asistente
@@ -329,7 +328,7 @@ va_template = f"{negrita}{name}: {normal_color}"
 def run_gpt(prompt:str):
     try:
         client = OpenAI(
-            api_key=get_key('dev/.env',"OPENAI_API_KEY"),
+            api_key=get_key('public/.env',"OPENAI_API_KEY"),
         )
         # print(client.api_key)
 
@@ -769,18 +768,23 @@ def run(text:str = '', status=True):
 # run('qué hora es')
 try:
     # import time
-    result = run()
+    # result = run('Cuales son las actividades más rentables que estan realizando las empresas ultimamente')
 
-    if not result['status']:
-        talk(run_gpt(result['text']))
-    # run('Qué hora es?')
+    # if not result['status']:
+    #     ia = run_gpt(result['text'])
+    #     print(va_template + str(ia))
+    #     talk(ia)
     # pass
 
     #* Implementando funcionalidad para que el asistente se mantenga escuchando
     # run('dime un chiste')
-    # while True:
-        # run('qué hora es')
-        # time.sleep(1)
+    while True:
+        result = run()
+
+        if not result['status']:
+            ia = run_gpt(result['text'])
+            print(va_template + str(ia))
+            talk(ia)
 
 except KeyboardInterrupt:
     no_talk()
