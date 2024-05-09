@@ -16,14 +16,14 @@ El proyecto VA será un asistente virtual potenciado con IA con la capacidad de 
 
 ***
 
-## Consideraciones Técnicas
+<!-- ## Consideraciones Técnicas
 ([**Curso de Python**](https://youtu.be/nKPbfIU442g?si=MVQuPnEONV21Q0fM))   
 ([**Curso de GIT**](https://youtu.be/3GymExBkKjE?si=LCoZB_32ZzKhNZD5))  
 ([**Curso de Python (opcional)**](https://www.youtube.com/playlist?list=PLJ7sTTLrIA6m2bGromPVNC52slexHVJfe))   
 ([**Curso de GIT (opcional)**](https://youtu.be/VdGzPZ31ts8?si=Y8XVWMdyve40dQ8G))   
 
 
-[![Curso de git y GitHub desde 0](https://img.youtube.com/vi/3GymExBkKjE/maxresdefault.jpg "Curso de git y github desde cero")](https://youtu.be/3GymExBkKjE?si=rHF7tfVCrc3IHw0i)
+[![Curso de git y GitHub desde 0](https://img.youtube.com/vi/3GymExBkKjE/maxresdefault.jpg "Curso de git y github desde cero")](https://youtu.be/3GymExBkKjE?si=rHF7tfVCrc3IHw0i) -->
 
 <div align="center">
     <br>
@@ -32,7 +32,7 @@ El proyecto VA será un asistente virtual potenciado con IA con la capacidad de 
     <br>
 </div>
 
-### Configuración del repositorio en local
+<!-- ### Configuración del repositorio en local
 Deben ejecutar los siguientes comandos:
 
 #### Se ejecuta una vez
@@ -57,7 +57,7 @@ Deben ejecutar los siguientes comandos:
 
 **Nota:** Una vez vistos los videos deben enviarme un mensaje con su correo electrónico
 
-**Nota:** Los comentarios deben describir el cambio realizado que se va a subir
+**Nota:** Los comentarios deben describir el cambio realizado que se va a subir -->
 
 <!-- *** -->
 
@@ -69,20 +69,26 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 ***
 
 ## Setup
-1. Abrir terminal en la **raiz** del repositorio e **instalar** dependencias con ```pip install -r requirements.txt```
+1. *Instalar git*
+1. *Instalar python*
+1. ``git clone https://github.com/Soy-Ismael/vai.git``
+1. **Instalar** las dependencias ejecutando **dependencias.bat** en windows 
 
-O bien puedes ejecutar el archivo "**dependencias**" haciendo doble clic en él.
-
+o bien puedes abrir una terminal en la raiz del proyecto y ejecutar ```pip install -r requirements.txt``` para linux
 
 [![Instalar dependencias (para desarrolladores)](assets/install-dependences.gif "Instalar dependencias (para desarrolladores)")](requirements.txt)
 
 
 
-2. Crear una **clave api** de OPEN AI
+2. Configuración de **claves api**
+    * ([**OpenAI**](https://platform.openai.com/api-keys)) Visita platform.openai, crea una cuenta y en el apartado api key, crea tu api key para usar la api de chat gpt con el asistente
+    * ([**Microsoft Azure**](https://portal.azure.com/#view/Microsoft_Azure_ProjectOxford/CognitiveServicesHub/~/SpeechServices)) Crea una cuenta en el portal de Azure y en la categoria "servicios de voz" crea una api key
+    
+    **Nota:** ambas api key se van a almacenar en el archivo .env con el mismo nombre que tiene el ejemplo contenido en el (recuerda eliminar la extension .example).
 
-[![Ejemplo de configuración de archivo .env](assets/env-example.png "Ejemplo de configuración de archivo .env")](dev/.env.example)
+[![Ejemplo de configuración de archivo .env](assets/ejemplo_api_key.png "Ejemplo de configuración de archivo .env")](dev/.env.example)
 
-3. **Ejecutar** el archivo **principal** ```python public/va.py```
+3. **Ejecutar** el archivo **principal** ```python public/va.py``` puedes hacer doble click en el para ejecutarlo o hacerlo mediante la terminal
 
 [![Ejecutar archivo](assets/execute.png "Ejecutar archivo")](public/va.py)
 
@@ -92,31 +98,32 @@ O bien puedes ejecutar el archivo "**dependencias**" haciendo doble clic en él.
 ## Ejemplos de uso
 * Reproduce romeo santos / reproduce sus huellas ⭐
 * Busca que es incoloro
-* Ofréceme información sobre la Primera Guerra Mundial ⭐
-* Ofréceme información en inglés sobre la Primera Guerra Mundial
-* Dime un chiste
-* Realiza un reporte de excel
-* Envía "cómo estás" a Daniel (en desarrollo) ⭐
+* Ofréceme información sobre Dow Jones ⭐
+* Ofréceme información en inglés sobre Dow Jones
+* Recuérdame hacer la tarea en 5 minutos
+* Cuentame un chiste
+* Realiza el reporte de excel
+<!-- * Envía "cómo estás" a Daniel (en desarrollo) ⭐ -->
 * ¿Qué hora es?
 * Establece un temporizador de 15 segundos
-* Qué dia fue hace 2 años
+<!-- * Qué dia fue hace 2 años -->
 * ¿Estás ahí?
 * ¿Cómo te llamas?
 * Muestrame el archivo de configuración
 * Crea una nueva configuración
 * Hasta luego
 
-## Dependencias / Módulos
+<!-- ## Dependencias / Módulos
 ### En Windows
 * Ejecutar archivo dependencias.bat
 
 ### En Linux / macOS / Windows
 * Ejecutar requirements.txt
-``pip install -r requirements.txt``
+``pip install -r requirements.txt`` -->
 
 ***
 
-## Análisis de capacidades
+<!-- ## Análisis de capacidades
 
 ### Hasta el momento el asistente es capaz de:
 **1.0**
@@ -157,8 +164,8 @@ O bien puedes ejecutar el archivo "**dependencias**" haciendo doble clic en él.
 
 **Xaviel**
 - [ ] Hacer que el audio resultado de OpenAI tts-1 se reproduzca de inmediato (no crear archivo de audio)
-- [ ] Implementar reconocimiento de voz con Whisper
-- [ ] Establecer recordatorios
+- [x] Implementar reconocimiento de voz con Whisper
+- [x] Establecer recordatorios
 
 **Elianny**
 - [ ] Reparar envío de mensajes por WhatsApp con pywhatkit
@@ -208,14 +215,13 @@ O bien puedes ejecutar el archivo "**dependencias**" haciendo doble clic en él.
     5. Rol o postura del asistente
 * Es necesario optimizar el programa para que corra más rápidamente, para esto podemos utilizar la menor cantidad de módulos posibles y, en lugar de importar todo un módulo, solo importar las funciones o propiedades que necesitamos de un módulo.
 
-**NOTA:** Importar un mismo módulo en 2 archivos distintos no añade peso al programa, el módulo se carga una vez y a partir de ahí siempre que se necesite hace referencia al módulo cargado en memoria.
+**NOTA:** Importar un mismo módulo en 2 archivos distintos no añade peso al programa, el módulo se carga una vez y a partir de ahí siempre que se necesite hace referencia al módulo cargado en memoria. -->
 
 ***
 
-## Flujo de trabajo
+<!-- ## Flujo de trabajo
 
 #### Ciclo PHVA
-<!-- * Planificar > Hacer > Verificar > Actuar -->
 
 | Planificar | Hacer | Verificar | Actuar |
 | :---: | :---: | :---: | :---: |
@@ -232,7 +238,7 @@ O bien puedes ejecutar el archivo "**dependencias**" haciendo doble clic en él.
 * Manejar la **excepción** en caso de que speech_recognition **no encuentre** micrófono
 * Manejar **excepción** en caso de que no se encuentren las **variables de entorno** (.env)
 
-***
+*** -->
 
 ## Informaciones de interés para los desarrolladores.
 
@@ -242,24 +248,24 @@ O bien puedes ejecutar el archivo "**dependencias**" haciendo doble clic en él.
 * Versión de [**dependencias:**](requirements.txt)
 * [**Pilares**](assets/checkpoints_va.jpeg) del proyecto
 
-### Explicación de ramas
+<!-- ### Explicación de ramas
 * **main** rama principal, no se trabaja sobre esta rama, es únicamente para mergear todos los cambios
 * **file** rama para trabajar con nuevos módulos o módulos existentes para el proyecto
 * **feature** rama para desarrollar una nueva característica en el propio archivo del asistente (va.py)
 * **backup** rama para realizar copias de seguridad con regularidad, no se trabaja en esta rama
 * **display** rama para el desarrollo de la interfaz gráfica del asistente
-* **ia** rama para el desarrollo de características relacionadas con inteligencia artificial
+* **ia** rama para el desarrollo de características relacionadas con inteligencia artificial -->
 
-### Comandos para cambiar de rama
+<!-- ### Comandos para cambiar de rama
 **Cuando inicies a trabajar**
 ```git checkout nombre_rama```
 
 **Cuando termines de trabajar**
-```git push origin nombre_rama```
+```git push origin nombre_rama``` -->
 
 <div align="center">
   <br>
-  <h2>🐍 Mis contribuciones 🐍</h2>
+  <h2>🐍 Contribuciones 🐍</h2>
   <br>
   <img alt="snake eating my contributions" src="https://raw.githubusercontent.com/salesp07/salesp07/output/github-contribution-grid-snake-dark.svg" />
   
