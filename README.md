@@ -12,9 +12,9 @@
 
 <h1 align="center">PROYECTO VA</h1>
 
-El proyecto VA será un asistente virtual potenciado con IA con la capacidad de cambiar el nombre de llamada por uno cómodo para el usuario. VA será desarrollado inicialmente en Python y tendrá la capacidad de ejecutarse en todos los sistemas operativos. Su objetivo principal será el de ofrecer información y ayudar con tareas ambiguas al usuario.
+El proyecto VA será un asistente virtual potenciado con inteligencia artificial capaz de cambiar el nombre de invocación por uno cómodo para el usuario. VA será desarrollado inicialmente en Python y tendrá la capacidad de ejecutarse en todos los sistemas operativos. Su objetivo principal será el de ofrecer información y ayudar con tareas ambiguas al usuario, además de automatizar procesos empresariales comunes como la generación de reportes de rendimientos periódicos de Excel.
 
-***
+<!-- *** -->
 
 <!-- ## Consideraciones Técnicas
 ([**Curso de Python**](https://youtu.be/nKPbfIU442g?si=MVQuPnEONV21Q0fM))   
@@ -69,28 +69,31 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 ***
 
 ## Setup
-**Instalar** ([**git**](https://git-scm.com/downloads))   
+<!-- **Instalar** ([**git**](https://git-scm.com/downloads))    -->
 **Instalar** ([**Python**](https://www.python.org/downloads/))   
-1. ``git clone https://github.com/Soy-Ismael/vai.git``
-1. **Instalar** las dependencias ejecutando **dependencias.bat** en windows 
+<!-- 1. ``git clone https://github.com/Soy-Ismael/vai.git`` -->
+<!-- 1. **Instalar** las dependencias ejecutando **dependencias.bat** en windows  -->
+1. **Descargar el repositorio**
+  - ```https://github.com/Soy-Ismael/vai/archive/refs/heads/main.zip```
+2. **Instalar las dependencias**
+  - Ejecuta **```dependencias.bat```** en windows
+  - o abre una terminal en la raiz del proyecto y ejecutar ```pip install -r requirements.txt``` para linux / windows
 
-o bien puedes abrir una terminal en la raiz del proyecto y ejecutar ```pip install -r requirements.txt``` para linux
-
-[![Instalar dependencias (para desarrolladores)](assets/install-dependences.gif "Instalar dependencias (para desarrolladores)")](requirements.txt)
+  [![Instalar dependencias (terminal)](assets/install-dependences.gif "Instalar dependencias (terminal)")](requirements.txt)
 
 
+3. Configuración de **claves api**
+  * Visita la ([**plataforma de OpenAI**](https://platform.openai.com/api-keys)), crea una cuenta, y en el apartado api key, crea tu clave api para usar la api de gpt con el asistente
+  * Crea una cuenta en el ([**Microsoft Azure portal**](https://portal.azure.com/#view/Microsoft_Azure_ProjectOxford/CognitiveServicesHub/~/SpeechServices)) y en la categoria "servicios de voz" crea una api key (**OPCIONAL**)
+  
+  **Nota:** ambas api key se van a almacenar en el archivo .env con el mismo nombre que tienen en el ejemplo contenido en el (recuerda eliminar la extension .example).
 
-2. Configuración de **claves api**
-    * ([**OpenAI**](https://platform.openai.com/api-keys)) Visita platform.openai, crea una cuenta y en el apartado api key, crea tu api key para usar la api de chat gpt con el asistente
-    * ([**Microsoft Azure**](https://portal.azure.com/#view/Microsoft_Azure_ProjectOxford/CognitiveServicesHub/~/SpeechServices)) Crea una cuenta en el portal de Azure y en la categoria "servicios de voz" crea una api key
-    
-    **Nota:** ambas api key se van a almacenar en el archivo .env con el mismo nombre que tiene el ejemplo contenido en el (recuerda eliminar la extension .example).
+  [![Ejemplo de configuración de archivo .env](assets/ejemplo_api_key.png "Ejemplo de configuración de archivo .env")](dev/.env.example)
 
-[![Ejemplo de configuración de archivo .env](assets/ejemplo_api_key.png "Ejemplo de configuración de archivo .env")](dev/.env.example)
-
-3. **Ejecutar** el archivo **principal** ```python public/va.py``` puedes hacer doble click en el para ejecutarlo o hacerlo mediante la terminal
+4. **Ejecutar** el archivo **principal** ```python public/va.py``` puedes hacer doble click en el para ejecutarlo, hacerlo mediante la terminal abriendola en la raíz del proyecto o mediante visual studio code si tienes la **extension python** instalada
 
 [![Ejecutar archivo](assets/execute.png "Ejecutar archivo")](public/va.py)
+[![Ejecutar archivo desde visual studio code](assets/execute_fromvsc.png "Ejecutar archivo")](public/va.py)
 
 
 ***
@@ -102,7 +105,7 @@ o bien puedes abrir una terminal en la raiz del proyecto y ejecutar ```pip insta
 * Ofréceme información en inglés sobre Dow Jones
 * Recuérdame hacer la tarea en 5 minutos
 * Cuentame un chiste
-* Realiza el reporte de excel
+* Realiza el reporte de excel ⭐
 * ¿Qué hora es?
 * Establece un temporizador de 15 segundos
 * ¿Estás ahí?
@@ -240,12 +243,12 @@ o bien puedes abrir una terminal en la raiz del proyecto y ejecutar ```pip insta
 
 *** -->
 
-## Informaciones de interés para los desarrolladores.
+## Datos curiosos.
 
 * Versión de Python: 3.12.1
 * Versión de pip: 23.3.2
-* Lineas de código totales: 1,604
-* Versión de [**dependencias:**](requirements.txt)
+* 2,166 lienas de código aproximadas
+* Versión de [**dependencias**](requirements.txt)
 * [**Pilares**](assets/checkpoints_va.jpeg) del proyecto
 
 <!-- ### Explicación de ramas
@@ -272,7 +275,30 @@ o bien puedes abrir una terminal en la raiz del proyecto y ejecutar ```pip insta
   <br/><br/>
 </div>
 
-### Informaciones adicionales
-*Explicación de códigos y funciones en* [**documentation.**](DOCUMENTATION.md)
+*Explicación de códigos y funciones en* [**documentation.**](DOCUMENTATION.md) (still working on)
 
 *Más información en* [**historia.**](HISTORY.md)
+
+Recuerda que el **50%** del triunfo esta en el **producto** y el otro **50%** en **como lo vendes**.
+
+***
+
+<h1 align="center">Fruit Detection</h1>
+Este proyecto fue el ganador del segundo lugar y una generosa compensación económica en el STEAM Fest de Estados Unidos.
+
+Hoy en día somos testigos de los esfuerzos que hacen los gobiernos por aumentar la inclusión social de las personas ciegas y, aunque hay muchas cosas que los ciegos pueden hacer por su cuenta, hay otras tantas que no, por ejemplo...
+
+Es fácil para un ciego diferencia entre una manzana y un guineo, pero como diferencia el ciego entre distintos estados de madurez de la fruta, como diferencia un ciego una manzana verde de una roja, o como diferencia una naranja de una mandarina o limón siendo estos últimos de pieles similares, bajo esa tesitura se creó el proyecto frui-detection que tiene la visión de implementar un ayudante en el teléfono de cada persona ciega utilizando la visión por computadora y redes neuronales entrenadas con eficientes y conocidas técnicas de machine learning.
+
+
+[![fruit detection dataset](assets/fruit-detection-dataset.gif "fruit detection dataset")](assets/fruit-detection-dataset.mp4)
+
+## Dataset
+El dataset o conjunto de datos es la coleccion de imagenes que usaras para entrenar a tu red neuronal, lo ideal es tener alrededor de 1,000 imagenes para entrenamiento y alrededor de 200 para validación, cuantas más imagenes utilices para ambas cosas más preciso sera el modelo detectando el objeto para el que fue entrenado.
+
+El proyecto fue creado a partir del modulo de vision por computadora para python **YOLO** en su versión **9c**, fue entrenado con 191 de las cuales fueron destinadas 38 para validación, todo esto hace posible que el programa diferencie y detecte manzanas rojas, verdes, guineos y naranjas. A pesar de su reducido dataset tiene un buen desempeño con un margen de error del 3% en condiciones adecuadas de luz.
+
+[![example of fruit detection](assets/example-fd-g.gif "example of fruit detection")](assets/example-fd-g.gif)
+
+* [**Pilares**](assets/checkpoints_va.jpeg) del proyecto
+Puedes revisar, modificar y experimentar con el [**código fuente de fruit-detection**](https://github.com/Soy-Ismael/Real-Time-Fruit-Detection-YOLOv9-v8.git).
