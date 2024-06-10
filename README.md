@@ -74,10 +74,10 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 <!-- 1. ``git clone https://github.com/Soy-Ismael/vai.git`` -->
 <!-- 1. **Instalar** las dependencias ejecutando **dependencias.bat** en windows  -->
 1. **Descargar el repositorio**
-  - ```https://github.com/Soy-Ismael/vai/archive/refs/heads/main.zip```
+  - [Presiona aquí para iniciar la descarga](https://github.com/Soy-Ismael/vai/archive/refs/heads/main.zip)
 2. **Instalar las dependencias**
   - Ejecuta **```dependencias.bat```** en windows
-  - o abre una terminal en la raiz del proyecto y ejecutar ```pip install -r requirements.txt``` para linux / windows
+  - o abre una terminal en la raíz del proyecto y ejecutar ```pip install -r requirements.txt``` para linux / windows
 
   [![Instalar dependencias (terminal)](assets/install-dependences.gif "Instalar dependencias (terminal)")](requirements.txt)
 
@@ -284,7 +284,9 @@ Recuerda que el **50%** del triunfo esta en el **producto** y el otro **50%** en
 ***
 
 <h1 align="center">Fruit Detection</h1>
+
 Este proyecto fue el ganador del segundo lugar y una generosa compensación económica en el STEAM Fest de Estados Unidos.
+
 
 Hoy en día somos testigos de los esfuerzos que hacen los gobiernos por aumentar la inclusión social de las personas ciegas y, aunque hay muchas cosas que los ciegos pueden hacer por su cuenta, hay otras tantas que no, por ejemplo...
 
@@ -300,5 +302,8 @@ El proyecto fue creado a partir del modulo de vision por computadora para python
 
 [![example of fruit detection](assets/example-fd-g.gif "example of fruit detection")](assets/example-fd-g.gif)
 
-* [**Pilares**](assets/checkpoints_va.jpeg) del proyecto
+La idea es simple, aumentar la cantidad de tareas que pueden los ciegos hacer por su cuenta aumentando su autonomia social y por ende haciendoles sentir más utiles e iguales a los dichosos videntes.
+
+**Nota:** el modelo fue entrenado para frutas, pero con un dataset distinto podría ser facilmente utilizado para avisar a conductores sobre peatones en el camino o para notificarles que deben detenerse cuando la luz de trafico este en color rojo, tambine puede ser utilizado para detectar tumores u otras anomalias en los resultados de examenes de rayos x o similares.
+
 Puedes revisar, modificar y experimentar con el [**código fuente de fruit-detection**](https://github.com/Soy-Ismael/Real-Time-Fruit-Detection-YOLOv9-v8.git).
