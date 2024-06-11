@@ -1,6 +1,0 @@
-nombre_contacto:número_telefononico_con_código_de_país
-
-Luis : +1 322 223 2232
-Luis:+13222232232
-
-Ambos formatos son válidos (usar preferiblemente el formato 1 para mayor legibilidad, el segundo formato para mayor eficiencia).
