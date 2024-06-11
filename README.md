@@ -77,7 +77,7 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
   - [Presiona aquí para iniciar la descarga](https://github.com/Soy-Ismael/vai/archive/refs/heads/main.zip)
 2. **Instalar las dependencias**
   - Ejecuta **```dependencias.bat```** en windows
-  - o abre una terminal en la raíz del proyecto y ejecutar ```pip install -r requirements.txt``` para linux / windows
+  - o abre una terminal en la raíz del proyecto y ejecutar ```pip install -r requirements.txt``` para linux / Windows
 
   [![Instalar dependencias (terminal)](assets/install-dependences.gif "Instalar dependencias (terminal)")](requirements.txt)
 
