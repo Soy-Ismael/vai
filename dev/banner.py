@@ -12,14 +12,14 @@ def figlet_banner(text:str = 'PROM2023-2024', color:str = "\033[93m", banner_ind
     
     custom_fig = Figlet(font=banners_with_figlet[banner_index], width=font_width, justify=align)
     print(f"{color}{negrita}{custom_fig.renderText(text)}{Transaction().normal_color}")
-    return f"{color}{negrita}{custom_fig.renderText(text)}{Transaction().normal_color}"
+    # return f"{color}{negrita}{custom_fig.renderText(text)}{Transaction().normal_color}"
 
 
 
-if __name__ == "__main__":
-    print(figlet_banner())
+# if __name__ == "__main__":
+    # print(figlet_banner())
 
-    #* font_width = 140
+    # font_width = 140
     # font_index = 8
     # text = 'PROM2023-2024'
 
@@ -31,15 +31,13 @@ if __name__ == "__main__":
     # for font in banners_with_figlet:
         # font_index = 8
 
-        #todo custom_fig = Figlet(font=font, width=font_width)
-        #todo print(custom_fig.renderText(text))
+        # custom_fig = Figlet(font=font, width=font_width)
+        # print(custom_fig.renderText(text))
+
     # for font in Figlet().getFonts():
-        # try:
-            # custom_fig = Figlet(font=font, width=font_width)
-            # print(font)
-            # print(custom_fig.renderText('PROM2023-2024'))
-        # except:
-        #     continue
-
-
-# NOTA: Crear más banners con utilidad de linea de comandos
+    #     try:
+    #         custom_fig = Figlet(font=font, width=font_width)
+    #         print(font)
+    #         print(custom_fig.renderText('PROM2023-2024'))
+    #     except Exception as err:
+    #         pass
