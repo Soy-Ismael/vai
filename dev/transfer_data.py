@@ -195,9 +195,9 @@ class Transaction:
 
 
     #* Leer archivo de configuración y devolver diccionario con los resultados obtenidos
-    def readfile(self):
+    def readfile(self, file_path:str='dev/'+nombre_archivo):
         try:
-            with open('dev\\'+nombre_archivo, 'r') as archivo:
+            with open(file_path, 'r') as archivo:
                 data = {}
 
                 for line in archivo:
@@ -206,10 +206,7 @@ class Transaction:
                     key , value  = line.strip().split(': ')
                     data[key] = value
 
-                if(len(data) <= 0):
-                    return False
-                else:
-                    return data
+                return False if len(data) <= 0 else data
         except ValueError:
             print(self.err_template+'en archivo de configuración')
         except Exception as e:
@@ -258,11 +255,43 @@ class Transaction:
                 if(key == key_in_db):
                     return value
             return False
+
+    def letras_a_numero(self, texto:str):
+        mapeo = {
+            'cero': 0, 'uno': 1, 'dos': 2, 'tres': 3, 'cuatro': 4, 'cinco': 5,
+            'seis': 6, 'siete': 7, 'ocho': 8, 'nueve': 9, 'diez': 10,
+            'once': 11, 'doce': 12, 'trece': 13, 'catorce': 14, 'quince': 15, 
+            'dieciséis': 16, 'diecisiete': 17, 'dieciocho': 18, 'diecinueve': 19, 
+            'veinte': 20, 'veintiuno': 21, 'veintidós': 22, 'veintitrés': 23, 
+            'veinticuatro': 24, 'veinticinco': 25, 'veintiséis': 26, 'veintisiete': 27, 
+            'veintiocho': 28, 'veintinueve': 29, 'treinta': 30, 'treinta y uno': 31, 'treinta y dos': 32
+        }
+
+        # Método 1
+        # for text_number in mapeo:
+        #     if texto == text_number:
+        #         return mapeo.get(text_number)
+        # return False
+
+        # Método 2
+        # if texto in mapeo.keys():
+        #     return mapeo.get(texto)
+        # else:
+        #     return False
         
+        # Método 3
+        # return mapeo.get(texto) if texto in mapeo.keys() else False
+
+        # Método 4
+        return mapeo.get(texto, False)
+        # Este es el método más eficiente, con una unica comprobación obtenemos lo que queremos
+            
 
 
 if __name__ == '__main__':
     transactions = Transaction()
+    # transactions.initial_config()
+    # print(transactions.letras_a_numero('cien'))
     # color = Transaction()
     # color.test_colors()
     # transactions.initial_config()

@@ -15,16 +15,17 @@
 #* Comprobar conectividad del usuario
 from transfer_data import Transaction # Módulo local para sustituir a config y readfile, ademas, añade nuevos métodos
 import os # Módulo para administrar cosas afines al sistema operativo (rutas, cierre de programas, etc.)
+import sys
 
 # Instanciar clase Transaction
 Data_transfer = Transaction()
 
 if Data_transfer.check_internet_connection():
-    print(Transaction().green_color+'Conexión a internet ✔️'+Transaction().normal_color)
-    pass
+    print(Data_transfer.green_color+'Conexión a internet ✔️'+Data_transfer.normal_color)
+    # pass
 else:
-    print(Transaction().err_template+'Conección a internet ✖️'+Transaction().normal_color)
-    os._exit()
+    print(Data_transfer.err_template+'Conección a internet perdida ✖️'+Data_transfer.normal_color)
+    # sys.exit(0)
 
 # Importaciones 
 import speech_recognition as sr # Módulo para reconocer audio y convertir a texto (STT)
@@ -34,14 +35,15 @@ import datetime # Módulo para manejar la hora
 import pywhatkit # Módulo para enviar mensajes de whatapp y abrir contenido en youtube (es un kit)
 import random #Nuevo módulo para generar números aleatorios
 import wikipedia #Nuevo modulo para resumir articulos de wikipedia
-import winsound #Nuevo modulo para reproducir sonido, (no es necesario instalar con pip)
+# import winsound #Nuevo modulo para reproducir sonido, (no es necesario instalar con pip - solo funciona con windows)
+from playsound import playsound #Nuevo modulo para reproducir sonido, (funciona en todos los sistemas operativos y reproduce .mp3, .ogg, .wav)
 # import urllib.request #Nuevo modulo para conteo de suscriptores
 import pyjokes # Módulo para chistes
 import time # Módulo para temporizador - importado solo en caso de que se necesite
 start_time = time.time()
 import re # Módulo expresiones regulares
 import asyncio # Módulo para ejecutar código asíncrono
-from voice_synthesizer import synthesize_to_speaker # Módulo local creado para tts de microsoft (más voces y calidad que pyttsx3, no depende de voces en el ordenador, es necesario crear cuentan de microsoft azure y crear api key para servicios de voz)
+# from voice_synthesizer import synthesize_to_speaker # Módulo local creado para tts de microsoft (más voces y calidad que pyttsx3, no depende de voces en el ordenador, es necesario crear cuentan de microsoft azure y crear api key para servicios de voz)
 from days import getDaysAgo 
 # import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
@@ -50,26 +52,12 @@ from report import create_report # Módulo para crear reportes de excel a partir
 # from whisperBeta import main # Módulo para reconocer el audio mediante whisper, recibe como parametro el modelo que va a utilizar para reconocer el audio (tiny, base, medium, large), el valor por defecto es base
 #* Open AI - Chat Gpt
 from openai import OpenAI # Módulo para inteligencia artificial
-from whisperBeta import main # Módulo para reconocer el audio mediante whisper, recibe como parametro el modelo que va a utilizar para reconocer el audio (tiny, base, medium, large), el valor por defecto es base
 # from audio import tts
 # Google - Gemini
 # import pathlib
 # import textwrap
 
-
-
-# import google.generativeai as genai
-
-# Used to securely store your API key
-# from google.colab import userdata
-
-# from IPython.display import display
-# from IPython.display import Markdown
-
-
-# def to_markdown(text):
-#     text = text.replace('•', '  *')
-#     return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
+txt_path = 'dev/txt/'
 
 #* Default const
 # name = 'jarvis' # Nombre por el que se llamara al asistente (para desarrollar más tarde)
@@ -77,44 +65,27 @@ from whisperBeta import main # Módulo para reconocer el audio mediante whisper,
 # time_format = "%I:%M:%p"
 # wiki_lang = 'es'
 
-#* Obtener constantes del archivo config.text
-# Esto se hace mas adelante en el códgio
-
-#* Default const - open AI mode#
-#  assistant_role: "Eres un asistente virtual que habla en verso y responde de manera cortez."
-# prompt = "Dime de manera detallada como puedo crear una función en python."
-
-#* Color templates
-# green_color = "\033[92m"
-# cian_color = "\033[96m"
-# blue_color = "\033[94m"
-# yellow_color = "\033[93m"
-# red_color = "\033[91m"
-# negrita = "\033[1m"
-# subrayado = "\033[4m"
-# normal_color = "\033[0m"
-
-green_color = Data_transfer.green_color
-cian_color = Data_transfer.cian_color
-blue_color = Data_transfer.blue_color
-yellow_color = Data_transfer.yellow_color
-red_color = Data_transfer.red_color
-negrita = Data_transfer.negrita
-subrayado = Data_transfer.subrayado
-normal_color = Data_transfer.normal_color
+# green_color = Data_transfer.green_color
+# cian_color = Data_transfer.cian_color
+# blue_color = Data_transfer.blue_color
+# yellow_color = Data_transfer.yellow_color
+# red_color = Data_transfer.red_color
+# negrita = Data_transfer.negrita
+# normal_color = Data_transfer.normal_color
 
 #* text templates
-user_template = f"{negrita}Usuario: {normal_color}"
-# va_template = f"{negrita}{name}: {normal_color}" #Declarada más abajo
-err_template = f"{red_color}{negrita}ERROR: {normal_color}"
-warning_template = f"{yellow_color}{negrita}ADVERTENCIA: {normal_color}"
+user_template = f"{Data_transfer.negrita}Usuario: {Data_transfer.normal_color}"
+# va_template = f"{Data_transfer.negrita}{name}: {Data_transfer.normal_color}" #Declarada más abajo
+err_template = f"{Data_transfer.red_color}{Data_transfer.negrita}ERROR: {Data_transfer.normal_color}"
+warning_template = f"{Data_transfer.yellow_color}{Data_transfer.negrita}ADVERTENCIA: {Data_transfer.normal_color}"
 
 #* De texto a voz - Modulo 6
 engine = pyttsx3.init()
 
 try:
     # global voice
-    voice_id = 0
+    # voice_id = Data_transfer.read_config_file_line('voice_number')
+    voice_id = int(Data_transfer.read_config_file_line('voice_number'))
 
     # if voice != None:
     #     voice_id = voice
@@ -122,31 +93,32 @@ try:
     voices = engine.getProperty('voices')
     engine.setProperty('voice', voices[voice_id].id)
 except IndexError:
-    print(f"No existe la voz con el ID {voice_id}, asegurese de tener ingles, español de españa y español de mexico instalado en su windows")
+    print(f"No existe la voz con el ID {voice_id}")
     print(f"{err_template}en configuración de idiomas")
 
     for voice in voices:
-        print(f'{yellow_color} = = = = = = = =  = = = = = = {normal_color}')
-        print(f'ID:{cian_color} {voice.id} {normal_color}')
-        print(f'Name:{cian_color} {voice.name} {normal_color}')
-        # print(f'Languages:{cian_color} {voice.languages} {normal_color}')
-        # print(f'Age:{cian_color} {voice.age} {normal_color}')
-        # print(f'Gender:{cian_color} {voice.gender} {normal_color}')
+        print(f'{Data_transfer.yellow_color} = = = = = = = =  = = = = = = {Data_transfer.normal_color}')
+        print(f'ID:{Data_transfer.cian_color} {voice.id} {Data_transfer.normal_color}')
+        print(f'Name:{Data_transfer.cian_color} {voice.name} {Data_transfer.normal_color}')
+        # print(f'Languages:{Data_transfer.cian_color} {voice.languages} {Data_transfer.normal_color}')
+        # print(f'Age:{Data_transfer.cian_color} {voice.age} {Data_transfer.normal_color}')
+        # print(f'Gender:{Data_transfer.cian_color} {voice.gender} {Data_transfer.normal_color}')
 
     #! No utilizar el exit() para programas reales, lo mejor seria utilizar el sys.exit()
-    os._exit()
+    # os._exit(0)
     # exit()
-    # sys.exit()
-
+    sys.exit(0)
 # for voice in voices:
 #     print(voice)
+
 # figlet_banner(text='USAR API CON PRUDENCIA', banner_index=5)
+figlet_banner(banner_index=5)
 
 #* Función para hablar, recibe el texto a reproducir como parametro
 def talk(text):
-    # engine.say(text)
-    # engine.runAndWait()
-    synthesize_to_speaker(text, 'es-MX-DaliaNeural')
+    engine.say(text)
+    engine.runAndWait()
+    # synthesize_to_speaker(text, 'es-MX-DaliaNeural')
 
 #* Función para detener el habla en caso de ser necesario
 def no_talk():
@@ -165,26 +137,29 @@ rec = sr.Recognizer()
 def listen():
     # Acceder al microfono del dispositivo
     try:
-        # print(text)
         with sr.Microphone() as source:
             try:
                 text = ''
                 status = False
 
-                print(f"{green_color}Escuchando... {normal_color}")
+                print(f"{Data_transfer.green_color}Escuchando... {Data_transfer.normal_color}")
 
-                winsound.PlaySound('sounds/sonido_apertura.wav', winsound.SND_FILENAME)
+                # winsound.PlaySound('sounds/sonido_apertura.wav', winsound.SND_FILENAME)
+                # playsound('sounds/sonido_apertura.wav')
+                # os.system("aplay sounds/sonido_apertura.wav")
                 # rec.adjust_for_ambient_noise(source,duration=1) #Ajustar para ruido de fondo, toma una muestra de 1 segundo para el ruido de fondo
                 audio = rec.listen(source)
 
                 #? Linea alternativa si el asistente escucha indefinidamente
                 # audio = rec.listen(source, timeout = 2, phrase_time_limit = 4)
 
-                print(f"{blue_color}Analizando... {normal_color}")
+                print(f"{Data_transfer.blue_color}Analizando... {Data_transfer.normal_color}")
                 text = rec.recognize_google(audio, language = lang).lower()
                 # print("Texto: " + text)
 
-                winsound.PlaySound('sounds/sonido_cierre.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+                # winsound.PlaySound('sounds/sonido_cierre.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+                # playsound('sounds/sonido_cierre.wav')
+                # os.system("aplay sounds/sonido_cierre.wav")
                 print(user_template + text)
 
                 if name in text:
@@ -192,8 +167,6 @@ def listen():
                     # print('Texto con nombre omitido: ' + text)
                     status = True
 
-                # prompt = text
-                # talk(text)
                 # return text
                 return {'text': text, 'status': status}
                 
@@ -213,7 +186,8 @@ def listen():
             except KeyboardInterrupt:
                 print(err_template + 'Acción cancelada por el usuario.')
                 # return False
-            winsound.PlaySound('sounds/Sonido_Cierre.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+            playsound('sounds/sonido_cierre.wav')
+            # os.system("aplay sounds/Sonido_Cierre.wav")
 
     except KeyboardInterrupt:
         print(err_template + 'Acción cancelada por el usuario.')
@@ -227,26 +201,10 @@ def listen():
         # return False
 
 
-#* IMPORTACIÓN DE FUNCIONES DE ARCHIVOS EXTERNOS
-figlet_banner()
-
 try:
     #* Función para cargar los datos de archivo de configuración en las variables de asistente
     def load_data(data_to_extract):
         global name, lang, wiki_lang, time_format, voice
-        # config_name, config_lang, time_format, voice = data_to_extract
-
-        # name = config_name
-        # lang = config_lang
-        # wiki_lang = config_lang[slice(0,2)]
-
-        # print('Nombre: ' + name)
-        # print('Idioma: ' + lang)
-        # print('Idioma de wikipedia: ' + wiki_lang)
-        # print('Formato de hora: ' + time_format)
-        # print('Indice de voz: ' + voice)
-
-        # print('===========================')
         name, lang, time_format, voice = data_to_extract
         wiki_lang = lang[slice(0,2)]
 
@@ -271,513 +229,265 @@ try:
 except KeyboardInterrupt:
     print(f'\n{warning_template}Acción cancelada por el usuario.')
 
-
-#* Función para crear archivo de configuración (config.txt) mediante la voz (no se usa aun)
-def init_configuration():
-    try:
-        response:str = listen()
-
-        if('sí' in response or 'si' in response):
-            print('Entro en si en respuesta')
-            Data_transfer.create_config_file()
-            Data_transfer.initial_config()
-
-        else:
-            print('Entro en no en respuesta')
-            print('Archivo de configuración no creado a petición de usuario, continuando con ejecución')
-            print('Cargando valores por defecto...')
-
-            name = 'va'
-            lang = 'es-ES'
-            time_format = "%I:%M %p"
-            wiki_lang = 'es'
-            voice_number = 0
-
-            talk('Esta bien, continuando con la ejecución')
-    except:
-        print('Audio no reconocido')
-        talk('No pude entender lo que has dicho, ¿Te importaria repetirlo?')
-        init_configuration()
-
-# init_configuration()
-
 #* Templates 2 - variable faltante, es necesario colocarla aquí luego de que se tiene el valor de "name"
-va_template = f"{negrita}{name}: {normal_color}"
+va_template = f"{Data_transfer.negrita}{name}: {Data_transfer.normal_color}"
 
 #* Ejecutar la función para escuchar al usuario y almacenar resultado en variable text para su futura evaluación
 # text = listen() - Ahora se ejecuta dentro de la función run, de modo que run se hace más autosuficiente
 # text = {'text' : 'envía Hola ¿cómo estas? a raylin', 'status': True}
 
-# print(Transaction)
-# print(type(Transaction))
-
 #* PARTE DE Ismael Y Xaviel - con open AI - módulo 3
-# Cargar las variables de entorno (variables contenidas en archivos .env)
-# load_dotenv()
-
-# Almanecar variable de entorno en una variable de python con dotenv
-# open_ai_api = os.getenv('OPENAI_API_KEY')
-# print(open_ai_api)
-
-# Variables de entorno
-
-#* Chat GPT
-
 # *INICIO CHAT GPT - Modulo 3, 4 & 5
-#* Este primer bloque se utiliza para interacciones con usuario
 def run_gpt(prompt:str):
     try:
         client = OpenAI(
-            api_key=get_key('public/.env',"OPENAI_API_KEY"),
+            api_key=get_key('dev/.env',"OPENAI_API_KEY"),
         )
-        # print(client.api_key)
-
-        # chat_completion = client.chat.completions.create(
-        #     messages=[
-        #         {"role": "system", 
-        #         "content": "Eres un asistente virtual que habla en verso y responde de manera cortez, clara y objetiva."},
-        #         {"role": "user", 
-        #         "content": text}
-        #     ],
-        #     model="gpt-3.5-turbo",
-        # )
 
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo-0125",
+            model="gpt-4o-mini-2024-07-18",
             messages=[
-                {
-                    "role": "user",
-                    "content": prompt,
-                }
+                {"role": "system", 
+                "content": f"Eres un asistente virtual llamado {name} que habla en verso y responde de manera cortez, clara y objetiva, es decir, resumes la información solicitada por el usuario."},
+                {"role": "user", 
+                "content": prompt}
             ]
         )
-        # print(response.headers.get("X-My-Header"))
-        
-        # print('response')
-
-        # print(response.choices[0].message.role)
-        print(response.choices[0].message.content)
         return response.choices[0].message.content
-        
-        # print(response.choices[0].message.content)
-        # print(response.choices)
-        # for line in response.iter_lines():
-        #     print(line)
 
     except Exception as err:
         print(err_template+str(err))
-
-# run_gpt()
-
-#* Este segundo bloque se utiliza para interpretación y ejecución de peticiones de usuario (se ejecuta por detras) (No se usa aun)
-
-# try:
-#     completion = client.chat.completions.create(
-#     model="gpt-3.5-turbo",
-#     messages=[
-#         {"role": "system", "content": "Eres un asistente virtual que interpreta las intenciónes del usuario y las clasifica de manera objetiva sin aunar descripción para ser posteriormente procesado y ejecutado lo que el usuario quiere realizar"},
-#         {"role": "user", "content": "¿Cuál es la intención del usuario segun este prompt?: " + prompt}
-#     ])
-#     intencion = completion.choices[0].message
-#     print(intencion)
-# except Exception as err:
-#     print(err)
 # *FINAL CHAT GPT
 
 #* Enviar mensajes de whatapp
-# pywhatkit sirve para enviar mensajes de WhatsApp: Utilice la función pywhatkit.sendwhatmsg() para enviar mensajes de WhatsApp a cualquier número de WhatsApp en un momento determinado. La sintaxis es la siguiente: pywhatkit.sendwhatmsg("número de móvil del receptor", "mensaje", horas, minutos). Asegúrese de que el número de móvil del receptor esté en formato de cadena y el código del país se mencione antes del número de móvil. Las horas siguen el formato de 24 horas. Los minutos son los minutos de la hora programada para el mensaje (00-59). Por ejemplo, para enviar un mensaje a un número de WhatsApp a las 22:28, utilice la siguiente sintaxis: pywhatkit.sendwhatmsg("+91xxxxxxxxxx", "Hola desde Mi Diario Python", 22, 28)
-
-# print(text)
-# print(text['text'])
-# print(text['status'])
+# pywhatkit sirve para enviar mensajes de WhatsApp: Utilice la función pywhatkit.sendwhatmsg() para enviar mensajes de WhatsApp a cualquier número de WhatsApp en un momento determinado. La sintaxis es la siguiente: pywhatkit.sendwhatmsg("número de móvil del receptor", "mensaje", horas, minutos). Asegúrese de que el número de móvil del receptor esté en formato de cadena y el código del país se mencione antes del número de móvil. Las horas siguen el formato de 24 horas. Los minutos son los minutos de la hora programada para el mensaje (00-59). Por ejemplo, para enviar un mensaje a un número de WhatsApp a las 22:28, utilice la siguiente sintaxis: pywhatkit.sendwhatmsg("+91xxxxxxxxxx", "Hola desde Python", 22, 28)
 
 #* Módulo 4 - realización de acciones según palabras claves de activación
 def run(text:str = '', status=True):
-
-    # print(text)
-    # print(text == '')
     if text == '':
         text = listen()
-        # print('entro en if')
+        if text['status'] == False:
+            # print('no hay nombre de asistente')
+            return {'text':text, 'status':status}
     else:
-        # print('no entro en if')
         text = {'text':text, 'status':status}
 
-    # print(text)
-    # print(text['text'])
-    # print(text['status'])
+    # text = {'text': 'Hola, ¿cómo estás?'}
 
-    # global text
-    if 'reproduce' in text['text']:
-        if 'spotify' in text['text']:
-            music = text['text'].replace('reproduce', '')
-            music = music.replace(name, '')
-            music = music.replace('spotify', '')
-            talk('Reproduciendo ' + music)
-            spoty.play(keys["spoty_client_id"], keys["spoty_client_secret"], music)
-        else:
+    # Utilizamos match para evaluar el texto
+    match text['text']:
+        case _ if 'reproduce' in text['text']:
+            # print('REPRODUCE')
             music = text['text'].replace('reproduce', '')
             music = music.replace(name, '')
             pywhatkit.playonyt(music)
             print(va_template + 'Reproduciendo' + music)
-            # print(f'{negrita}{name}: {normal_color}Reproduciendo ' + music)
+            # print(f'{Data_transfer.negrita}{name}: {Data_transfer.normal_color}Reproduciendo ' + music)
             talk('Reproduciendo ' + music)
-        return {'text' : text['text'], 'status' : True}
+            return {'text' : text['text'], 'status' : True}
+        case _ if 'busca' in text['text']:
+            busqueda = text['text'].replace('busca', '')
+            # print('Texto con nombre omitido: ' + text)
+            talk('Buscando ' + busqueda)
+            pywhatkit.search(busqueda)
+            # Esta funcion busca en el motor de busqueda google.com, valga la redundancia
+            print(f"{va_template}Buscando {busqueda}")
+            return {'text' : text['text'], 'status' : True}
+        case _ if 'información sobre' in text['text']:
+            # print('INFORMACION SOBRE')
+            # wikipedia.set_lang = 'es'
+            wikipedia.set_lang(wiki_lang)
+            
+            info = text['text'].replace('información sobre', '')
+            info = text['text'].replace('dame', '')
+            info = text['text'].replace('dime', '')
+            info = text['text'].replace('ofreceme', '')
+            info = text['text'].replace('ofréceme', '')
 
-    elif 'busca' in text['text']:
-        busqueda = text['text'].replace('busca', '')
-        # print('Texto con nombre omitido: ' + text)
-        talk('Buscando ' + busqueda)
-        pywhatkit.search(busqueda)
-        # Esta funcion busca en el motor de busqueda google.com, valga la redundancia
-        print(f"{va_template}Buscando {busqueda}")
-        return {'text' : text['text'], 'status' : True}
-
-    elif 'información sobre' in text['text'] and 'ingles' in text['text']:
-
-        info = text['text'].replace('información sobre', '')
-        info = text['text'].replace('en', '')
-        info = text['text'].replace('dame', '')
-        info = text['text'].replace('dime', '')
-        info = text['text'].replace('ofreceme', '')
-        info = text['text'].replace('ofréceme', '')
-
-        # print('Texto con nombre omitido: ' + text)
-        talk('Resumiendo informacion sobre ' + info + ' en wikipedia')
-        talk(pywhatkit.info(info))
-        # Esta funcion unicamente devuelve resumen en la consola (no puedo almacenar el resumen en variable), y lo devuelve en ingles, para almacenar el resumen y poder cambiar el idioma necesito utilizar el modulo de wikipedia (ejemplo mostrado arriba), que es el mismo modulo que utiliza pywhatkit internamente.
-        print(f"{va_template}resumiendo {info} en wikipedia en ingles")
-        return {'text' : text['text'], 'status' : True}
-    
-    elif 'información sobre' in text['text']:
-        # wikipedia.set_lang = 'es'
-        wikipedia.set_lang(wiki_lang)
-        
-        info = text['text'].replace('información sobre', '')
-        info = text['text'].replace('dame', '')
-        info = text['text'].replace('dime', '')
-        info = text['text'].replace('ofreceme', '')
-        info = text['text'].replace('ofréceme', '')
-
-        resumen = wikipedia.summary(info)
-        print(va_template + resumen)
-        talk(resumen)
-        return {'text' : text['text'], 'status' : True}
-    
-    elif 'recuérdame' in text['text']:
-        import time
-        tarea_inicio = text['text'].find("Recuérdame") + len("Recuérdame")
-        match = re.search(r'\b(en|después de)\b', text['text'])
-        if match:
-            tarea_fin = match.start()            
-            tarea = text['text'][tarea_inicio:tarea_fin].strip()
-            tiempo_inicio = match.end()
-            tiempo_texto = text['text'][tiempo_inicio:].strip().split()[0]
-            comando = int(tiempo_texto)
-            if "segundo" or "segundos" in tiempo_texto:
-                comando = comando
-            elif "minuto" or "minutos" in tiempo_texto:
-                comando = comando * 60
-            elif "hora" or "horas" in tiempo_texto:
-                comando = comando * 3600
-            elif "día" or "días" in tiempo_texto:
-                comando = comando * 86400
-            talk(f"¡Tarea programada! Te recordaré que debes {tarea} en el tiempo estimado")
-            time.sleep(comando)
-            print(f"Recuerda que {tarea}")
-            talk(f"Recuerda que {tarea}")
-        else:
-            talk("No se encontró la unidad de tiempo. Por favor intente de nuevo")
-        # return True
-        return {'text' : text['text'], 'status' : True}
-
-
-
-# * Diferencia entre search e info
-# search: La función pywhatkit.search("Palabra clave") abre tu navegador predeterminado y realiza una búsqueda en Google con la “Palabra clave” que proporcionaste. Te mostrará todos los resultados de búsqueda relacionados con esa palabra clave en Google.
-
-# info: Por otro lado, la función pywhatkit.info("Tema") te proporciona una breve información sobre el “Tema” que proporcionaste. Esta función utiliza la biblioteca wikipedia para buscar el tema y devuelve un resumen del artículo de Wikipedia correspondiente.
-
-# Por lo tanto, la principal diferencia es que search realiza una búsqueda en Google e info proporciona un resumen de un artículo de Wikipedia.
-
-    elif 'chiste' in text['text']:
-        chiste = pyjokes.get_joke(wiki_lang)
-        print(va_template + chiste)
-        talk(chiste)
-        # tts(chiste)
-        # windound no soporta formato mp3
-        winsound.PlaySound('sounds/redoble_de_tambores.wav', winsound.SND_FILENAME)
-        return {'text' : text['text'], 'status' : True}
-
-
-    elif 'realiza' in text['text'] and 'reporte' in text['text']:
-        print('Creando reporte')
-        talk('Creando reporte')
-        create_report()
-        return {'text' : text['text'], 'status' : True}
-
-
-
-    elif 'envía' in text['text']:
-        text = text['text'].replace('envía', '')
-
-        #! EJEMPLO DE LO QUE SE ESPERA COMO ENTRADA "ENVIAR MENSAJE A DANIEL", ELIMINAR LA FRASE ENVIAR O ENVIA Y TOMAR LA VOCAL "A" COMO SEPARADOR, LO QUE ESTA DESPUES DE LA "A" SERA EL CONTACTO A QUIEN SE LE ENVIARA QUE SE DEBERA BUSCAR EN EL ARCHIVO CONTACTS.TXT Y LO QUE ESTA ANTES DE "A" Y DESPUES DE "ENVIA" O "ENVIAR" SERA EL MENSAJE.
-
-        # "Esto es un mensaje de prueba desde python"
-
-        #* Modulo para obtener el tiempo actual y sumarle 10 segundos para la funcion de enviar mensaje por whatapp
-        # Obtén la hora actual
-        hora_actual = datetime.datetime.now()
-
-        # Imprime la hora actual en formato de 24 horas
-        # print("Hora actual: ", hora_actual)
-        # print("Hora actual: ", hora_actual.strftime("%H:%M:%S"))
-
-        # Suma 1 minuto a la hora actual
-        #* minuto_extra = datetime.timedelta(minutes=1)
-        nueva_hora = hora_actual + datetime.timedelta(minutes=1)
-        # nueva_hora = datetime.datetime.strftime(nueva_hora, "%H:%M")
-
-        # print(nueva_hora.strftime("%I,%M")) Esto funciona
-        # Imprime la nueva hora en formato de 24 horas
-        # print("Nueva hora: ", nueva_hora.strftime("%H:%M:%S"))
-        # nueva_hora_formateada = nueva_hora.strftime(str(int("%H")) , str(int("%M")+1))
-        # print("Nueva hora: ", nueva_hora.strftime("%H:%M"))
-
-        # print("Nueva horaH: ", nueva_hora.strftime("%H"))
-        # print("Nueva horaM: ", nueva_hora.strftime("%M"))
-        # print("Nueva horaM: ", nueva_hora.strftime("%S"))
-        # print("Nueva hora: ", nueva_hora.strftime(str("%H")+ ',' +str("%M") + ',' + str("%S")))
-
-        #* print(hora_actual.strftime("%I:%M"))
-        #* print(nueva_hora.strftime("%I:%M"))
-        # print(nueva_hora_formateada)
-        import pywhatkit as kit
-        import speech_recognition as sr
-        
-        try:
-            msg, contact = text.split(' a ')
-            # print('Mensaje ' + msg)
-            # print('contacto ' + contact)
-
-            contact = Data_transfer.read_phone_numbers(contact)
-            def transcribir_audio():
-                recognizer = sr.Recognizer()
-                with sr.Microphone() as source:
-                    talk(f"Di el mensaje que deseas enviar por WhatsApp:")
-                    # Ajusta al ruido ambiental
-                    recognizer.adjust_for_ambient_noise(source)  
-                    audio = recognizer.listen(source)
-            #? talk(f"El mensaje se enviara en unos segundos")
-            talk(f"El mensaje se enviara en unos segundos")
-            # print(contact, msg, nueva_hora.hour, nueva_hora.minute, 15, True, 3)
-
-            # pywhatkit.sendwhatmsg(contact, msg, nueva_hora.hour, nueva_hora.minute, 15, True, 3)
-            # pywhatkit.sendwhatmsg('+18574928689', msg, nueva_hora.hour, nueva_hora.minute, 3, True, 5)
-            kit.sendwhatmsg_instantly("Ismael", msg)
-            # Número de teléfono a enviar mensaje ( formato inter)
-            contact = "Ismael"
-            talk(f"Mensaje enviado al número seleccionado")
-            print(va_template + "Mensaje enviado al número seleccionado")
-        except:
-            print(err_template + "en el envío de mensaje, por favor, vuelve a intentarlo.")
-            talk("Error en el envío de mensaje, por favor, vuelve a intentarlo.")
-        # pywhatkit.sendwhatmsg("numero con prefijo","mensaje", 23,57)
-        return {'text' : text['text'], 'status' : True}
-
-
-    elif 'qué hora es' in text['text']:
-        # print(f"Son las {datetime.datetime.now().strftime("%I:%M")}")
-        # talk(f"Son las {datetime.datetime.now().strftime("%I:%M")}")
-
-        # time = datetime.datetime.now().strftime("%I:%M")
-        time = datetime.datetime.now().strftime(time_format[slice(0,5)])
-        # time_es = datetime.datetime.now().strftime("%I:%M:%p")
-        time_es = datetime.datetime.now().strftime(time_format)
-        
-        # print(time)
-        # print(time_es)
-
-        if(time.startswith('0')):
-            time = time[slice(1,(time.__len__()+1))]
-            time_es = time_es[slice(1,(time.__len__()+1))]
-            # print('Ajustado: '+ time)
-            # print('Ajustado: '+ time_es)
-
-        changeShape = random.randint(0,2)
-        # print(changeShape)
-
-        if(changeShape == 0):
-            print(va_template + f"Son las {time}")
-            talk(f"Son las {time}")
-
-        elif(changeShape == 1):
-            if(datetime.datetime.now().strftime('%p') == 'PM'):
-                print(va_template + f"Son las {time} de la tarde")
-                talk(f"Son las {time} de la tarde")
+            resumen = wikipedia.summary(info)
+            print(va_template + resumen)
+            talk(resumen)
+            return {'text' : text['text'], 'status' : True}
+        case _ if 'recuérdame' in text['text']:
+            import time
+            tarea_inicio = text['text'].find("Recuérdame") + len("Recuérdame")
+            match = re.search(r'\b(en|después de)\b', text['text'])
+            if match:
+                tarea_fin = match.start()            
+                tarea = text['text'][tarea_inicio:tarea_fin].strip()
+                tiempo_inicio = match.end()
+                tiempo_texto = text['text'][tiempo_inicio:].strip().split()[0]
+                comando = int(tiempo_texto)
+                if "segundo" or "segundos" in tiempo_texto:
+                    comando = comando
+                elif "minuto" or "minutos" in tiempo_texto:
+                    comando = comando * 60
+                elif "hora" or "horas" in tiempo_texto:
+                    comando = comando * 3600
+                elif "día" or "días" in tiempo_texto:
+                    comando = comando * 86400
+                talk(f"¡Tarea programada! Te recordaré que debes {tarea} en el tiempo estimado")
+                time.sleep(comando)
+                print(f"Recuerda que {tarea}")
+                talk(f"Recuerda que {tarea}")
             else:
-                print(va_template + f"Son las {time} de la mañana")
-                talk(f"Son las {time} de la mañana")
-        else:
-            print(va_template + f"Son las {time_es}")
-            talk(f"Son las {time_es}")
-        return {'text' : text['text'], 'status' : True}
+                talk("No se encontró la unidad de tiempo. Por favor intente de nuevo")
+            # return True
+            return {'text' : text['text'], 'status' : True}
+        case _ if 'chiste' in text['text']:
+            chiste = pyjokes.get_joke(wiki_lang)
+            print(va_template + chiste)
+            talk(chiste)
+            # tts(chiste)
+            # windound no soporta formato mp3
+            playsound('sounds/redoble_de_tambores.wav')
+            # os.system("aplay sounds/redoble_de_tambores.wav")
+            return {'text' : text['text'], 'status' : True}
+        case _ if 'realiza' in text['text'] and 'reporte' in text['text']:
+            print('Creando reporte')
+            talk('Creando reporte')
+            create_report()
+            return {'text' : text['text'], 'status' : True}
+        case _ if 'qué hora es' in text['text']:
+            time = datetime.datetime.now().strftime(time_format[slice(0,5)])
+            time_es = datetime.datetime.now().strftime(time_format)
+            if(time.startswith('0')):
+                time = time[slice(1,(time.__len__()+1))]
+                time_es = time_es[slice(1,(time.__len__()+1))]
 
+            changeShape = random.randint(0,2)
+            if(changeShape == 0):
+                print(va_template + f"Son las {time}")
+                talk(f"Son las {time}")
 
-    # Condicional para que el programa tenga un temporizador
-    elif 'temporizador' in text['text'] :
-        import time
-        wait = 0
-        # text = text['text'].replace('temporizador', '')
-        _, timer = text['text'].split('de')
+            elif(changeShape == 1):
+                if(datetime.datetime.now().strftime('%p') == 'PM'):
+                    print(va_template + f"Son las {time} de la tarde")
+                    talk(f"Son las {time} de la tarde")
+                else:
+                    print(va_template + f"Son las {time} de la mañana")
+                    talk(f"Son las {time} de la mañana")
+            else:
+                print(va_template + f"Son las {time_es}")
+                talk(f"Son las {time_es}")
+            return {'text' : text['text'], 'status' : True}
+        case _ if 'temporizador' in text['text']:
+            import time
+            wait = 0
+            _, timer = text['text'].split('de')
 
-        hour = re.findall(r"\d+\s*[h]{1,5}",timer)
-        minute = re.findall(r"\d+\s*[m]{1,7}",timer)
-        seconds = re.findall(r"\d+\s*[s]{1,8}",timer)
+            hour = re.findall(r"\d+\s*[h]{1,5}",timer)
+            minute = re.findall(r"\d+\s*[m]{1,7}",timer)
+            seconds = re.findall(r"\d+\s*[s]{1,8}",timer)
 
-        # hour = int(hour[0].replace('h','').split()[0]) if len(hour) > 0 else None
-        # minute = int(minute[0].replace('m','').split()[0]) if len(minute) > 0 else None
-        # seconds = int(seconds[0].replace('s','').split()[0]) if len(seconds) > 0 else None
+            hour = int(hour[0].replace('h','')) if len(hour) > 0 else 0
+            minute = int(minute[0].replace('m','')) if len(minute) > 0 else 0
+            seconds = int(seconds[0].replace('s','')) if len(seconds) > 0 else 0
 
-        # wait = wait + (hour*3600) if hour != None else 0
-        # wait = wait + (minute*60) if minute != None else 0
-        # wait = wait + seconds if seconds != None else 0
+            wait = (hour*3600) + (minute*60) + seconds
 
-        hour = int(hour[0].replace('h','')) if len(hour) > 0 else 0
-        minute = int(minute[0].replace('m','')) if len(minute) > 0 else 0
-        seconds = int(seconds[0].replace('s','')) if len(seconds) > 0 else 0
+            print(f'Temporizador fijado para {wait} segundos...')
+            talk(f'Temporizador fijado para {wait} segundos...')
+            
+            async def async_sleep(time_to_wait:int) -> None:
+                await asyncio.sleep(time_to_wait)
 
-        wait = (hour*3600) + (minute*60) + seconds
+                print(f'Terminado!')
+                talk(f'Terminado!')
 
-        # print(hour)
-        # print(minute)
-        # print(seconds)
-        # print(f'{hour} horas, {minute} minutos y {seconds} segundos son: {wait} segundos en total')
-        print(f'Temporizador fijado para {wait} segundos...')
-        talk(f'Temporizador fijado para {wait} segundos...')
-        
-        async def async_sleep(time_to_wait:int) -> None:
-            # time.sleep(time_to_wait)
-            await asyncio.sleep(time_to_wait)
+                for i in range(2):
+                    # winsound.PlaySound('sounds/redoble_de_tambores.wav', winsound.SND_FILENAME)
+                    playsound('sounds/redoble_de_tambores.wav')
+            
+            print('Antes de invocación de funcion asíncrona')        
+            asyncio.run(async_sleep(wait))
+            print('despues de invocación de funcion asíncrona')        
+            return {'text' : text['text'], 'status' : True}
+        case _ if 'que dia fue' in text['text'] or 'qué día fue' in text['text']:
+            # print('QUE DIA FUE')
+            date = getDaysAgo(text['text'])
+            print(date)
+            talk(date)
+            return {'text' : text['text'], 'status' : True}
+        case _ if 'estás ahí' in text['text']:
+            print(va_template + 'Sí, ¿En qué te puedo ayudar?')
+            talk('Sí, ¿En qué te puedo ayudar?')
+            text = name + ' ' + listen()
+            return {'text' : text['text'], 'status' : True}
+        case _ if 'cómo te llamas' in text['text']:
+            print(name)
+            talk('Soy' + name + '¿Cómo te puedo ayudar?')
+            # text = listen()
+            return {'text' : text['text'], 'status' : True}
+        case _ if 'muéstrame el archivo de configuración' in text['text'] or 'muestrame el archivo de configuración' in text['text']:
+            print('Mostrando el contenido del archivo de configuración')
+            talk('Mostrando el contenido del archivo de configuración')
 
-            print(f'Terminado!')
-            talk(f'Terminado!')
+            print('Nombre del asistente: ' + name)
+            print('Idioma: ' + lang)
+            print('Idioma de wikipedia: ' + wiki_lang)
+            print('Formato de hora: ' + '12' if time_format.startswith('%I') else '24' + 'horas')
+            print('Indice de voz: ' + voice)
 
-            for i in range(2):
-                winsound.PlaySound('sounds/redoble_de_tambores.wav', winsound.SND_FILENAME)
-        
-        # await async_sleep()
-        print('Antes de invocación de funcion asíncrona')        
-        asyncio.run(async_sleep(wait))
-        print('despues de invocación de funcion asíncrona')        
-        return {'text' : text['text'], 'status' : True}
+            talk('Nombre del asistente: ' + name)
+            talk('Idioma: ' + lang)
+            talk('Idioma de wikipedia: ' + wiki_lang)
+            talk('Formato de hora: ' + '12' if time_format.startswith('%I') else '24' + 'horas')
+            talk('Indice de voz: ' + voice)
+            return {'text' : text['text'], 'status' : True}
+        case _ if 'crea una nueva configuración' in text['text']:
+            talk('Creando archivo de configuración nuevamente')
+            Data_transfer.initial_config()
+            load_data(Data_transfer.readfile().values())
+            return {'text' : text['text'], 'status' : True}
+        case _ if 'hasta luego' in text['text']:
+            talk(f'Hasta pronto')
+            sys.exit(0)
+            return {'text' : text['text'], 'status' : True}
+            # Aquí deberia ir un código para poner el asistente en modo de siempre escucha y contestar si se menciona el nombre del asistente
+        case _ if 'enciende' in text['text']:
+            from wakeonlan import send_magic_packet
+            machine = text['text'].replace('enciende', '').replace('la', '').replace('ps', 'pc').replace('computadora', 'pc')
 
-    
-    elif 'que dia fue' in text['text'] or 'qué día fue' in text['text']:
-        date = getDaysAgo(text['text'])
-        print(date)
-        talk(date)
-        return {'text' : text['text'], 'status' : True}
-
-    #! IMPORTANTE
-    #* Con global le indico que la variable text sera global en lugar de local, como la variable text existe, entonces estoy indicando que quiero utilizar la variable global y no crear una variable nueva dentro de la función, esto deberia solucionar el error de "UnboundLocalError" 
-    # global text
-    elif 'estás ahí' in text['text']:
-        print(True)
-        print(va_template + 'Sí, ¿En qué te puedo ayudar?')
-        talk('Sí, ¿En qué te puedo ayudar?')
-        text = name + ' ' + listen()
-        return {'text' : text['text'], 'status' : True}
-
-
-    # global text
-    elif 'cómo te llamas' in text['text']:
-        print(name)
-        talk('Soy' + name + '¿Cómo te puedo ayudar?')
-        # text = listen()
-        return {'text' : text['text'], 'status' : True}
-
-    elif 'muestrame el archivo de configuración' in text['text'] or 'muéstrame el archivo de configuración' in text['text']:
-        print('Mostrando el contenido del archivo de configuración')
-        talk('Mostrando el contenido del archivo de configuración')
-
-        print('Nombre del asistente: ' + name)
-        print('Idioma: ' + lang)
-        print('Idioma de wikipedia: ' + wiki_lang)
-        print('Formato de hora: ' + '12' if time_format.startswith('%I') else '24' + 'horas')
-        print('Indice de voz: ' + voice)
-
-        talk('Nombre del asistente: ' + name)
-        talk('Idioma: ' + lang)
-        talk('Idioma de wikipedia: ' + wiki_lang)
-        talk('Formato de hora: ' + '12' if time_format.startswith('%I') else '24' + 'horas')
-        talk('Indice de voz: ' + voice)
-        return {'text' : text['text'], 'status' : True}
-        
-    
-    elif 'crea una nueva configuración' in text['text'] :
-        talk('Creando archivo de configuración nuevamente')
-        Data_transfer.initial_config()
-        load_data(Data_transfer.readfile().values())
-        return {'text' : text['text'], 'status' : True}
-
-
-    elif 'hasta luego' in text['text']:
-        talk(f'Hasta pronto')
-        os._exit(0)
-        return {'text' : text['text'], 'status' : True}
-
-    # Código aqui
-
-
-    # Esta debe ser la ultima linea de la función run
-    return {'text' : text['text'], 'status' : False}
-
-    # elif 'cuántos suscriptores tiene' in text or 'cuantos suscriptores tiene' in text:
-    #     key = os.getenv('GOOGLE_API_KEY_YOUTUBE')
-    #     name_subs = text.replace('cuantos suscriptores tiene', '')
-    #     data = urllib.request.urlopen(f'https://www.googleapis.com/youtube/v3/channels?part=statistics&forUsername={name_subs.strip()}&key={key}').read()
-    #     subs = json.loads(data)["items"][0]["statistics"]["subscriberCount"]
-    #     talk(name_subs + " tiene +{:,d}".format(int(subs)) + "suscriptores!")
-
-
-# print('Nombre asistente: '+name)
-# print('Texto: '+text)}# print(name in text)
-#* Ejecutar funciones que ejecutan acciones a peticion
-# try:
-#     if(name in text):
-#         try:
-#             finish()
-#             run()
-#             search()
-#             info()
-#             send()
-#             time()
-#             disponibilidad()
-#             who_i_am()
-#         except NameError as err:
-#             print("Entrada de audio inválida, intentalo nuevamente")
-#             talk("Entrada de audio inválida, intentalo nuevamente")
-#             print(err)
-#         except KeyboardInterrupt:
-#             print(err_template + 'Acción cancelada por el usuario.')
-# except TypeError:
-#     pass
+            class MacNotFoundError(Exception):
+                # """Excepción personalizada para indicar que no se encontró la dirección MAC."""
+                pass
+            # Enviar un paquete mágico a una dirección MAC específica
+            # send_magic_packet('00:11:22:33:44:55')
+            # send_magic_packet('00:11:22:33:44:55', '66:77:88:99:AA:BB')
+            # send_magic_packet('00:11:22:33:44:55', ip_address='192.168.1.255', port=7)
+            try:
+                if 'todas' in machine:
+                    for mac in Data_transfer.readfile(txt_path+'/wol.txt').values():
+                        # print(mac)
+                        send_magic_packet(mac)
+                else:
+                    if machine.split()[1].isdigit():
+                        machine = machine.split()[0]+str(machine.split()[1])
+                    else:
+                        index = Data_transfer.letras_a_numero(machine.split()[1])
+                        if index == False:
+                            raise MacNotFoundError(f"No se encontró la dirección MAC para {machine.strip()}.")
+                        machine = machine.split()[0]+str(index)
+                    # print('Mac: ' + Data_transfer.read_config_file_line(machine, txt_path+'/wol.txt'))
+                    send_magic_packet(Data_transfer.read_config_file_line(machine, txt_path+'/wol.txt'))
+                print(va_template + "Echo ✅")
+                talk('Listo')
+            except ValueError as err:
+                print(f"{err_template}{err}")
+            except MacNotFoundError as err:
+                print(err_template + str(err))
+                talk(str(err))
+        case _:
+            return {'text' : text['text'], 'status' : False}
 
 #* EJECUCIÓN DE ACCIONES - con control de excepciones
-# run('qué hora es')
 try:
-    # import time
-    # result = run('Cuales son las actividades más rentables que estan realizando las empresas ultimamente')
-
-    # if not result['status']:
-    #     ia = run_gpt(result['text'])
-    #     print(va_template + str(ia))
-    #     talk(ia)
-    # pass
-
     #* Implementando funcionalidad para que el asistente se mantenga escuchando
-    # run('dime un chiste')
+    # run('texto de prueba escrito')
+    # run('enciende la pc uno')
+    # run()
+
     while True:
         result = run()
 
@@ -793,142 +503,11 @@ except NameError as err:
     print(err)
     print("Entrada de audio inválida, intentalo nuevamente")
     talk("Entrada de audio inválida, intentalo nuevamente")
-    # print("EXCEPT 1")
 except TypeError as err:
     print(err)
-    talk("Entrada de audio inválida, intentalo nuevamente")
-    print("Entrada de audio inválida, intentalo nuevamente")
-    # print("EXCEPT 2")
+    # talk("Entrada de audio inválida, intentalo nuevamente")
+    # print("Entrada de audio inválida, intentalo nuevamente")
+    pass
 
 
-
-#! LINEA TEMPORAL
-# run()
-
-#* Ejecutar acción sin decir jarvis antes
-# def justRun():
-#     finish()
-#     run()
-#     search()
-#     info()
-#     send()
-#     time()
-#     disponibilidad()
-#     who_i_am()
-
-#* GEMINI Pro
-# google_api_key = os.getenv('GOOGLE_API_KEY')
-
-# Or use `os.getenv('GOOGLE_API_KEY')` to fetch an environment variable.
-# google_api_key = userdata.get('GOOGLE_API_KEY')
-
-# print(google_api_key) 
-# print(type(google_api_key))
-
-# model = genai.GenerativeModel('gemini-pro')
-# chat = model.start_chat(history=[])
-
-# response = chat.send_message("Dime como puedo crear una funcion en python.")
-# to_markdown(response.text)
-# print(response.text)
-# print(chat.history)
-
-# model = genai.GenerativeModel('gemini-pro')
-# chat = model.start_chat(history=[])
-# print(model.count_tokens)
-# print(chat.model)
-
-# response = chat.send_message(
-#     "Pretend you\'re a snowman and stay in character for each response.")
-# # print(response.text)
-
-# response = chat.send_message(
-#     "What\'s your favorite season of the year?")
-# # print(response.text)
-
-
-
-
-# google_api_key = os.getenv('GOOGLE_API_KEY')
-# genai.configure(api_key= google_api_key)
-
-# model = genai.get_model("tunedModels/gemini-pro") # Elige el modelo gemini-pro
-# prompt = "¿Qué es la inteligencia artificial?" # Define tu entrada de texto
-# response = model.generateContent(prompt=prompt) # Genera una respuesta de texto
-# print(response) # Imprime la respuesta
-
-print(f'{Transaction().yellow_color}PROGRAMA FINALIZADO CON UNA DURACIÓN DE:{Transaction().bright_cyan_color}{Transaction().negrita} {int(time.time() - start_time)} segundos {Transaction().normal_color}')
-
-# Recordar peticiones anteriores para charla amena (IA)
-
-historial_solicitudes = {}
-
-def procesar_solicitud (solicitud):
-    if solicitud in historial_solicitudes:
-        repuesta = "Hablamos sobre esto anteriormente. ¿Te interesa hablar sobre algo más?"
-    else:
-        historial_solicitudes [solicitud] = True
-        repuesta = "COOL. ¿Qué más te gustaria conversar?"
-        
-    return repuesta
-
-# while True:
-#     solicitud_usuario = input("usuario: ")
-#     respuesta_ia = procesar_solicitud (solicitud_usuario)
-#     print("IA: ", respuesta_ia)
-    
-# Realizar operaciones matemáticas básicas a petición 
-
-def realizar_operaciones (operacion):
-    partes = operacion.split()
-    
-    if len(partes) != 3:
-        return "Formato de operación incorrecto. Por favor, utilice el formato 'número - operador - número'."
-    
-    num1 = float(partes[0])
-    num2 = float(partes[2])
-    operador = partes[1]
-    
-    if operador == '+':
-        resultado = num1 + num2
-    elif operador == '-':
-        resultado = num1 - num2
-    elif operador == '*':
-        resultado = num1 * num2
-    elif operador == '/':
-        if num2 == 0:
-            return "Error: División por cero."
-        else:
-            resultado = num1 / num2
-    else:
-        return "Operador no válido."
-    
-    return resultado
-
-# while True:
-#     operacion = input("Introduce una operación: ")
-#     resultado = realizar_operaciones (operacion)
-#     print("Resultado: ", resultado)
-    
-# Eliminar todo el texto anterior a la palabra clave donde sea necesario (.slice() tal vez / expresiones regulares)
-
-import re
-
-def eliminar_texto_anterior (texto, palabra_clave):
-    match = re.search (palabra_clave, texto)
-    
-    if match:
-        palabra_clave1 = match.start()
-        texto_nuevo = texto [palabra_clave1:]
-        return texto_nuevo 
-    else:
-        return "Palabra no encontrada."
-    
-    texto_original = "Vamos a eliminar todo lo anterior a la palabra clave 'eliminar'."
-    palabra_clave = "eliminar"
-    # texto_resultante = eliminar_texto_anterior (texto_original, palabra_clave)
-    print("Texto resultante: ",texto_resultante)
-    
-    
-
-             
+print(f'{Data_transfer.yellow_color}PROGRAMA FINALIZADO CON UNA DURACIÓN DE:{Data_transfer.bright_cyan_color}{Data_transfer.negrita} {int(time.time() - start_time)} segundos {Data_transfer.normal_color}')

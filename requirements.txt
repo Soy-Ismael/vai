@@ -3,11 +3,10 @@
 # package
 # python.exe -m --upgrade pip
 # pip install --upgrade azure-cognitiveservices-speech
-
 SpeechRecognition==3.10.1
-PyAudio==0.2.14
+# PyAudio==0.2.14
 python-dotenv==1.0.1
-setuptools==69.0.3
+setuptools
 distutils644==0.4
 openai==1.10.0
 pyttsx3==2.90
@@ -20,5 +19,11 @@ pyfiglet==1.0.2
 azure-cognitiveservices-speech==1.36.0
 openpyxl==3.1.2
 pandas==2.2.2
+pydub
+# whisper
+wakeonlan
 # matplotlib==3.8.4
 # reportlab==4.2.0
+
+playsound # ejecutar el comando siguiente si este modulo arroja un error al instalarlo
+# python -m pip install --upgrade pip setuptools wheel
