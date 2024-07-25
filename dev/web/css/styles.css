@@ -1,0 +1,133 @@
+/** White theme */
+/* site main color: #F2F3F5 */
+/* contrast color: #FFFFFF */
+
+/* Items */
+/* dark contrast color: #0492EB - acent color going to be the same (checkbox, buttons, underline, etc) */
+/* hover color for buttons: #04B0FF */
+/* soft contrast color: #D9EEFB */
+/* text color: #212121 */
+/* soft text color: #363E4D - for pure white surfaces */
+
+/** Dark theme */
+/* site main color: #131313 */
+/* contrast color: #2B2B2B */
+
+/* Items */
+/* dark contranst color: #3367D6 */
+/* soft contrast color: #4285F4 */
+/* text color: #EAEAEA on dark side*/
+/* text color: #FFFFFF on contrast color side*/
+
+/** Both */
+/* Good news color: #7CE07F - kind of green */
+
+/* warnings */
+/* background color: #FF2954 */
+/* text color: #FFF4F6 */
+
+/** fonts */
+/* lato for title */
+/* Roboto for paragraphs, buttons and everything else */
+
+/* .roboto-regular {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+} */
+/* .roboto-light {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.lato-regular {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+} */
+/* .lato-light {
+    font-family: "Lato", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+} */
+
+:root{
+    --main-font: "Lato", sans-serif; /* for titles */
+    --secondary-font: "Roboto", sans-serif; /* for subtitles or paragraphs */
+    --hard-font: 400; /* main sentence */
+    --soft-font: 300; /* secondary sentences */
+    --font-style: normal;
+
+    /* white theme */
+    --white-theme-main-color: #F2F3F5;
+    --white-theme-main-contrast-color: #FFFFFF;
+    --white-theme-dark-contrast-color: #0492EB;
+    --white-theme-soft-contrast-color: #D9EEFB;
+    --white-theme-hover-contrast-color: #04B0FF;
+    --white-theme-text-color: #212121;
+    --white-theme-soft-text-color: #363E4D; /* for pure white surfaces */
+
+    /* dark theme */
+    --dark-theme-main-color: #131313;
+    --dark-theme-main-contrast-color: #2B2B2B;
+    --dark-theme-dark-contrast-color: #3367D6;
+    --dark-theme-soft-contrast-color: #4285F4;
+    --dark-theme-text-color: #EAEAEA; /* on dark side */
+    --dark-theme-text-contrast-color: #FFFFFF; /* on contrast color side */
+
+    /* both */
+    --successfully-execute: #7CE07F;
+    --warning-bg: #FF2954;
+    --warning-font-color: #FFF4F6;
+}
+
+body{
+    font-family: var(--main-font);
+    /* background-color: var(--white-theme-main-color); */
+    background-color: var(--white-theme-main-color);
+    margin: 0;
+    display: flex;
+    scroll-behavior: smooth;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 250px;
+    /* width: 100%; */
+    max-width: 280px;
+    background-color: #333;
+    color: var(--dark-theme-text-color);
+}
+
+.header__title{
+    padding-left: 35px;
+}
+
+.nav__list{
+    list-style: none;
+    padding: 20px;   
+}
+
+.nav__item{
+    word-spacing: 25px;
+    padding: 24px 0;
+    font-size: 18px;
+    transform: translateX(-50px);
+    transition: transform 350ms, word-spacing 350ms, color 350ms;
+}
+
+.nav__item:hover{
+    transform: translateX(0px);
+    word-spacing: 15px;
+    /* color: var(--white-theme-hover-contrast-color); */
+    color: var(--warning-bg);
+    cursor: pointer;
+}
+
+.main{
+    padding: 10px 24px;
+    flex-basis: 100%;
+}

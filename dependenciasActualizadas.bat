@@ -91,17 +91,36 @@ pip install openpyxl
 echo TERMINADO
 cls
 
+title pydub
+color 4
+pip install pydub
+echo TERMINADO
+cls
+
+title wake on lan
+color c
+pip install wakeonlan
+echo TERMINADO
+cls
+
+title Instalando playsound
+python -m pip install --upgrade pip setuptools wheel
+color b
+pip install playsound
+echo TERMINADO
+cls
+
 @REM title matplotlib
 @REM color 4
 @REM pip install matplotlib
 @REM echo TERMINADO
 @REM cls
 
-title reportlab
-color c
-pip install reportlab
-echo TERMINADO
-cls
+@REM title reportlab
+@REM color c
+@REM pip install reportlab
+@REM echo TERMINADO
+@REM cls
 
 @REM text-to-speech de openAI
 @REM title Instalando pathlib

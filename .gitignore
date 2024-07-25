@@ -1,7 +1,7 @@
 PyWhatKit_DB.txt
 dev/__pycache__
 __pycache__
-*.json
+# *.json
 *.env
 *.cs
 *.rar
@@ -14,8 +14,8 @@ dev/pruebas2.py
 # config.txt
 # contacts.txt
 log.txt
-*.js
-*.html
+# *.js
+# *.html
 dev/banners.txt
 dev/config.txt
 dev/contacts.txt
@@ -30,3 +30,4 @@ dev/temp.wav
 public/.env
 notas.txt
 wol.txt
+.env
