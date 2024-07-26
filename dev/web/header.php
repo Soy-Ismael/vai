@@ -15,8 +15,8 @@
         <h1 class="header__title">Dashboard</h1>
         <nav class="nav">
             <ul class="nav__list">
-                <li class="nav__item"><i class="fa-solid fa-house"></i> Home</li>
-                <li class="nav__item"><i class="fa-solid fa-gear"></i> Configuración</li>
+                <li class="nav__item"><i class="fa-solid fa-house"></i> <a href="index.php" class="nav__link" >Home</a></li>
+                <li class="nav__item"><i class="fa-solid fa-gear"></i> <a href="configuration.php" class="nav__link" >Configuración</a></li>
             </ul>
         </nav>
         <p class="header__info">About</p>

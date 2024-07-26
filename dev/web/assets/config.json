@@ -5,10 +5,10 @@
         "hour_format": "%I:%M %p",
         "voice_number": 2,
         "operative_system": "linux",
-        "voice_engine": "pyttsx3/azure chose one",
         "role": "Eres un asistente virtual llamado {name} que habla en verso y responde de manera cortez, clara y objetiva, es decir, resumes la información solicitada por el usuario."
     },
     "env":{
+        "voice_engine": "pyttsx3/azure",
         "sha_phrase": "$$xyz-123",
         "azure_api_key": "abc",
         "openai_api_key": "def",
@@ -27,7 +27,7 @@
         "timer": true,
         "what_day_was": true,
         "check_availability": true,
-        "ask_name": true,
+        "say_name": true,
         "request_config_file": true,
         "create_new_config_file": true,
         "closing_phrase": true,
@@ -39,26 +39,150 @@
     },
     "wakeonlan": {
         "mac": {
-            "pc1": "DC-4A-3E-80-E4-5B",
-            "pc2": "D8-9E-F3-24-11-6A",
-            "pc3": "48-0F-CF-4C-BC-DD",
-            "pc4": "A0-8C-FD-C3-F8-90",
-            "pc5": "48-0F-CF-5F-F8-B9",
-            "pc7": "70-5A-0F-7F-BA-40",
-            "pc8": "70-5A-0F-34-CE-A3",
-            "pc9": "70-5A-0F-34-CE-46",
-            "pc10": "48-0F-CF-5B-C3-7C",
-            "pc11": "54-BF-64-72-A8-B9",
-            "pc12": "D8-9E-F3-13-DF-A6",
-            "pc14": "50-9A-4C-5A-75-98",
-            "pc15": "D8-9E-F3-06-40-D8",
-            "pc16": "48-4D-7E-CE-A6-1C",
-            "pc17": "D8-9E-F3-29-54-11",
-            "pc18": "48-4D-7E-CE-A4-70",
-            "pc19": "DC-4A-3E-90-6C-0F",
-            "pc21": "D8-9E-F3-06-3F-13",
-            "pc22": "D8-9E-F3-00-92-02",
-            "pc24": "D8-9E-F3-2E-BE-78"
+            "pc1": {
+                "name": "pc1",
+                "ip": "",
+                "mac": "DC-4A-3E-80-E4-5B",
+                "status": true
+            },
+            "pc2": {
+                "name": "pc2",
+                "ip": "",
+                "mac":  "D8-9E-F3-24-11-6A",
+                "status": true
+            },
+            "pc3": {
+                "name": "pc3",
+                "ip": "",
+                "mac": "48-0F-CF-4C-BC-DD",
+                "status": true
+            },
+            "pc4": {
+                "name": "pc4",
+                "ip": "",
+                "mac": "A0-8C-FD-C3-F8-90",
+                "status": true
+            },
+            "pc5": {
+                "name": "pc5",
+                "ip": "",
+                "mac": "48-0F-CF-5F-F8-B9",
+                "status": true
+            },
+            "pc6": {
+                "name": "pc6",
+                "ip": "",
+                "mac": "",
+                "status": false
+            },
+            "pc7": {
+                "name": "pc7",
+                "ip": "",
+                "mac": "70-5A-0F-7F-BA-40",
+                "status": true
+            },
+            "pc8": {
+                "name": "pc8",
+                "ip": "",
+                "mac": "70-5A-0F-34-CE-A3",
+                "status": true
+            },
+            "pc9": {
+                "name": "pc9",
+                "ip": "",
+                "mac": "70-5A-0F-34-CE-46",
+                "status": true
+            },
+            "pc10": {
+                "name": "pc10",
+                "ip": "",
+                "mac": "48-0F-CF-5B-C3-7C",
+                "status": true
+            } ,
+            "pc11": {
+                "name": "pc11",
+                "ip": "",
+                "mac": "54-BF-64-72-A8-B9",
+                "status": true
+            },
+            "pc12": {
+                "name": "pc12",
+                "ip": "",
+                "mac": "D8-9E-F3-13-DF-A6",
+                "status": true
+            },
+            "pc13": {
+                "name": "pc13",
+                "ip": "",
+                "mac": "",
+                "status": false
+            },
+            "pc14": {
+                "name": "pc14",
+                "ip": "",
+                "mac": "50-9A-4C-5A-75-98",
+                "status": true
+            },
+            "pc15": {
+                "name": "pc15",
+                "ip": "",
+                "mac": "D8-9E-F3-06-40-D8",
+                "status": true
+            },
+            "pc16": {
+                "name": "pc16",
+                "ip": "",
+                "mac": "48-4D-7E-CE-A6-1C",
+                "status": true
+            },
+            "pc17": {
+                "name": "pc17",
+                "ip": "",
+                "mac": "D8-9E-F3-29-54-11",
+                "status": true
+            },
+            "pc18": {
+                "name": "pc18",
+                "ip": "",
+                "mac": "48-4D-7E-CE-A4-70",
+                "status": true
+            },
+            "pc19": {
+                "name": "pc19",
+                "ip": "",
+                "mac": "DC-4A-3E-90-6C-0F",
+                "status": true
+            },
+            "pc20": {
+                "name": "pc20",
+                "ip": "",
+                "mac": "",
+                "status": false
+            },
+            "pc21": {
+                "name": "pc21",
+                "ip": "",
+                "mac": "D8-9E-F3-06-3F-13",
+                "status": true
+            },
+            "pc22": {
+                "name": "pc22",
+                "ip": "",
+                "mac": "D8-9E-F3-00-92-02",
+                "status": true
+            },
+            "pc23": {
+                "name": "pc23",
+                "ip": "",
+                "mac": "",
+                "status": false
+            },
+            "pc24": {
+                "name": "pc24",
+                "ip": "",
+                "mac": "D8-9E-F3-2E-BE-78",
+                "status": true
+            }
         },
         "index": {
             "cero": 0,
