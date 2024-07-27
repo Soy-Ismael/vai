@@ -276,16 +276,15 @@ body{
     color: var(--warning-bg);
 }
 
-.status{
+/* .status{
     display: inline-block;
     box-sizing: border-box;
     background-color: #e5e5e5;
     padding: 4px 8px;
     height: auto;
     border-radius: 5px;
-    /* margin-top: 20px; */
     margin: 20px 0 0 24px;
-}
+} */
 
 .status[data-status="true"] {
     /* color: var(--successfully-execute); */

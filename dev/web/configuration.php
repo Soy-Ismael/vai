@@ -212,7 +212,7 @@
         </section>
         <section class="section">
             <h3 class="section__title">Wake On Lan</h3>
-            <table class="table">
+            <table class="table" id="table">
                 <thead>
                     <tr class="table__row table__row--head">
                         <th class="table__th">NOMBRE</th>
@@ -223,7 +223,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="table__row">
+                    <!-- Mensaje para cuando no hayan datos -->
+                    <!-- <p style="text-aligh: center;">No hay datos</p> -->
+                     
+                    <!-- <tr class="table__row">
                         <td class="table__td">Pc1</td>
                         <td class="table__td">N/A</td>
                         <td class="table__td">DC-4A-3E-80-E4-5B</td>
@@ -236,7 +239,7 @@
                         <td class="table__td">DC-4A-3E-80-E4-5B</td>
                         <td class="table__td status" data-status="true">Activo</td>
                         <td class="table__td table__td--icons"><i class="fa-solid fa-clipboard table__copy"></i> <i class="fa-solid fa-pen-to-square table__edit"></i> <i class="fa-solid fa-trash-can table__trash"></i></td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
             <!-- aqui deberia ir diseño y configuracion de paginación -->
