@@ -136,12 +136,30 @@ body{
 }
 
 .header__info{
+    position: relative;
     font-size: 18px;
-    order: 3;
+    top: 330px;
+    padding: 15px 0 15px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 }
 
+.header__info:hover{
+    background-color: #04b0ff1f;
+}
+
+/* .header__info:hover .header__info::before{
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 35px;
+    background-color: var(--dark-theme-soft-contrast-color);
+    left: 10px;
+} */
+
 .main{
-    padding: 10px 30px;
+    padding: 10px 30px 20px 30px;
     flex-basis: 100%;
     background-color: var(--white-theme-main-color);
 }
@@ -192,17 +210,19 @@ body{
     border: 1px solid var(--white-theme-hover-contrast-color);
 }
 
-.form__input--checkbox{
-    outline: none;      
-    border: none;
-    width: 15px;
-    height: 15px;
-    font-size: 14px;
-}
-
 .form__field--checkbox{
     max-width: 376px;
 }
+
+.form__input--checkbox{
+    /* outline: none;       */
+    /* border: none; */
+    width: 15px;
+    height: 15px;
+    /* font-size: 14px; */
+    /* appearance: none; */
+}
+
 /* .form__input--checkbox:checked{
     background-color: var(--white-theme-dark-contrast-color);
 } */
@@ -213,6 +233,11 @@ body{
     align-items: center;
     gap: 0 4px;
     justify-content: flex-start;
+    cursor: pointer;
+}
+
+.form__checkbox:hover{
+    opacity: 1;
 }
 
 /* Tabla desing */
@@ -220,7 +245,7 @@ body{
     border-collapse: collapse;
     width: 760px;
     margin-top: 35px;
-    /* caret-color: transparent; */
+    caret-color: transparent;
     /* border: 0 solid #868e93; */
 }
 
@@ -276,6 +301,7 @@ body{
     color: var(--warning-bg);
 }
 
+/* Por si estatus es con letras o se requiere añadir un backgroud */
 /* .status{
     display: inline-block;
     box-sizing: border-box;
@@ -316,3 +342,270 @@ body{
 /* .section__icon{
     
 } */
+
+.submitButton{
+    width: 100px;
+    height: 35px;
+    font-size: 15px;
+    font-family: var(--secondary-font);
+    border-radius: 3px;
+    border: none;
+    background-color: var(--dark-theme-soft-contrast-color);
+    color: var(--white-theme-soft-contrast-color);
+    font-weight: var(--hard-font);
+    transition: background-color 150ms;
+    margin: 15px 0 30px 0;
+}
+
+.submitButton:active{
+    background-color: var(--dark-theme-dark-contrast-color);
+}
+
+/** Modals - video guia (https://youtu.be/Iaw9rFopXPY?si=19uiTyGDfBE2j-7x) */
+/* Contenedor de modal container */
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #000000bd;
+    display: flex;
+    /* Ya no se muestra el modal, pero no funciona el cursor porque el posicion fixed ocupa toda la pantalla y aunque no se vea, el contenedor del modal sigue ahí */
+    opacity: 0;
+    /* Con pointer events none, que el modal este ahí no afecta a la funcionalidad de la web */
+    pointer-events: none;
+    transition: opacity 600ms 800ms; /* Cuando se cierre el modal, la opacidad se ira luego de 800ms*/
+
+    /* Añadir dinamismo (el modal baja desde arriba) */
+    --transform: translateY(-100vh);
+    --transition: transform 800ms;
+}
+
+/* Va dentro de un elemento div o section con la clase modal */
+.modal__container{
+    width: 90%;
+    background-color: #fff;
+    margin: auto;
+    /* Su ancho sera del 90% con un tamaño maximo de 600px (adaptable) */
+    max-width: 600px;
+    max-height: 90%;
+    border-radius: 6px;
+    padding: 3em 2.5em;
+    /* Display grid solo para poder darle el gap y centrar elementos */
+    display: grid;
+    gap: 1em;
+    place-items: center;
+    grid-auto-columns: 100%;
+
+    /* añadir dinamismo */
+    transform: var(--transform);
+    transition: var(--transition);
+}
+
+/* Imagen que va sobre el titulo */
+.modal__img{
+    width: 90%;
+    max-width: 300px;
+}
+
+/* Esto es un h3 que va dentro de modal__container */
+.modal__title{
+    font-size: 2.5rem;
+}
+
+/* Parrafo que puede ir debajo del titulo */
+.modal__paragraph{
+    margin-bottom: 10px;
+}
+
+/* Etiqueta a o cualquier otra de tipo linea para cerrar el modal */
+.modal__close{
+    font-family: var(--secondary-font);
+    text-decoration: none;
+    color: #fff;
+    background-color: #f26250;
+    padding: 1em 3em;
+    border: 1px solid ; /* Color blanco */
+    border-radius: 6px;
+    display: inline-block;
+    font-weight: 300;
+    transition: background-color 300ms;
+}
+
+.modal__close:hover{
+    color: #f26250;
+    background-color: #fff;
+}
+
+/* Clase modificado para mostrar u ocultar el modal */
+/* Para darle funcionalidad se utiliza js */
+.modal--show{
+    opacity: 1;
+    pointer-events: unset;
+    
+    /* propiedades para mejorar la estetica */
+    transition: opacity 600ms;
+
+    /* añadir dinamismo */
+    --transform: translateY(-100vh); /* Cuando modal show este activo el modal tiene que bajar desde arriba, es decir, vh=0 (posicion original) */
+
+    /* Todo ocurre al mismo tiempo, no esta mal, pero para añadir un orden (primero opacidad, despues desplazamiento, se puede usar:) */
+    --transition: transform 800ms 900ms; /* 800ms de delay, despues de que pasen 900ms el transform surtira efecto */
+    /* nota: hay que tener en cuenta la operacidad qeu esta arriba, primero ocurrira la opacidad despues de 200ms el transform */
+}
+
+/* opcional */
+/* El menu es adaptable, pero para que se adapte mejor es posible usar: */
+/* @media (max-width:800px) {
+    .modal__container{
+        padding: 2em 1.5em;
+    }
+
+    .modal__title{
+        font-size: 2rem;
+    }
+} */
+
+
+/** Custon modals */
+.form__modal {
+    position: fixed;
+    /* background-color: #00A65A; */
+    padding: 6px 40px;
+    border-radius: 8px;
+    right: 0;
+    /* border-top: 4px solid var(--white-theme-main-contrast-color); */
+    /* border-right: 4px solid var(--white-theme-main-contrast-color); */
+    margin: 4px;
+    /* border: 4px solid var(--white-theme-main-contrast-color); */
+    z-index: 10;
+    border-bottom: none;
+    transform: translateY(-10vh);
+    transition: transform 650ms;
+}
+
+.show__custom__modal{
+    transform: translateY(0);
+}
+
+.form__modal__paragraph{
+    margin: 10px;
+}
+
+.modal__custom{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #000000bd;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 400ms;
+}
+
+.modal__img__custom {
+    width: 100%;
+    /* width: 300px; */
+    max-width: 300px;
+}
+
+.modal__title__custom{
+    font-size: 1.8em;
+    margin: 0 0 20px 0;
+}
+
+.modal__paragraph__custom{
+    font-size: 13px;
+    margin: 5px;
+}
+
+.model__text__container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.model__img__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    caret-color: transparent;
+}
+
+.modal__container__custom{
+    width: 90%;
+    background-color: #fff;
+    margin: auto;
+    max-width: 740px;
+    max-height:60%;
+    min-height:300px;
+    border-radius: 6px;
+    padding: 2em 1.2em;
+    display: flex;
+    gap: 50px;
+}
+
+.modal__button__custom{
+    font-family: var(--secondary-font);
+    text-decoration: none;
+    color: #fff;
+    background-color: #f26250;
+    padding: .6em 1.5em;
+    border: 1px solid ;
+    /* Color blanco */
+    border-radius: 6px;
+    display: inline-block;
+    font-weight: 300;
+    transition: background-color 300ms;
+}
+
+.modal__form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.modal__button__custom:hover {
+    color: #f26250;
+    background-color: #fff;
+}
+
+.modal__form__input {
+    box-sizing: border-box;
+    width: 240px;
+    height: 28px;
+    padding: 0 10px;
+    border-radius: 3px;
+    border: 1px solid #bec3c5;
+    color: var(--white-theme-text-color);
+    font-weight: var(--hard-font);
+    font-size: 14px;
+    align-self: flex-end;
+}
+
+.modal__form__input:focus {
+    outline: none;
+    border: 1px solid var(--white-theme-hover-contrast-color);
+}
+
+.modal__form__input:hover {
+    border: 1px solid var(--white-theme-hover-contrast-color);
+}
+
+.model__links{
+    display: flex;
+    justify-content: space-around;
+}
+
+.modal__custom--show {
+    opacity: 1;
+    pointer-events: unset;
+
+    /* propiedades para mejorar la estetica */
+    transition: opacity 600ms;
+}

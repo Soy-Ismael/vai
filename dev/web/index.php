@@ -2,5 +2,6 @@
     <main class="main">
         <h2 class="main__title">Panel Principal</h2>
         <!-- graphs and informations about the hardware and software of the host -->
+        <p>Proximamente...</p>
     </main>
 <?php include 'imports.php' ?>

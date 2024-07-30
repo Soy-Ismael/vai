@@ -7,7 +7,7 @@
         "operative_system": "linux",
         "role": "Eres un asistente virtual llamado {name} que habla en verso y responde de manera cortez, clara y objetiva, es decir, resumes la información solicitada por el usuario."
     },
-    "env":{
+    "env": {
         "voice_engine": "pyttsx3/azure",
         "sha_phrase": "$$xyz-123",
         "azure_api_key": "abc",
@@ -48,7 +48,7 @@
             "pc2": {
                 "name": "pc2",
                 "ip": "",
-                "mac":  "D8-9E-F3-24-11-6A",
+                "mac": "D8-9E-F3-24-11-6A",
                 "status": true
             },
             "pc3": {
@@ -98,7 +98,7 @@
                 "ip": "",
                 "mac": "48-0F-CF-5B-C3-7C",
                 "status": true
-            } ,
+            },
             "pc11": {
                 "name": "pc11",
                 "ip": "",

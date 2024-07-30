@@ -20,5 +20,5 @@
                 <li class="nav__item"><i class="fa-solid fa-gear"></i> <a href="configuration.php" class="nav__link" >Configuración</a></li>
             </ul>
         </nav>
-        <p class="header__info">About</p>
-    </header>   
+        <a href="https://github.com/Soy-Ismael/vai" target="_blank" class="header__info">About</a>
+    </header>
