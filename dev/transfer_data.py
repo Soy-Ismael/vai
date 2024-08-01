@@ -1,13 +1,7 @@
-import re #Expresión regular
 from socket import gethostbyname, create_connection, error
-import pyttsx3
-import time
+import json
 
 # Este fichero contendra una clase con todos los métodos y propiedades necesarios para la transferencia de informaciónes entre disitntos archivos, esto con el fin de tener un código más modularizado y limpio.
-
-# Revisar archivo de notas.txt
-import os
-nombre_archivo = 'config.txt'
 
 class Transaction:
     def __init__(self):
@@ -69,167 +63,25 @@ class Transaction:
         print(self.bold_green_background + ' Hola ¿Cómo estás? ' + color.normal_color)
         print(self.subrayado + ' Hola ¿Cómo estás? ' + color.normal_color)
 
-    #* Función de config file optimizada para crear archivo de configuración
-    def create_config_file(self):
-        with open('dev\\'+nombre_archivo, 'w') as archivo:
-            return True
-        return False
-
-    #* Rellenar archivo de configuración con datos ingresados por usuario
-    def initial_config(self):
+    #* Leer archivo .json de configuración
+    def read_config_file(self):
         try:
-            text_plain_enter = '\n'
-            print(self.black_on_white_color + 'Inicializando configuración...' + self.normal_color + '\n')
+            with open('dev/web/assets/config.json', 'r', encoding='utf-8') as file:
+                config = json.load(file)
+                return config
+                # El tipo de dato de config es diccionario.
 
-            name = input('Nombre del asistente: ')
-            while(len(name) < 1):
-                # print(f"{self.err_template} {self.red_color} {self.negrita}DATO INVALIDO. {self.normal_color}")
-                print(f"{self.err_template} {self.red_color} {self.negrita}El nombre debe contener algún carácter.{self.normal_color}")
-                name = input('Nombre del asistente: ')
-            name = f"name: {name}"
-                
-
-            # lang = input('Idioma preferido (es-ES / en-US): ')
-            #* Expresión regular para idioma
-            def validate_lang(text_input:str):
-                text_input.strip()
-                regEx = re.search(r"^[a-z]{2}-[A-Z]{2}$", text_input)
-                return regEx.group() if regEx else False
-
-            lang = validate_lang(input('Idioma preferido (es-ES / en-US): '))
-            while lang == False:
-                lang = validate_lang(input('Idioma preferido (es-ES / en-US): '))
-
-            lang = f"language: {lang}"
-
-            #* User re.sub para remplazar en expresión regular para formato de hora
-            def validate_hour(hour):
-                if re.match(r"^12$", hour):
-                    print('12')
-                    return "%I:%M %p"
-                elif re.match(r"^24$", hour):
-                    print('24')
-                    return "%H:%M %p"
-                else:
-                    return False
-
-            hour_format = validate_hour(input('Formato de hora (12 / 24): ').strip().replace(' ', ''))
-            while hour_format == False:
-                print(self.warning_template+'Entrada invalida, intentalo nuevamente')
-                hour_format = validate_hour(input('Formato de hora (12 / 24): ').strip().replace(' ', ''))
-
-            hour_format = f"hour_format: {hour_format}"
-
-            #* Seleccionar voz
-            def validate_voice(index:int, max_lengh:int):
-                return index if type(index) == int and index in range(max_lengh+1) else False
+                # Imprimir el contenido de forma legible
+                # print(json.dumps(config['assistant'], indent=4, ensure_ascii=False))
+        except FileNotFoundError:
+            print("No se encontró el archivo de configuración.")
+        except json.JSONDecodeError:
+            print("Error al decodificar el archivo JSON.")
 
 
-            try:
-                engine = pyttsx3.init()
-                voices = engine.getProperty('voices')
-                print(f"{self.yellow_color}Las voces disponibles son proporcionales a la cantidad de idiomas instalados{self.normal_color} {text_plain_enter}")
+    #* Leer archivo de configuración y devolver diccionario con los resultados obtenidos readfile()
 
-                index = 0
-                for voice in voices:
-                    voice_name = voice.name
-                    voice_name = voice_name.replace('Microsoft', '')
-                    voice_name = voice_name.replace('Desktop', '')
-                    # ϟ ↦ ↯ ↪ ⇆ ⇢ ⇉ ⇨ ➜ ➠ ➸ ➵ ⤨ ⟼ ☠ ✘ ッ ヅ ツ 
-                    print(f'{self.red_color} {self.negrita} ID: {self.green_color} {index}  {self.red_color} ヅ {self.normal_color}{self.cian_color}{voice_name} {self.normal_color}')
-                    print(f'{self.yellow_color} - - - - - - - - - - - - {self.normal_color}')
-                    index = index + 1
-
-                print(f"{self.yellow_color}{self.negrita}= = Escoge una voz escribiendo su ID = ={self.normal_color} {text_plain_enter}")
-
-                voice_number = validate_voice(int(input('Voz preferida (0, 1, 2...)(int): ')), len(voices))
-                # is para comprobar que sea exactamente igual a False y que el '0' no se interprete como False
-                while voice_number is False:
-                    voice_number = validate_voice(int(input('Voz preferida (0, 1, 2...)(int): ')), len(voices))
-                engine.setProperty('voice', voices[voice_number].id)
-
-            except IndexError as err:
-                print(f"{self.err_template} {err}")
-                print(f"{self.warning_template}Aplicando configuración por defecto...")
-                voice_number = 0
-                engine.setProperty('voice', voices[voice_number].id)
-            except ValueError as err:
-                print(f"{self.err_template} {err}")
-                print(f"{self.warning_template}Aplicando configuración por defecto...")
-                voice_number = 0
-                engine.setProperty('voice', voices[voice_number].id)
-
-            voice = f"voice_number: {voice_number}"
-
-            def summary():
-                # print(f"{self.green_color}= = Configuración finalizada. = ={self.normal_color}")
-                print(f"{self.green_color}{self.negrita}= = Resumen de configuración: = ={self.normal_color} {text_plain_enter}")
-
-                print(f"{self.yellow_color} {name} {self.normal_color}")
-                print(f"{self.yellow_color} {lang} {self.normal_color}")
-                print(f"{self.yellow_color} {hour_format} {self.normal_color}")
-                print(f"{self.yellow_color} {voice} {self.normal_color}")
-
-            data_dictionary = [name+text_plain_enter, lang+text_plain_enter, hour_format+text_plain_enter, voice+text_plain_enter]
-
-            def fill_file(data:dict):
-                with open('dev\\'+nombre_archivo, 'w') as archivo:
-                    archivo.writelines(data_dictionary)
-                    return True
-
-            return fill_file(data_dictionary)
-        except KeyboardInterrupt:
-            print(f'\n{self.warning_template}Acción cancelada por el usuario.')
-
-
-    #* Comprobar si el archivo de configuración está correcto (comprueba si existe y si tiene todo el contenido)
-    def check_file_integrity(self, ruta:str = 'dev\\'+nombre_archivo, lines:int = 3):
-        if(os.path.isfile(ruta)):
-            with open(ruta, 'r') as archivo:
-                if(len(archivo.readlines()) <= lines):
-                    return False
-                else:
-                    return True
-        else:
-            return False
-
-
-    #* Leer archivo de configuración y devolver diccionario con los resultados obtenidos
-    def readfile(self, file_path:str='dev/'+nombre_archivo):
-        try:
-            with open(file_path, 'r') as archivo:
-                data = {}
-
-                for line in archivo:
-                    line = line.replace("\n", '')
-                    
-                    key , value  = line.strip().split(': ')
-                    data[key] = value
-
-                return False if len(data) <= 0 else data
-        except ValueError:
-            print(self.err_template+'en archivo de configuración')
-        except Exception as e:
-            print(self.err_template+f"Ocurrio un error al leer el archivo de configuración: {e}")
-            return False
-
-
-    #* Función para leer archivo de números telefonico
-    def read_phone_numbers(self, name:str):
-        #! ESTA FUNCIÓN NO CONTROLA ACENTOS HASTA AHORA.
-        if(self.check_file_integrity('dev\\contacts.txt', 3)):
-            with open('dev\\contacts.txt', 'r') as archivo:
-                for line in archivo.readlines():
-                    line = line.replace('\n', '')
-                    name_in_db,number = line.replace(' ', '').split(':')                    
-
-                    if name.lower() == name_in_db.lower():
-                        return number
-                return False
-        else:
-            return 'Archivo no encontrado'
-
-    #* Función para revisar si el usuario tiene conección a internet (para ejecutar módulo de gpt) (Aun no esta lista la función)
+    #* Función para revisar si el usuario tiene conección a internet
     def check_internet_connection(self):
         try:
             gethostbyname("google.com")
@@ -240,21 +92,6 @@ class Transaction:
         except error:
             return False
             # return "No hay conexión a internet..."
-
-    def write_on_config_file(self, key:str, value:str, file_path:str='dev\\'+nombre_archivo):
-        with open(file_path, 'a') as archivo:
-            archivo.write(f'{key}: {value}\n')
-
-    def read_config_file_line(self, key:str, file_path:str='dev\\'+nombre_archivo):
-        with open(file_path, 'r') as archivo:
-            # print(archivo.readlines())
-            for line in archivo.readlines():
-                line = line.replace('\n', '')
-                key_in_db, value = line.strip().split(': ')
-
-                if(key == key_in_db):
-                    return value
-            return False
 
     def letras_a_numero(self, texto:str):
         mapeo = {
@@ -290,6 +127,7 @@ class Transaction:
 
 if __name__ == '__main__':
     transactions = Transaction()
+    print(transactions.read_config_file())
     # transactions.initial_config()
     # print(transactions.letras_a_numero('cien'))
     # color = Transaction()

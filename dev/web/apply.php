@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Enviar los datos al archivo config.json en assets/config.json
     $json_for_humans = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-    file_put_contents('assets/test.json', $json_for_humans);
+    file_put_contents('assets/config.json', $json_for_humans);
 
     // Enviar una respuesta al usuario (por ejemplo, una página de confirmación)
     // header('Location: confirmation.php');

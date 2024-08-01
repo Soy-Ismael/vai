@@ -24,8 +24,8 @@ if Data_transfer.check_internet_connection():
     print(Data_transfer.green_color+'Conexión a internet ✔️'+Data_transfer.normal_color)
     # pass
 else:
-    print(Data_transfer.err_template+'Conección a internet perdida ✖️'+Data_transfer.normal_color)
-    # sys.exit(0)
+    print(Data_transfer.err_template+'No hay conexión a internet ✖️'+Data_transfer.normal_color)
+    sys.exit(0)
 
 # Importaciones 
 import speech_recognition as sr # Módulo para reconocer audio y convertir a texto (STT)
@@ -41,13 +41,13 @@ from playsound import playsound #Nuevo modulo para reproducir sonido, (funciona 
 import pyjokes # Módulo para chistes
 import time # Módulo para temporizador - importado solo en caso de que se necesite
 start_time = time.time()
-import re # Módulo expresiones regulares
+# import re # Módulo expresiones regulares - se importa cuando se necesita
 import asyncio # Módulo para ejecutar código asíncrono
 # from voice_synthesizer import synthesize_to_speaker # Módulo local creado para tts de microsoft (más voces y calidad que pyttsx3, no depende de voces en el ordenador, es necesario crear cuentan de microsoft azure y crear api key para servicios de voz)
 from days import getDaysAgo 
 # import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
-from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
+# from banner import figlet_banner # Nuevo módulo local para imprimir banner de los desarrolladores
 from report import create_report # Módulo para crear reportes de excel a partir de un archivo con formato definido
 # from whisperBeta import main # Módulo para reconocer el audio mediante whisper, recibe como parametro el modelo que va a utilizar para reconocer el audio (tiny, base, medium, large), el valor por defecto es base
 #* Open AI - Chat Gpt
@@ -57,43 +57,36 @@ from openai import OpenAI # Módulo para inteligencia artificial
 # import pathlib
 # import textwrap
 
-txt_path = 'dev/txt/'
+config = Data_transfer.read_config_file()
 
-#* Default const
-# name = 'jarvis' # Nombre por el que se llamara al asistente (para desarrollar más tarde)
-# lang = 'es-ES'
-# time_format = "%I:%M:%p"
-# wiki_lang = 'es'
+# global name, lang, wiki_lang, time_format, voice
 
-# green_color = Data_transfer.green_color
-# cian_color = Data_transfer.cian_color
-# blue_color = Data_transfer.blue_color
-# yellow_color = Data_transfer.yellow_color
-# red_color = Data_transfer.red_color
-# negrita = Data_transfer.negrita
-# normal_color = Data_transfer.normal_color
+name = config['assistant']['name']
+lang = config['assistant']['language']
+time_format = config['assistant']['hourFormat']
+voice = config['assistant']['voiceNumber']
+wiki_lang = lang[slice(0,2)]
+role = config['assistant']['role']
+
+# print('Nombre: ' + name)
+# print('Idioma: ' + lang)
+# print('Formato de hora: ' + time_format)
+# print('Indice de voz: ' + voice)
+# print('Idioma de wikipedia: ' + wiki_lang)
 
 #* text templates
 user_template = f"{Data_transfer.negrita}Usuario: {Data_transfer.normal_color}"
-# va_template = f"{Data_transfer.negrita}{name}: {Data_transfer.normal_color}" #Declarada más abajo
+va_template = f"{Data_transfer.negrita}{name}: {Data_transfer.normal_color}" #Declarada más abajo
 err_template = f"{Data_transfer.red_color}{Data_transfer.negrita}ERROR: {Data_transfer.normal_color}"
 warning_template = f"{Data_transfer.yellow_color}{Data_transfer.negrita}ADVERTENCIA: {Data_transfer.normal_color}"
 
 #* De texto a voz - Modulo 6
 engine = pyttsx3.init()
-
 try:
-    # global voice
-    # voice_id = Data_transfer.read_config_file_line('voice_number')
-    voice_id = int(Data_transfer.read_config_file_line('voice_number'))
-
-    # if voice != None:
-    #     voice_id = voice
-
     voices = engine.getProperty('voices')
-    engine.setProperty('voice', voices[voice_id].id)
+    engine.setProperty('voice', voices[int(voice)].id)
 except IndexError:
-    print(f"No existe la voz con el ID {voice_id}")
+    print(f"No existe la voz con el ID {voice}")
     print(f"{err_template}en configuración de idiomas")
 
     for voice in voices:
@@ -112,13 +105,16 @@ except IndexError:
 #     print(voice)
 
 # figlet_banner(text='USAR API CON PRUDENCIA', banner_index=5)
-figlet_banner(banner_index=5)
+if config['modules']['printBanner']:
+    from banner import figlet_banner
+    figlet_banner(banner_index=5)
+
 
 #* Función para hablar, recibe el texto a reproducir como parametro
 def talk(text):
     engine.say(text)
     engine.runAndWait()
-    # synthesize_to_speaker(text, 'es-MX-DaliaNeural')
+    # synthesize_to_speaker(text, 'es-MX-DaliaNeural', 'es-MX', config['env']['azureApiKey'])
 
 #* Función para detener el habla en caso de ser necesario
 def no_talk():
@@ -201,37 +197,6 @@ def listen():
         # return False
 
 
-try:
-    #* Función para cargar los datos de archivo de configuración en las variables de asistente
-    def load_data(data_to_extract):
-        global name, lang, wiki_lang, time_format, voice
-        name, lang, time_format, voice = data_to_extract
-        wiki_lang = lang[slice(0,2)]
-
-        # print('Nombre: ' + name)
-        # print('Idioma: ' + lang)
-        # print('Idioma de wikipedia: ' + wiki_lang)
-        # print('Formato de hora: ' + time_format)
-        # print('Indice de voz: ' + voice)
-
-    #* Ejecutar función que lee archivo de configuración
-    data = Data_transfer.readfile()
-    if type(data) != dict or not Data_transfer.check_file_integrity():
-        # print(err_template+'Archivos de configuración corruptos')
-        (err_template+'Datos de configuración corruptos o inexistentes')
-        talk('Error en datos de configuración, por favor restablezca el archivo.')
-        Data_transfer.initial_config()
-
-        data = Data_transfer.readfile()
-        load_data(data.values())
-    else:
-        load_data(data.values())
-except KeyboardInterrupt:
-    print(f'\n{warning_template}Acción cancelada por el usuario.')
-
-#* Templates 2 - variable faltante, es necesario colocarla aquí luego de que se tiene el valor de "name"
-va_template = f"{Data_transfer.negrita}{name}: {Data_transfer.normal_color}"
-
 #* Ejecutar la función para escuchar al usuario y almacenar resultado en variable text para su futura evaluación
 # text = listen() - Ahora se ejecuta dentro de la función run, de modo que run se hace más autosuficiente
 # text = {'text' : 'envía Hola ¿cómo estas? a raylin', 'status': True}
@@ -242,13 +207,17 @@ def run_gpt(prompt:str):
     try:
         client = OpenAI(
             api_key=get_key('dev/.env',"OPENAI_API_KEY"),
+            # api_key=config['env']['openaiApiKey']
         )
 
         response = client.chat.completions.create(
             model="gpt-4o-mini-2024-07-18",
             messages=[
                 {"role": "system", 
-                "content": f"Eres un asistente virtual llamado {name} que habla en verso y responde de manera cortez, clara y objetiva, es decir, resumes la información solicitada por el usuario."},
+                # Manera original
+                # "content": f"Eres un asistente virtual llamado {name} que habla en verso y responde de manera cortez, clara y objetiva, es decir, resumes la información solicitada por el usuario."},
+                # Manera con archivo de configuración (los f-string deberian seguir funcionando)
+                "content": f"{role}"},
                 {"role": "user", 
                 "content": prompt}
             ]
@@ -276,7 +245,7 @@ def run(text:str = '', status=True):
 
     # Utilizamos match para evaluar el texto
     match text['text']:
-        case _ if 'reproduce' in text['text']:
+        case _ if 'reproduce' in text['text'] and config['modules']['playYtContent']:
             # print('REPRODUCE')
             music = text['text'].replace('reproduce', '')
             music = music.replace(name, '')
@@ -285,7 +254,7 @@ def run(text:str = '', status=True):
             # print(f'{Data_transfer.negrita}{name}: {Data_transfer.normal_color}Reproduciendo ' + music)
             talk('Reproduciendo ' + music)
             return {'text' : text['text'], 'status' : True}
-        case _ if 'busca' in text['text']:
+        case _ if 'busca' in text['text'] and config['modules']['searchInWeb']:
             busqueda = text['text'].replace('busca', '')
             # print('Texto con nombre omitido: ' + text)
             talk('Buscando ' + busqueda)
@@ -293,7 +262,7 @@ def run(text:str = '', status=True):
             # Esta funcion busca en el motor de busqueda google.com, valga la redundancia
             print(f"{va_template}Buscando {busqueda}")
             return {'text' : text['text'], 'status' : True}
-        case _ if 'información sobre' in text['text']:
+        case _ if 'información sobre' in text['text'] and config['modules']['infoInWeb']:
             # print('INFORMACION SOBRE')
             # wikipedia.set_lang = 'es'
             wikipedia.set_lang(wiki_lang)
@@ -308,8 +277,10 @@ def run(text:str = '', status=True):
             print(va_template + resumen)
             talk(resumen)
             return {'text' : text['text'], 'status' : True}
-        case _ if 'recuérdame' in text['text']:
+        case _ if 'recuérdame' in text['text'] and config['modules']['reminders']:
             import time
+            import re
+
             tarea_inicio = text['text'].find("Recuérdame") + len("Recuérdame")
             match = re.search(r'\b(en|después de)\b', text['text'])
             if match:
@@ -334,7 +305,7 @@ def run(text:str = '', status=True):
                 talk("No se encontró la unidad de tiempo. Por favor intente de nuevo")
             # return True
             return {'text' : text['text'], 'status' : True}
-        case _ if 'chiste' in text['text']:
+        case _ if 'chiste' in text['text'] and config['modules']['jokes']:
             chiste = pyjokes.get_joke(wiki_lang)
             print(va_template + chiste)
             talk(chiste)
@@ -343,12 +314,12 @@ def run(text:str = '', status=True):
             playsound('sounds/redoble_de_tambores.wav')
             # os.system("aplay sounds/redoble_de_tambores.wav")
             return {'text' : text['text'], 'status' : True}
-        case _ if 'realiza' in text['text'] and 'reporte' in text['text']:
+        case _ if 'realiza' in text['text'] and 'reporte' in text['text'] and config['modules']['excelReport']:
             print('Creando reporte')
             talk('Creando reporte')
             create_report()
             return {'text' : text['text'], 'status' : True}
-        case _ if 'qué hora es' in text['text']:
+        case _ if 'qué hora es' in text['text'] and config['modules']['sayHour']:
             time = datetime.datetime.now().strftime(time_format[slice(0,5)])
             time_es = datetime.datetime.now().strftime(time_format)
             if(time.startswith('0')):
@@ -371,8 +342,10 @@ def run(text:str = '', status=True):
                 print(va_template + f"Son las {time_es}")
                 talk(f"Son las {time_es}")
             return {'text' : text['text'], 'status' : True}
-        case _ if 'temporizador' in text['text']:
+        case _ if 'temporizador' in text['text'] and config['modules']['timer']:
             import time
+            import re
+
             wait = 0
             _, timer = text['text'].split('de')
 
@@ -403,23 +376,23 @@ def run(text:str = '', status=True):
             asyncio.run(async_sleep(wait))
             print('despues de invocación de funcion asíncrona')        
             return {'text' : text['text'], 'status' : True}
-        case _ if 'que dia fue' in text['text'] or 'qué día fue' in text['text']:
+        case _ if ('que dia fue' in text['text'] or 'qué día fue' in text['text']) and config['modules']['whatDayWas']:
             # print('QUE DIA FUE')
             date = getDaysAgo(text['text'])
             print(date)
             talk(date)
             return {'text' : text['text'], 'status' : True}
-        case _ if 'estás ahí' in text['text']:
+        case _ if 'estás ahí' in text['text'] and config['modules']['checkAvailability']:
             print(va_template + 'Sí, ¿En qué te puedo ayudar?')
             talk('Sí, ¿En qué te puedo ayudar?')
             text = name + ' ' + listen()
             return {'text' : text['text'], 'status' : True}
-        case _ if 'cómo te llamas' in text['text']:
+        case _ if 'cómo te llamas' in text['text'] and config['modules']['sayName']:
             print(name)
             talk('Soy' + name + '¿Cómo te puedo ayudar?')
             # text = listen()
             return {'text' : text['text'], 'status' : True}
-        case _ if 'muéstrame el archivo de configuración' in text['text'] or 'muestrame el archivo de configuración' in text['text']:
+        case _ if ('muéstrame el archivo de configuración' in text['text'] or 'muestrame el archivo de configuración' in text['text']) and config['modules']['requestConfigFile']:
             print('Mostrando el contenido del archivo de configuración')
             talk('Mostrando el contenido del archivo de configuración')
 
@@ -435,42 +408,53 @@ def run(text:str = '', status=True):
             talk('Formato de hora: ' + '12' if time_format.startswith('%I') else '24' + 'horas')
             talk('Indice de voz: ' + voice)
             return {'text' : text['text'], 'status' : True}
-        case _ if 'crea una nueva configuración' in text['text']:
-            talk('Creando archivo de configuración nuevamente')
-            Data_transfer.initial_config()
-            load_data(Data_transfer.readfile().values())
-            return {'text' : text['text'], 'status' : True}
-        case _ if 'hasta luego' in text['text']:
+        case _ if 'hasta luego' in text['text'] and config['modules']['closingPhrase']:
             talk(f'Hasta pronto')
             sys.exit(0)
             return {'text' : text['text'], 'status' : True}
             # Aquí deberia ir un código para poner el asistente en modo de siempre escucha y contestar si se menciona el nombre del asistente
-        case _ if 'enciende' in text['text']:
+        case _ if 'enciende' in text['text'] and config['modules']['wakeOnLan']:
             from wakeonlan import send_magic_packet
-            machine = text['text'].replace('enciende', '').replace('la', '').replace('ps', 'pc').replace('computadora', 'pc')
+            machine = text['text'].replace('enciende ', '').replace('la ', '').replace('ps', 'pc').replace('computadora ', 'pc').replace('de ', '')
 
-            class MacNotFoundError(Exception):
-                # """Excepción personalizada para indicar que no se encontró la dirección MAC."""
-                pass
+            # class MacNotFoundError(Exception):
+            #     # """Excepción personalizada para indicar que no se encontró la dirección MAC."""
+            #     pass
+
             # Enviar un paquete mágico a una dirección MAC específica
             # send_magic_packet('00:11:22:33:44:55')
             # send_magic_packet('00:11:22:33:44:55', '66:77:88:99:AA:BB')
             # send_magic_packet('00:11:22:33:44:55', ip_address='192.168.1.255', port=7)
             try:
                 if 'todas' in machine:
-                    for mac in Data_transfer.readfile(txt_path+'/wol.txt').values():
-                        # print(mac)
-                        send_magic_packet(mac)
+                    for pc, details in config['wakeonlan']['mac'].items():
+                        if details['mac'] != "":
+                            send_magic_packet(details['mac'])
                 else:
                     if machine.split()[1].isdigit():
                         machine = machine.split()[0]+str(machine.split()[1])
+                        # machine = machine.replace(' ', '')
+                        send_magic_packet(config['wakeonlan']['mac'][machine]['mac'])
+                        # print(machine)
                     else:
+                        # tres, dos, veinte o un nombre "juan, pedro, asiento"
                         index = Data_transfer.letras_a_numero(machine.split()[1])
+                        # Para el caso particular de interes, si index es False entonces se trata de un nombre
                         if index == False:
-                            raise MacNotFoundError(f"No se encontró la dirección MAC para {machine.strip()}.")
-                        machine = machine.split()[0]+str(index)
+                            # raise MacNotFoundError(f"No se encontró la dirección MAC para {machine.strip()}.")
+                            for pc, details in config['wakeonlan']['mac'].items():
+                                if details['name'] == machine.split()[1] and details['mac'] != "":
+                                    print(machine)
+                                    send_magic_packet(details['mac'])
+                        else:
+                            machine = machine.split()[0]+str(index)
+                            # print(config['wakeonlan']['mac'][machine]['mac'])
+                            # print(machine)
+                            # Lo envia por el nombre de index y no por el nombre de equipo
+                            send_magic_packet(config['wakeonlan']['mac'][machine]['mac'])
+
                     # print('Mac: ' + Data_transfer.read_config_file_line(machine, txt_path+'/wol.txt'))
-                    send_magic_packet(Data_transfer.read_config_file_line(machine, txt_path+'/wol.txt'))
+                    # send_magic_packet(Data_transfer.read_config_file_line(machine, txt_path+'/wol.txt'))
                 print(va_template + "Echo ✅")
                 talk('Listo')
             except ValueError as err:
@@ -485,24 +469,29 @@ def run(text:str = '', status=True):
 try:
     #* Implementando funcionalidad para que el asistente se mantenga escuchando
     # run('texto de prueba escrito')
-    # run('enciende la pc uno')
+    # muéstrame el archivo de configuración' in text['text'] or 'muestrame el archivo de configuración
+    run('muéstrame el archivo de configuración')
     # run()
 
-    while True:
-        result = run()
+    # while True:
+    #     result = run()
 
-        if not result['status']:
-            ia = run_gpt(result['text'])
-            print(va_template + str(ia))
-            talk(ia)
+    #     if not result['status'] and config['modules']['aiModule']:
+    #         ia = run_gpt(result['text'])
+    #         print(va_template + str(ia))
+    #         talk(ia)
+    #     else:
+    #         print('Acción no programada')
+    #         talk('Temo que lo que has pedido excede mis capacidades')
 
 except KeyboardInterrupt:
     no_talk()
     print(err_template + 'Acción cancelada por el usuario.')
 except NameError as err:
     print(err)
-    print("Entrada de audio inválida, intentalo nuevamente")
-    talk("Entrada de audio inválida, intentalo nuevamente")
+    # print("Entrada de audio inválida, intentalo nuevamente")
+    # talk("Entrada de audio inválida, intentalo nuevamente")
+    pass
 except TypeError as err:
     print(err)
     # talk("Entrada de audio inválida, intentalo nuevamente")
@@ -510,4 +499,5 @@ except TypeError as err:
     pass
 
 
-print(f'{Data_transfer.yellow_color}PROGRAMA FINALIZADO CON UNA DURACIÓN DE:{Data_transfer.bright_cyan_color}{Data_transfer.negrita} {int(time.time() - start_time)} segundos {Data_transfer.normal_color}')
+if config['modules']['countExecutionTime']:
+    print(f'{Data_transfer.yellow_color}PROGRAMA FINALIZADO CON UNA DURACIÓN DE:{Data_transfer.bright_cyan_color}{Data_transfer.negrita} {int(time.time() - start_time)} segundos {Data_transfer.normal_color}')

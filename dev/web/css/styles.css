@@ -361,6 +361,10 @@ body{
     background-color: var(--dark-theme-dark-contrast-color);
 }
 
+.form__input--select{
+    padding: 0 6px;
+}
+
 /** Modals - video guia (https://youtu.be/Iaw9rFopXPY?si=19uiTyGDfBE2j-7x) */
 /* Contenedor de modal container */
 .modal{

@@ -3,3 +3,6 @@
     <script src="js/main.js"></script>
 </body>
 </html>
+
+<!-- .htaccess -->
+<!-- Header set Access-Control-Allow-Origin "*" -->

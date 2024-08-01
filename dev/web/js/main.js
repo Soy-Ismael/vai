@@ -34,14 +34,40 @@ if (location.pathname == "/web/configuration.php"){
         sendData();
     });
 
-    //* Rellenar tabla con las direcciones mac
     // console.log(table.children[1]);
+    // fetch("http://localhost/web/assets/config.json")
     fetch("http://localhost/web/assets/config.json")
-        .then((response) => response.json())
-        .then((data) => {
-            const devices = data.wakeonlan.mac;
-            const fragment = document.createDocumentFragment();
-            // console.log(table.children[1]);
+    .then((response) => response.json())
+    .then((data) => {
+        // console.log(data);
+        const form1 = document.getElementById("form1");
+        const form2 = document.getElementById("form2");
+        const form3 = document.getElementById("form3");
+
+        // Cargar datos de form1
+        for (const element of form1.children) {
+            value = data["assistant"][element.children[1].name];
+            element.children[1].value = value;
+        }
+        
+        // Cargar datos de form2
+        for (const element of form2.children) {
+            value = data["env"][element.children[1].name];
+            element.children[1].value = value;
+        }
+
+        // Cargar datos de form3
+        // for (const element of form3.children) {
+        //     value = data["modules"][element.children[1].name];
+        //     element.children[1].value = value;
+        //     console.log(value);
+        // }
+
+
+        //* Rellenar tabla con las direcciones mac
+        const devices = data.wakeonlan.mac;
+        const fragment = document.createDocumentFragment();
+        // console.log(table.children[1]);
             Object.keys(devices).forEach((element) => {
                 const tr = document.createElement("TR");
                 const tdName = document.createElement("TD");
@@ -106,7 +132,7 @@ const sendData = () =>{
         modules: {},
         wakeonlan: {
             mac: {},
-            index: {}
+            // index: {}
         }
     };
 
@@ -123,7 +149,6 @@ const sendData = () =>{
         allFormData.modules[key] = Boolean(value);
     });
 
-    let mac = {}
     let indexCounter = 1;
 
     for (const device of table.children[1].children) {

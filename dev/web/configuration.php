@@ -19,11 +19,19 @@
                 </div>
                 <div class="form__field">
                     <label for="language">Idioma:</label>
-                    <input type="text" name="language" id="language" class="form__input" placeholder="es-ES">
+                    <!-- <input type="text" name="language" id="language" class="form__input" placeholder="es-ES"> -->
+                    <select name="language" id="language" class="form__input form__input--select">
+                        <option value="es-ES" selected>es-ES</option>
+                        <option value="en-US">en-US</option>
+                    </select>
                 </div>
                 <div class="form__field">
                     <label for="hourFormat">Formato de hora:</label>
-                    <input type="text" name="hourFormat" id="hourFormat" class="form__input" placeholder="12">
+                    <!-- <input type="text" name="hourFormat" id="hourFormat" class="form__input" placeholder="12"> -->
+                     <select name="hourFormat" id="hourFormat" class="form__input form__input--select">
+                        <option value="%I:%M %p" selected>12</option>
+                        <option value="%H:%M %p">24</option>
+                     </select>
                 </div>
                 <div class="form__field">
                     <label for="voiceNumber">Indice de voz:</label>
@@ -31,7 +39,12 @@
                 </div>
                 <div class="form__field">
                     <label for="operativeSystem">Sistema operativo:</label>
-                    <input type="text" name="operativeSystem" id="operativeSystem" class="form__input" placeholder="Linux / Windows">
+                    <!-- <input type="text" name="operativeSystem" id="operativeSystem" class="form__input" placeholder="Linux / Windows"> -->
+                    <select name="operativeSystem" id="operativeSystem" class="form__input form__input--select">
+                        <option value="Linux" selected>Linux</option>
+                        <option value="Windows">Windows</option>
+                        <option value="MacOS">MacOs</option>
+                    </select>
                 </div>
                 <div class="form__field">
                     <label for="role">Rol del asistente:</label>
@@ -45,7 +58,11 @@
             <form action="" method="" class="form" id="form2">
                 <div class="form__field">
                     <label for="voiceEngine">Motor de voz:</label>
-                    <input type="text" name="voiceEngine" id="voiceEngine" class="form__input" placeholder="pyttsx3 / azure">
+                    <!-- <input type="text" name="voiceEngine" id="voiceEngine" class="form__input" placeholder="pyttsx3 / azure"> -->
+                    <select name="voiceEngine" id="voiceEngine" class="form__input form__input--select">
+                        <option value="pyttsx3" selected>pyttsx3</option>
+                        <option value="azure">Microsoft Azure SS</option>
+                    </select>
                 </div>
                 <div class="form__field">
                     <label for="encryption_phrase">Frase de encriptado:</label>
@@ -172,14 +189,14 @@
                         <span>Habilitar</span>
                     </label>
                 </div>
-                <div class="form__field form__field--checkbox">
+                <!-- <div class="form__field form__field--checkbox">
                     <span>Crear archivo de configuración:</span>
                     <label for="createConfigFile" class="form__checkbox">
                         <input type="hidden" name="createConfigFile" value="">
                         <input type="checkbox" name="createConfigFile" id="createConfigFile" class="form__input form__input--checkbox">
                         <span>Habilitar</span>
                     </label>
-                </div>
+                </div> -->
                 <div class="form__field form__field--checkbox">
                     <span>Frase de cierre:</span>
                     <label for="closingPhrase" class="form__checkbox">
@@ -196,14 +213,14 @@
                         <span>Habilitar</span>
                     </label>
                 </div>
-                <div class="form__field form__field--checkbox">
+                <!-- <div class="form__field form__field--checkbox">
                     <span>Interfaz web:</span>
                     <label for="webInterface" class="form__checkbox">
                         <input type="hidden" name="webInterface" value="">
                         <input type="checkbox" name="webInterface" id="webInterface" checked class="form__input form__input--checkbox">
                         <span>Habilitar</span>
                     </label>
-                </div>
+                </div> -->
                 <div class="form__field form__field--checkbox">
                     <span>Inteligencia artificial:</span>
                     <label for="aiModule" class="form__checkbox">
