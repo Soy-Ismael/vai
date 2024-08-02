@@ -16,8 +16,8 @@
         <h1 class="header__title">Dashboard</h1>
         <nav class="nav">
             <ul class="nav__list">
-                <li class="nav__item"><i class="fa-solid fa-house"></i> <a href="index.php" class="nav__link" >Home</a></li>
-                <li class="nav__item"><i class="fa-solid fa-gear"></i> <a href="configuration.php" class="nav__link" >Configuración</a></li>
+                <li class="nav__item"><i class="fa-solid fa-house"></i> <a href="index" class="nav__link" >Home</a></li>
+                <li class="nav__item"><i class="fa-solid fa-gear"></i> <a href="configuration" class="nav__link" >Configuración</a></li>
             </ul>
         </nav>
         <a href="https://github.com/Soy-Ismael/vai" target="_blank" class="header__info">About</a>

@@ -43,7 +43,7 @@ import time # Módulo para temporizador - importado solo en caso de que se neces
 start_time = time.time()
 # import re # Módulo expresiones regulares - se importa cuando se necesita
 import asyncio # Módulo para ejecutar código asíncrono
-# from voice_synthesizer import synthesize_to_speaker # Módulo local creado para tts de microsoft (más voces y calidad que pyttsx3, no depende de voces en el ordenador, es necesario crear cuentan de microsoft azure y crear api key para servicios de voz)
+from voice_synthesizer import synthesize_to_speaker # Módulo local creado para tts de microsoft (más voces y calidad que pyttsx3, no depende de voces en el ordenador, es necesario crear cuentan de microsoft azure y crear api key para servicios de voz)
 from days import getDaysAgo 
 # import spoty # Módulo para reproducir contenido en spotify (no esta en uso actualmente)
 # from sys import exit #Para trabajar con sys.exit() en caso de ser necesario
@@ -67,6 +67,8 @@ time_format = config['assistant']['hourFormat']
 voice = config['assistant']['voiceNumber']
 wiki_lang = lang[slice(0,2)]
 role = config['assistant']['role']
+printBanner = config['modules']['printBanner']
+voiceEngine = config['env']['voiceEngine']
 
 # print('Nombre: ' + name)
 # print('Idioma: ' + lang)
@@ -105,21 +107,22 @@ except IndexError:
 #     print(voice)
 
 # figlet_banner(text='USAR API CON PRUDENCIA', banner_index=5)
-if config['modules']['printBanner']:
+if printBanner:
     from banner import figlet_banner
     figlet_banner(banner_index=5)
 
 
 #* Función para hablar, recibe el texto a reproducir como parametro
 def talk(text):
-    engine.say(text)
-    engine.runAndWait()
-    # synthesize_to_speaker(text, 'es-MX-DaliaNeural', 'es-MX', config['env']['azureApiKey'])
+    if voiceEngine == 'azure':
+        synthesize_to_speaker(text, 'es-MX-DaliaNeural', 'es-MX', config['env']['azureApiKey'])
+    else:
+        engine.say(text)
+        engine.runAndWait()
 
 #* Función para detener el habla en caso de ser necesario
-def no_talk():
-    engine.stop()
-# talk("Hola, ¿como estas?")
+# def no_talk():
+#     engine.stop()
 
 
 #* De voz a texto - Modulo 1 & 2
@@ -470,11 +473,11 @@ try:
     #* Implementando funcionalidad para que el asistente se mantenga escuchando
     # run('texto de prueba escrito')
     # muéstrame el archivo de configuración' in text['text'] or 'muestrame el archivo de configuración
-    run('muéstrame el archivo de configuración')
+    run('Que dia es hoy')
     # run()
 
     # while True:
-    #     result = run()
+    #     # result = run('Que dia es hoy')
 
     #     if not result['status'] and config['modules']['aiModule']:
     #         ia = run_gpt(result['text'])
@@ -485,7 +488,7 @@ try:
     #         talk('Temo que lo que has pedido excede mis capacidades')
 
 except KeyboardInterrupt:
-    no_talk()
+    # no_talk()
     print(err_template + 'Acción cancelada por el usuario.')
 except NameError as err:
     print(err)

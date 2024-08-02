@@ -70,7 +70,7 @@
                 </div>
                 <div class="form__field">
                     <label for="azureApiKey">Azure api key:</label>
-                    <input type="text" name="azureApiKey" id="azureApiKey" class="form__input" placeholder="micr-45ksgts3...">
+                    <input type="text" name="azureApiKey" disabled id="azureApiKey" class="form__input disabled" placeholder="micr-45ksgts3...">
                 </div>
                 <div class="form__field">
                     <label for="openaiApiKey">OpenAI api key:</label>

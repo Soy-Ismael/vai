@@ -1,0 +1,20 @@
+Header set Access-Control-Allow-Origin "*"
+
+RewriteEngine On
+
+# Redirecciones 301 /antigua_ruta /nueva_ruta
+
+# Redirecciones 301 con Rewrite
+# RewriteRule ^ruta-antigua$ /ruta-nueva [R=301,L]
+# RewriteRule ^/web/index.php$ /web/index [R=301,L]
+# RewriteRule ^/web/configuration.php$ /web/configuration [R=301,L]
+
+# Ocultar la extensión .php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]
+
+# Ocultar la extensión .html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9_-]+)$ $1.html [L]

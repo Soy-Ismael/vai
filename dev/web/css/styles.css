@@ -242,11 +242,13 @@ body{
 
 /* Tabla desing */
 .table{
-    border-collapse: collapse;
-    width: 760px;
+    /* collapse junta los bordes */
+    /* separate separa los bordes (verticalmente en este caso) */
+    border-collapse: separate;
+    width: 850px;
     margin-top: 35px;
     caret-color: transparent;
-    /* border: 0 solid #868e93; */
+    border: 0 solid #868e93;
 }
 
 .table__row{
@@ -364,6 +366,19 @@ body{
 .form__input--select{
     padding: 0 6px;
 }
+
+.disabled{
+    background-color: #9d9d9d9b;
+    cursor: not-allowed;
+    user-select: none;
+    caret-color: transparent;
+}
+
+.disabled:hover{
+    border: none;
+    outline: none;
+}
+
 
 /** Modals - video guia (https://youtu.be/Iaw9rFopXPY?si=19uiTyGDfBE2j-7x) */
 /* Contenedor de modal container */
