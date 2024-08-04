@@ -4,7 +4,7 @@ Este archivo contiene informaciones técnicas sobre el funcionamiento de VA y la
 ***
 
 ### Proyecto VA
-Dicho de manera simple, el asistente virtual o proyecto VA sigue los siguientes pasos para lograr su cometido:
+Dicho de manera simple, el asistente virtual o proyecto VA se adapta a la siguiente estructura para lograr su cometido:
 
 1. Grabar voz del usuario 🎤 (SpeechRecognition)
 1. Convertir lo que dijo en texto 🖋 (Google / Whisper)
@@ -16,8 +16,8 @@ Dicho de manera simple, el asistente virtual o proyecto VA sigue los siguientes 
 ***
 ## Asistente local
 
-### va.py
-La programación de VA (Virtual Assistant) gira en torno a la petición y respuesta, o retorno de respuestas como consecuencia de repetidas peticiones entre el usuario y el asistente. Para esto se crearon distintos modulos y funciones que ayudan al óptimo desarrollo de su finalidad.
+### Va
+La programación de VA (Virtual Assistant) gira en torno a la petición y respuesta, o retorno de respuestas como consecuencia de repetidas peticiones entre el usuario y el asistente. Para esto se crearon distintos módulos y funciones que ayudan al óptimo desarrollo de su finalidad.
 
 **listen()** -> Esta función se encarga de utilizar los modulos de SpeechRecognition para escuchar al usuario apoyandose en el microfono del equipo host, luego retorna la transcripción de lo que el usuario dijo en texto.
 
@@ -179,3 +179,139 @@ recognize_audio(save_path, model)
 ## Interfaz web
 ruta: dev/web/
 
+### config.json
+Este archivo contiene toda la configuración del asistente de manera centralizada y organizada, el formato json fue elegido por su facilida de lectura para los humanos y su versatilidad y popular uso en el desarrollo web. Este archivo se divide en 4 objetos principales:
+
+assistant -> Este objeto contiene las opciones de configuración que directamente modifican el comportamiento del asistente, como el nombre, el idioma y el formato que de hora que utilizara.
+
+```json
+"assistant": {
+    "name": "jarvis",
+    "language": "es-ES",
+    "hourFormat": "%I:%M %p",
+    "voiceNumber": "2",
+}
+```
+
+env -> Este objeto almacena información para la configuración del entorno que debe manejarse con cierta discreción tales como claves API, frases de encryptado y contraseñas.
+
+```json
+"env": {
+    "voiceEngine": "pyttsx3",
+    "encryption_phrase": "fresas",
+    "azureApiKey": "",
+    "openaiApiKey": "sk-khst...",
+}
+```
+
+modules -> Este objeto contiene el nombre de todos los módulos del asistente además de un valor booleano que puede ser true o false para indicar si el asistente utilizara ese módulo o no.
+
+```json
+"modules": {
+    "playYtContent": true,
+    "searchInWeb": false,
+    "infoInWeb": true,
+    "reminders": false,
+}
+```
+
+wakeonlan -> Este objeto contiene otro objeto mac dentro que a su vez contiene otros objetos con las direcciones MAC y direcciones IP de todos los equipos en la red local hasta un maximo de 32 equipos. Este objeto tiene el siguiente formato:
+
+```json
+"wakeonlan": {
+    "mac": {
+        "pc1": {
+            "name": "chucho",
+            "ip": "192.168.0.17",
+            "mac": "DC-EA-UE-80-EC-7B",
+            "status": true
+        },
+        "pc2": {
+            "name": "pc2",
+            "ip": "",
+            "mac": "E8-9A-F3-N4-1G-6F",
+            "status": true
+        },
+        "pc3": {
+            "name": "boberto",
+            "ip": "",
+            "mac": "",
+            "status": false
+        }
+    }
+}
+```
+
+Donde el nombre de los objetos dentro de mac corresponde al indice y los objetos dentro de estos corresponden a un equipo wol en la red local, el valor de la ip es opcional, pero la dirección mac, el nombre y el status es obligatorio si se quieren enviar paquetes wol a un equipo. el valor de **status** va a depender del valor de la propiedad mac, de modo que si existe una dirección mac, status sera true, si no hay una dirección mac, status sera false.
+
+### main.js
+Este archivo se encarga de añadir funcionalidad al sitio web, abre y cierra los modals, actualiza información recolecta, unifica y envia la información de los distitnos formularios en la pagina de configuración y en general tiene funciones de validación, funcionalidad y estetica. Además este archivo tambien es el responsable de hacer una petición a una URL local y rellenar los datos de la pagina web con los datos actuales del archivo json de configuración.
+
+### htaccess
+Controla el comportamiento del sitio web del lado del servidor / backend además de controlar comportamientos de visualización de la URL y la politica de CORDS para poder realizar peticiones y envios entre distintas URL's.
+
+[![Ejemplo de básico de funcionamiento de la interfaz web](assets/exdw-documentation.png "Ejemplo de funcionamiento interno de la interfaz web")](assets/exdw-documentation.png)
+
+### apply.php
+Controla el recibo y la validación de la información enviada por el cliente y posteriormente crear un archivo php completo con la nueva información, de modo que incluso si se modifica un solo valor, php creara un archivo php completo con el mismo nombre reescribiendo el contenido del anterior.
+
+```php
+// Como las API REST trabajan con json se formatean las cabeceras del archivo php que entienda el formato
+header('Content-Type: application/json; charset=utf-8');
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { // Los datos se envian por el método post
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    // Si name es null o no tiene valor obtendra el valor de '' por defecto (??)
+    $name = htmlspecialchars(trim($data['assistant']['name'] ?? ''));
+    
+    if (!empty($name)) { // Si el nombre es distinto de vacio
+        $response = [
+            "status" => "success",
+            'ok' => true,
+            "code" => 200,
+            "message" => "Operation was completed successfully.",
+            "data"=> $data,
+            'timestamp' => date('c'), // Marca de tiempo en formato ISO 8601
+            "errors" => null
+        ];
+    } else {
+        $response = [
+            'status' => 'error',
+            'ok' => false,
+            'code' => 400,
+            'message' => "name field can't be empty.",
+            'data' => null,
+            'errors' => [
+                'Data was received, but there is an issue in the data'
+            ]
+        ];
+    }
+    // convierte el array asociativo a un json y la envia a javascript como respuesta
+    echo json_encode($response);
+    
+    // Enviar los datos en formato json al archivo config.json
+    $json_for_humans = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    file_put_contents('assets/config.json', $json_for_humans);
+}
+```
+
+### configuration.php
+Es una simple página web que sirve para solicitar los datos de configuración del asistente y utiliza php para importar distintas partes de la pagina y así mantener cada sub-pagina más limpia limitandose al contenido que va a proveer dicha pagina.
+
+### header.php
+Es simple código html en un archivo php para ser posteriormente incluido en cada uno de los submenus con una simple linea de php.
+
+```php
+include 'imports.php'
+```
+
+De esta manera al modificar solo 1 archivo se cambia el menu en todas las paginas.
+
+### imports.php
+Tiene la misma función que el archivo de **header.php**, pero en este caso se utiliza para importar los archivos necesarios para la funcionalidad de la página web.
+
+### index.php
+Este es el archivo principal y se encarga de suplir una página de incio, aunque la página web tiene fines meramente de configuración, para añadir algo de escencia a la web se utiliza este archivo para mostrar algunas informaciones del equipo que ejecuta el asistente.
+
+### modals.php
+En resumdas cuentas, este archivo contiene todos los modales o ventanas modal para dejar saber alguna información o solicitar otras al usuario.

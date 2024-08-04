@@ -27,7 +27,7 @@ El proyecto VA será un asistente virtual potenciado con inteligencia artificial
 
 <div align="center">
     <br>
-    <img src="https://skillicons.dev/icons?i=vscode,github,git,python" />
+    <img src="https://skillicons.dev/icons?i=vscode,github,git,python,php,javascript,css,md" />
     <!-- <img src="https://skillicons.dev/icons?i=nodejs,javascript,firebase,mysql" /><br> -->
     <br>
 </div>
@@ -71,45 +71,55 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 ## Setup
 <!-- **Instalar** ([**git**](https://git-scm.com/downloads))    -->
 ### Requisitos:
-- ([**Python**](https://www.python.org/downloads/))
-**Opcionales**
-- ([**LAMP server**](https://youtu.be/vukkdC2Kvuo?si=memb1yaFRJlzzBYc))   
+- [**Python**](https://www.python.org/downloads/)
+
+**Opcional**
+- [**LAMP server**](https://youtu.be/vukkdC2Kvuo?si=memb1yaFRJlzzBYc)
 <!-- 1. ``git clone https://github.com/Soy-Ismael/vai.git`` -->
 <!-- 1. **Instalar** las dependencias ejecutando **dependencias.bat** en windows  -->
 
-<br>
-
 ### Deploy
 **Descargar el** [**repositorio**](https://github.com/Soy-Ismael/vai/archive/refs/heads/main.zip)
-````wget https://github.com/Soy-Ismael/vai/archive/refs/heads/main.zip```
+```bash
+wget https://github.com/Soy-Ismael/vai/archive/refs/heads/main.zip
+```
 
 **Descomprimir y renombrar la carpeta**
-```unzip vai-main.zip```
-```mv vai-main va```
+```bash
+unzip vai-main.zip
+mv vai-main va
+```
 
 **Instalar las dependencias** 
-```pip install -r va/requirements.txt```
+```bash
+pip install -r va/requirements.txt
+```
 <!-- Ejecuta **```dependencias.bat```** en windows -->
 
 <!-- [![Instalar dependencias (terminal)](assets/install-dependences.gif "Instalar dependencias (terminal)")](requirements.txt) -->
 
 
 ### Configuración
+[![Ejecutar archivo principal](assets/execute.png "Ilustración de como se puede ejecutar el archivo principal")](dev/va.py)
+
 **Claves API**
-Visita [**platform de OpenAI**](https://platform.openai.com/api-keys), crea una cuenta y en el apartado api key crea tu clave api para usar la api de gpt con el asistente
+
+Visita [**platform de OpenAI**](https://platform.openai.com/api-keys), crea una cuenta y en el apartado api key crea tu clave api para obtener acceso a funciones de IA.
 
 **Opcional**
-Crea una cuenta en el ([**Microsoft Azure portal**](https://portal.azure.com/#view/Microsoft_Azure_ProjectOxford/CognitiveServicesHub/~/SpeechServices)) y en la categoria "servicios de voz" crea una api key (Mejora la voz del asistente y añade gran cantidad de voces y acentos).
+
+Crea una cuenta en el [**portal de azure**](https://portal.azure.com/#view/Microsoft_Azure_ProjectOxford/CognitiveServicesHub/~/SpeechServices) y en la categoria "servicios de voz" crea una api key para dotar al asistente de una excelsa calidad de voz.
   
-**Nota:** Puedes pasarle las claves API mediante la [interfaz web](http://localhost/va/dev/web/configuration) al asistente.
+**Nota:** Puedes proporcionar las claves API mediante la interfaz web al asistente.
 
 <!-- [![Ejemplo de configuración de archivo .env](assets/ejemplo_api_key.png "Ejemplo de configuración de archivo .env")](dev/.env.example) -->
-[![Ejemplo de configuración de claves api en la web](assets/web-env.png "Ejemplo de configuración de claves api")](http://localhost/va/dev/web/configuration)
+[![Ejemplo de configuración de claves api en la web](http://localhost/va/dev/web/configuration "Ejemplo de configuración de claves api")](assets/web-env.png)
 
 ### Ejecución
-```python va/dev/va.py```
+```bash
+python va/dev/va.py
+```
 
-[![Ejecutar archivo principal](assets/execute.png "Ilustración de como se puede ejecutar el archivo principal")](dev/va.py)
 <!-- [![Ejecutar archivo desde visual studio code](assets/execute_fromvsc.png "Ejecutar archivo")](public/va.py) -->
 
 
@@ -124,12 +134,12 @@ Crea una cuenta en el ([**Microsoft Azure portal**](https://portal.azure.com/#vi
 * Realiza el reporte mensual de Excel ⭐
 * ¿Qué hora es?
 * Establece un temporizador de 15 segundos
-<!-- * Qué día fue hace 2 semanas -->
 * ¿Estás ahí?
 * ¿Cómo te llamas?
 * Muestrame el archivo de configuración
 * Enciende la pc de Xaviel / enciende la computadora uno ⭐
 * Hasta luego
+<!-- * Qué día fue hace 2 semanas -->
 <!-- * Envía "cómo estás" a Daniel (en desarrollo) ⭐ -->
 
 <!-- ## Dependencias / Módulos
@@ -249,11 +259,11 @@ Crea una cuenta en el ([**Microsoft Azure portal**](https://portal.azure.com/#vi
 * 2,166 vbeta < 1.0.0 --> 2,944 v2.1.1 lienas de código aproximadas
 * Versión de [**dependencias**](requirements.txt)
 * [**Checkpoints**](assets/checkpoints_va.jpeg) del proyecto
-* Este proyecto surge como consecuencia de la feria tecnológica IPHA de la generación 2023 - 2024
-* Este es el primer proyecto de la mención informática y del IPHA en estar públicado en github
-* Este es el primer proyecto open-source de la mención informática y del IPHA
-* Este es el primer proyecto de la mención de informática que involucra más de 1 lenguage de programación
-* Este es el primer proyecto de la mención de informática que utiliza una API / API backend / backend endpoint
+<!-- * Este proyecto surge como consecuencia de la feria tecnológica IPHA de la generación 2023 - 2024 -->
+<!-- * Este es el primer proyecto de la mención informática y del IPHA en estar públicado en github -->
+<!-- * Este es el primer proyecto open-source de la mención informática y del IPHA -->
+<!-- * Este es el primer proyecto de la mención de informática que involucra más de 1 lenguage de programación -->
+<!-- * Este es el primer proyecto de la mención de informática que utiliza una API / API backend / backend endpoint -->
 
 <!-- ### Explicación de ramas
 * **main** rama principal, no se trabaja sobre esta rama, es únicamente para mergear todos los cambios
@@ -290,11 +300,11 @@ Recuerda que el **50%** del triunfo esta en el **producto** y el otro **50%** en
 
 <h1 align="center">Fruit Detection</h1>
 
-Esta es una idea que puede servir de inspiración para un proyecto alternativo:
+Esta es una idea que puede servir de inspiración para un proyecto futuro:
 
 Utilizar redes neuronales para vision por computadora definitivamente suena algo... complejo, pero con este fragmento de código de no más de 100 lineas podras adaptarlo a tus necesidades pudiendo así detectar cualquier cosa con un hardware adecuado.
 
-Nota: Las redes neuronales de este proyecto se ejecutan de manera local, es decir, es necesario una NPU o una computadora con una tarjeta grafica dedicada de NVIDIA.
+Nota: Las redes neuronales de este proyecto se ejecutan de manera local, es decir, es necesario una NPU o un equipo con una tarjeta grafica dedicada de NVIDIA.
 
 <!-- Este proyecto fue el ganador del segundo lugar y una generosa compensación económica en el STEAM Fest de Estados Unidos. -->
 
@@ -317,4 +327,4 @@ La idea es simple, aumentar la cantidad de tareas que pueden los ciegos hacer po
 
 **Nota:** el modelo fue entrenado para frutas, pero con un dataset distinto podría ser facilmente utilizado para avisar a conductores sobre peatones en el camino o para notificarles que deben detenerse cuando la luz de trafico este en color rojo, tambine puede ser utilizado para detectar tumores u otras anomalias en los resultados de examenes de rayos x o similares. -->
 
-Puedes revisar, modificar y experimentar con el [**código fuente de fruit-detection**](https://github.com/Soy-Ismael/Real-Time-Fruit-Detection-YOLOv9-v8.git).
+Echale un ojo al [**código fuente de fruit-detection**](https://github.com/Soy-Ismael/Real-Time-Fruit-Detection-YOLOv9-v8.git).
