@@ -70,30 +70,47 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 
 ## Setup
 <!-- **Instalar** ([**git**](https://git-scm.com/downloads))    -->
-**Instalar** ([**Python**](https://www.python.org/downloads/))   
+### Requisitos:
+- ([**Python**](https://www.python.org/downloads/))
+**Opcionales**
+- ([**LAMP server**](https://youtu.be/vukkdC2Kvuo?si=memb1yaFRJlzzBYc))   
 <!-- 1. ``git clone https://github.com/Soy-Ismael/vai.git`` -->
 <!-- 1. **Instalar** las dependencias ejecutando **dependencias.bat** en windows  -->
-1. **Descargar el repositorio**
-  - [Presiona aquí para iniciar la descarga](https://github.com/Soy-Ismael/vai/archive/refs/heads/main.zip)
-2. **Instalar las dependencias**
-  - Ejecuta **```dependencias.bat```** en windows
-  - o abre una terminal en la raíz del proyecto y ejecutar ```pip install -r requirements.txt``` para linux / Windows
 
-  [![Instalar dependencias (terminal)](assets/install-dependences.gif "Instalar dependencias (terminal)")](requirements.txt)
+<br>
+
+### Deploy
+**Descargar el** [**repositorio**](https://github.com/Soy-Ismael/vai/archive/refs/heads/main.zip)
+````wget https://github.com/Soy-Ismael/vai/archive/refs/heads/main.zip```
+
+**Descomprimir y renombrar la carpeta**
+```unzip vai-main.zip```
+```mv vai-main va```
+
+**Instalar las dependencias** 
+```pip install -r va/requirements.txt```
+<!-- Ejecuta **```dependencias.bat```** en windows -->
+
+<!-- [![Instalar dependencias (terminal)](assets/install-dependences.gif "Instalar dependencias (terminal)")](requirements.txt) -->
 
 
-3. Configuración de **claves api**
-  * Visita la ([**plataforma de OpenAI**](https://platform.openai.com/api-keys)), crea una cuenta, y en el apartado api key, crea tu clave api para usar la api de gpt con el asistente
-  * Crea una cuenta en el ([**Microsoft Azure portal**](https://portal.azure.com/#view/Microsoft_Azure_ProjectOxford/CognitiveServicesHub/~/SpeechServices)) y en la categoria "servicios de voz" crea una api key (**OPCIONAL**)
+### Configuración
+**Claves API**
+Visita [**platform de OpenAI**](https://platform.openai.com/api-keys), crea una cuenta y en el apartado api key crea tu clave api para usar la api de gpt con el asistente
+
+**Opcional**
+Crea una cuenta en el ([**Microsoft Azure portal**](https://portal.azure.com/#view/Microsoft_Azure_ProjectOxford/CognitiveServicesHub/~/SpeechServices)) y en la categoria "servicios de voz" crea una api key (Mejora la voz del asistente y añade gran cantidad de voces y acentos).
   
-  **Nota:** ambas api key se van a almacenar en el archivo .env con el mismo nombre que tienen en el ejemplo contenido en el (recuerda eliminar la extension .example).
+**Nota:** Puedes pasarle las claves API mediante la [interfaz web](http://localhost/va/dev/web/configuration) al asistente.
 
-  [![Ejemplo de configuración de archivo .env](assets/ejemplo_api_key.png "Ejemplo de configuración de archivo .env")](dev/.env.example)
+<!-- [![Ejemplo de configuración de archivo .env](assets/ejemplo_api_key.png "Ejemplo de configuración de archivo .env")](dev/.env.example) -->
+[![Ejemplo de configuración de claves api en la web](assets/web-env.png "Ejemplo de configuración de claves api")](http://localhost/va/dev/web/configuration)
 
-4. **Ejecutar** el archivo **principal** ```python public/va.py``` puedes hacer doble click en el para ejecutarlo, hacerlo mediante la terminal abriendola en la raíz del proyecto o mediante visual studio code si tienes la **extension python** instalada
+### Ejecución
+```python va/dev/va.py```
 
-[![Ejecutar archivo](assets/execute.png "Ejecutar archivo")](public/va.py)
-[![Ejecutar archivo desde visual studio code](assets/execute_fromvsc.png "Ejecutar archivo")](public/va.py)
+[![Ejecutar archivo principal](assets/execute.png "Ilustración de como se puede ejecutar el archivo principal")](dev/va.py)
+<!-- [![Ejecutar archivo desde visual studio code](assets/execute_fromvsc.png "Ejecutar archivo")](public/va.py) -->
 
 
 ***
@@ -101,20 +118,19 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 ## Ejemplos de uso
 * Reproduce romeo santos / reproduce sus huellas ⭐
 * Busca que es incoloro
-* Ofréceme información sobre Dow Jones ⭐
-* Ofréceme información en inglés sobre Dow Jones
+* Ofréceme información sobre el S&P 500 ⭐
 * Recuérdame hacer la tarea en 5 minutos
 * Cuentame un chiste
-* Realiza el reporte de excel ⭐
+* Realiza el reporte mensual de Excel ⭐
 * ¿Qué hora es?
 * Establece un temporizador de 15 segundos
+<!-- * Qué día fue hace 2 semanas -->
 * ¿Estás ahí?
 * ¿Cómo te llamas?
 * Muestrame el archivo de configuración
-* Crea una nueva configuración
+* Enciende la pc de Xaviel / enciende la computadora uno ⭐
 * Hasta luego
 <!-- * Envía "cómo estás" a Daniel (en desarrollo) ⭐ -->
-<!-- * Qué dia fue hace 2 años -->
 
 <!-- ## Dependencias / Módulos
 ### En Windows
@@ -203,22 +219,8 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 ***
 
 ## Anotaciones
-* Si el usuario quiere utilizar pywhatkit.send() (enviar mensajes mediante WhatsApp web) entonces esto se debe guardar en el archivo de config.txt, si su respuesta es sí, entonces debe crear un archivo contacts.txt con el formato clave:valor con el número de teléfono de todas las personas que el usuario desee (como se muestra en contacts.example.txt), si su respuesta es no entonces se guarda esta información en config.txt y no se realiza nada más.
-* El archivo **log.txt** debe estar **oculto** en un principio y se mostrará a **petición de usuario**, esto por un comando de voz o bien por un botón mediante una posible interfaz gráfica.
-* El archivo **PyWhatKit_DB.txt** con los logs de envíos de mensajes por WhatsApp debe estar **oculto siempre**.
-* El archivo local en el que se almacena la variable de nombre puede ser uno llamado **config.txt** y que esté oculto al usuario.
-* La palabra clave para verificar si el asistente está a la escucha puede ser "¿Estás ahí?", y el asistente responde si escucha y si no responde es porque no escucha.
-* Se debe crear un archivo en formato clave valor con el nombre del contacto y su número de teléfono para enviar mensajes de WhatsApp mediante WhatsApp web con la utilidad pywhatkit.send()
-* Antes de cada mensaje se debe añadir el rol de quien propone dicho mensaje, antes del mensaje del usuario debe aparecer el texto "Usuario: ..." y antes del mensaje del asistente "nombre_asistente: ..."
-* El archivo **config.txt** va a contener informaciones para la configuración del asistente y se ejecutará la primera vez que se ejecute el software, para saber cuando se ejecuta por primera vez podemos preguntar con Python "¿el archivo config.txt existe?", si no existe es la primera vez que se ejecuta, se crea el archivo con los siguientes datos:
-    1. Nombre del asistente
-    2. Formato de fecha preferido
-    3. Idioma para la conversión del audio de entrada
-    4. Voz del asistente
-    5. Rol o postura del asistente
 * Es necesario optimizar el programa para que corra más rápidamente, para esto podemos utilizar la menor cantidad de módulos posibles y, en lugar de importar todo un módulo, solo importar las funciones o propiedades que necesitamos de un módulo.
-
-**NOTA:** Importar un mismo módulo en 2 archivos distintos no añade peso al programa, el módulo se carga una vez y a partir de ahí siempre que se necesite hace referencia al módulo cargado en memoria. -->
+* Importar un mismo módulo en 2 archivos distintos no añade peso al programa, el módulo se carga una vez y a partir de ahí siempre que se necesite hace referencia al módulo cargado en memoria. -->
 
 ***
 
@@ -230,9 +232,6 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 | :---: | :---: | :---: | :---: |
 | Título principal | Análisis de capacidades | notas.txt | Placa de desarrollo |
 | Analizar características, funciones y organización del proyecto | Programar las funciones o características propuestas bajo un mismo estándar de orden | Realizar pruebas en diferentes escenarios de ejecución simulados para garantizar el correcto funcionamiento |Una vez listo el proyecto, cargarlo en la placa de desarrollo y esperar el día de la presentación |
-
-### Errores en el programa
-* Las voces de **pttsx3** dependen de los idiomas del **usuario** host
 
 **NOTA:** es necesario un buen micrófono para utilizar el software con normalidad, de lo contrario se debería utilizar la línea alternativa para que el asistente pare de escuchar indefinidamente.
 
@@ -247,9 +246,14 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 
 * Versión de Python: 3.12.1
 * Versión de pip: 23.3.2
-* 2,166 lienas de código aproximadas
+* 2,166 vbeta < 1.0.0 --> 2,944 v2.1.1 lienas de código aproximadas
 * Versión de [**dependencias**](requirements.txt)
-* [**Pilares**](assets/checkpoints_va.jpeg) del proyecto
+* [**Checkpoints**](assets/checkpoints_va.jpeg) del proyecto
+* Este proyecto surge como consecuencia de la feria tecnológica IPHA de la generación 2023 - 2024
+* Este es el primer proyecto de la mención informática y del IPHA en estar públicado en github
+* Este es el primer proyecto open-source de la mención informática y del IPHA
+* Este es el primer proyecto de la mención de informática que involucra más de 1 lenguage de programación
+* Este es el primer proyecto de la mención de informática que utiliza una API / API backend / backend endpoint
 
 <!-- ### Explicación de ramas
 * **main** rama principal, no se trabaja sobre esta rama, es únicamente para mergear todos los cambios
@@ -257,7 +261,8 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 * **feature** rama para desarrollar una nueva característica en el propio archivo del asistente (va.py)
 * **backup** rama para realizar copias de seguridad con regularidad, no se trabaja en esta rama
 * **display** rama para el desarrollo de la interfaz gráfica del asistente
-* **ia** rama para el desarrollo de características relacionadas con inteligencia artificial -->
+* **ia** rama para el desarrollo de características relacionadas con inteligencia artificial
+* **output** rama para la animación del snake -->
 
 <!-- ### Comandos para cambiar de rama
 **Cuando inicies a trabajar**
@@ -285,17 +290,23 @@ Recuerda que el **50%** del triunfo esta en el **producto** y el otro **50%** en
 
 <h1 align="center">Fruit Detection</h1>
 
-Este proyecto fue el ganador del segundo lugar y una generosa compensación económica en el STEAM Fest de Estados Unidos.
+Esta es una idea que puede servir de inspiración para un proyecto alternativo:
+
+Utilizar redes neuronales para vision por computadora definitivamente suena algo... complejo, pero con este fragmento de código de no más de 100 lineas podras adaptarlo a tus necesidades pudiendo así detectar cualquier cosa con un hardware adecuado.
+
+Nota: Las redes neuronales de este proyecto se ejecutan de manera local, es decir, es necesario una NPU o una computadora con una tarjeta grafica dedicada de NVIDIA.
+
+<!-- Este proyecto fue el ganador del segundo lugar y una generosa compensación económica en el STEAM Fest de Estados Unidos. -->
 
 
-Hoy en día somos testigos de los esfuerzos que hacen los gobiernos por aumentar la inclusión social de las personas ciegas y, aunque hay muchas cosas que los ciegos pueden hacer por su cuenta, hay otras tantas que no, por ejemplo...
+<!-- Hoy en día somos testigos de los esfuerzos que hacen los gobiernos por aumentar la inclusión social de las personas ciegas y, aunque hay muchas cosas que los ciegos pueden hacer por su cuenta, hay otras tantas que no, por ejemplo...
 
-Es fácil para un ciego diferencia entre una manzana y un guineo, pero como diferencia el ciego entre distintos estados de madurez de la fruta, como diferencia un ciego una manzana verde de una roja, o como diferencia una naranja de una mandarina o limón siendo estos últimos de pieles similares, bajo esa tesitura se creó el proyecto frui-detection que tiene la visión de implementar un ayudante en el teléfono de cada persona ciega utilizando la visión por computadora y redes neuronales entrenadas con eficientes y conocidas técnicas de machine learning.
+Es fácil para un ciego diferencia entre una manzana y un guineo, pero como diferencia el ciego entre distintos estados de madurez de la fruta, como diferencia un ciego una manzana verde de una roja, o como diferencia una naranja de una mandarina o limón siendo estos últimos de pieles similares, bajo esa tesitura se creó el proyecto frui-detection que tiene la visión de implementar un ayudante en el teléfono de cada persona ciega utilizando la visión por computadora y redes neuronales entrenadas con eficientes y conocidas técnicas de machine learning. -->
 
 
 [![fruit detection dataset](assets/fruit-detection-dataset.gif "fruit detection dataset")](assets/fruit-detection-dataset.mp4)
 
-## Dataset
+<!-- ## Dataset
 El dataset o conjunto de datos es la coleccion de imagenes que usaras para entrenar a tu red neuronal, lo ideal es tener alrededor de 1,000 imagenes para entrenamiento y alrededor de 200 para validación, cuantas más imagenes utilices para ambas cosas más preciso sera el modelo detectando el objeto para el que fue entrenado.
 
 El proyecto fue creado a partir del modulo de vision por computadora para python **YOLO** en su versión **9c**, fue entrenado con 191 de las cuales fueron destinadas 38 para validación, todo esto hace posible que el programa diferencie y detecte manzanas rojas, verdes, guineos y naranjas. A pesar de su reducido dataset tiene un buen desempeño con un margen de error del 3% en condiciones adecuadas de luz.
@@ -304,6 +315,6 @@ El proyecto fue creado a partir del modulo de vision por computadora para python
 
 La idea es simple, aumentar la cantidad de tareas que pueden los ciegos hacer por su cuenta aumentando su autonomia social y por ende haciendoles sentir más utiles e iguales a los dichosos videntes.
 
-**Nota:** el modelo fue entrenado para frutas, pero con un dataset distinto podría ser facilmente utilizado para avisar a conductores sobre peatones en el camino o para notificarles que deben detenerse cuando la luz de trafico este en color rojo, tambine puede ser utilizado para detectar tumores u otras anomalias en los resultados de examenes de rayos x o similares.
+**Nota:** el modelo fue entrenado para frutas, pero con un dataset distinto podría ser facilmente utilizado para avisar a conductores sobre peatones en el camino o para notificarles que deben detenerse cuando la luz de trafico este en color rojo, tambine puede ser utilizado para detectar tumores u otras anomalias en los resultados de examenes de rayos x o similares. -->
 
 Puedes revisar, modificar y experimentar con el [**código fuente de fruit-detection**](https://github.com/Soy-Ismael/Real-Time-Fruit-Detection-YOLOv9-v8.git).

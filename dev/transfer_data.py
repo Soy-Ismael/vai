@@ -122,7 +122,6 @@ class Transaction:
         # Método 4
         return mapeo.get(texto, False)
         # Este es el método más eficiente, con una unica comprobación obtenemos lo que queremos
-            
 
 
 if __name__ == '__main__':

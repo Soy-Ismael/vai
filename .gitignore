@@ -31,3 +31,11 @@ public/.env
 notas.txt
 wol.txt
 .env
+assets/web-env.png
+dev/manipulate-json.py
+dev/txt/contacts.example.txt
+dev/txt/wol.example.txt
+dev/web/request.php
+dev/whisperBeta.py
+dev/web/request.php
+dev/web/assets/original_config.json

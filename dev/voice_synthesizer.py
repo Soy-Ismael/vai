@@ -1,15 +1,6 @@
 import azure.cognitiveservices.speech as speechsdk
 from azure.cognitiveservices.speech.audio import AudioOutputConfig
 from dotenv import get_key
-# from va import talk
-import pyttsx3
-
-engine = pyttsx3.init()
-voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)
-def talk(text):
-    engine.say(text)
-    engine.runAndWait()
 
 # función para sintetizar el texto y convertirlo a voz, recibe como parametros: el texto a sintetizar, el idioma y acento con el que va a hablar, el idioma que va a reconocer, la clave api de azure y la región de esa clave api, (tiene valores por defecto cada parametro para una ejecución más limpia de la función)
 
