@@ -31,7 +31,7 @@ public/.env
 notas.txt
 wol.txt
 .env
-assets/web-env.png
+# assets/web-env.png
 dev/manipulate-json.py
 dev/txt/contacts.example.txt
 dev/txt/wol.example.txt

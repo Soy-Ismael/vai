@@ -100,7 +100,7 @@ pip install -r va/requirements.txt
 
 
 ### Configuración
-[![Ejecutar archivo principal](assets/execute.png "Ilustración de como se puede ejecutar el archivo principal")](dev/va.py)
+[![Ejemplo de configuración de claves api en la web](assets/web-env.png "Ejemplo de configuración de claves api")](http://localhost/va/dev/web/configuration)
 
 **Claves API**
 
@@ -113,13 +113,13 @@ Crea una cuenta en el [**portal de azure**](https://portal.azure.com/#view/Micro
 **Nota:** Puedes proporcionar las claves API mediante la interfaz web al asistente.
 
 <!-- [![Ejemplo de configuración de archivo .env](assets/ejemplo_api_key.png "Ejemplo de configuración de archivo .env")](dev/.env.example) -->
-[![Ejemplo de configuración de claves api en la web](http://localhost/va/dev/web/configuration "Ejemplo de configuración de claves api")](assets/web-env.png)
 
 ### Ejecución
 ```bash
 python va/dev/va.py
 ```
 
+[![Ejecutar archivo principal](assets/execute.png "Ilustración de como se puede ejecutar el archivo principal")](dev/va.py)
 <!-- [![Ejecutar archivo desde visual studio code](assets/execute_fromvsc.png "Ejecutar archivo")](public/va.py) -->
 
 
